@@ -1,4 +1,4 @@
-package com.mycompany.cupcake.Data;
+package data;
 
 /**
  *
@@ -7,9 +7,9 @@ package com.mycompany.cupcake.Data;
 public class User {
     private String username;
     private String password;
-    private int balance;
+    private double balance;
 
-    public User(String username, String password, int balance) {
+    public User(String username, String password, double balance) {
         this.username = username;
         this.password = password;
         this.balance = balance;
@@ -23,8 +23,11 @@ public class User {
         return password;
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
     
+    public void setBalance(double newBal) {
+        balance = newBal;
+    }
 }
