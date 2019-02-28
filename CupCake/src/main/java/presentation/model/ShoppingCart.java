@@ -42,7 +42,5 @@ public class ShoppingCart {
         for (LineItem item : sc.getLineItems()) {
             System.out.println(item.getQuantity());
         }
-
     }
-
 }
