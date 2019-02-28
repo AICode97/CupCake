@@ -11,8 +11,9 @@ import presentation.view.*;
  * @author Andreas Vikke
  */
 public abstract class Command {
-     public abstract void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
-    
+
+    public abstract void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+
     public static Command from(HttpServletRequest request) {
         Command c;
         String path = request.getPathInfo().substring(1);
@@ -22,7 +23,7 @@ public abstract class Command {
                 break;
             case "login":
                 c = new LoginCommand();
-                break; 
+                break;
             default:
                 c = new FrontPageCommand();
         }
