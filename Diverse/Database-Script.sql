@@ -7,7 +7,8 @@ CREATE TABLE `cupcake`.`users` (
   `username` VARCHAR(45) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `password` VARCHAR(200) NOT NULL,
-  `balance` DOUBLE NOt NULL DEFAULT 0,
+  `balance` DOUBLE NOT NULL DEFAULT 0,
+  `role` ENUM('ADMIN', 'CUSTOMER') NOT NULL DEFAULT 'CUSTOMER',
   PRIMARY KEY (`username`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
 );
@@ -43,7 +44,7 @@ CREATE TABLE `cupcake`.`cupcakes` (
     ON UPDATE CASCADE
 );
 
-INSERT INTO `cupcake`.`users` VALUES ('Vikke', 'vikkedesign@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100);
+INSERT INTO `cupcake`.`users` VALUES ('Vikke', 'vikkedesign@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'ADMIN');
 
 INSERT INTO `cupcake`.`cupcakeBottoms` (`name`, `price`) VALUES 
 ('Chocolate', 5.00),
