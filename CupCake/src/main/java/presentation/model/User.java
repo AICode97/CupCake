@@ -35,4 +35,9 @@ public class User {
     public void setBalance(double newBal) {
         balance = newBal;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "username=" + username + ", email=" + email + ", password=" + password + ", balance=" + balance + '}';
+    }
 }
