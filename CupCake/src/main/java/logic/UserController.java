@@ -41,4 +41,18 @@ public class UserController {
             ex.printStackTrace();
         }
     }
+    
+    public static void main(String[] args) {
+        UserController uc = new UserController();
+        List<User> users = uc.getUsers();
+        for(User u : users){
+            System.out.println(u.getUsername());
+        }
+        /*User user = uc.getUser("Asger");
+        System.out.println(user.getBalance());
+        uc.addUser("William", "ErDuFærdig?@gmail.com", "1234");*/
+        System.out.println(uc.getUser("William").getEmail());
+    }
+    
+    
 }
