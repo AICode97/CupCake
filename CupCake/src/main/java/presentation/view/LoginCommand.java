@@ -26,11 +26,11 @@ public class LoginCommand extends Command {
 
         boolean valid = vuc.validateUser(username, password);
 
-        uc.getUser(username);
-
-        HttpSession session = request.getSession();
-        session.setAttribute("username", username);
-
+        if (valid) {
+            uc.getUser(username);
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
+        }
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE html>");
@@ -41,9 +41,9 @@ public class LoginCommand extends Command {
             out.println("<body>");
             out.println("<form action=\"" + request.getContextPath() + "/LoginServlet\" method=\"GET\">");
             out.println("Username: <br>");
-            out.println("<input type=\"text\" name=\"UsernameLogin\"><br>");
+            out.println("<input type=\"text\" name=\"username\"><br>");
             out.println("<br>Password : <br>");
-            out.println("<input type=\"password\" name=\"PasswordLogin\"><br>");
+            out.println("<input type=\"password\" name=\"password\"><br>");
             out.println("<input type=\"submit\" name=\"LoginLogin\" value=\"Login\"> <br>");
             if (valid) {
                 out.println("<h1>You are now logged in.</h1>");
