@@ -9,7 +9,6 @@ import logic.CupcakeController;
  * @author Martin Frederiksen
  */
 public class ShoppingCart {
-
     private List<LineItem> lineItems;
 
     public ShoppingCart() {
@@ -24,12 +23,10 @@ public class ShoppingCart {
         List<LineItem> items = getLineItems();
         if (items.isEmpty()) {
             lineItems.add(li);
-            System.out.println("LISTEN ER TOM");
         } else {
             for (LineItem i : items) {
-                if (i.getBottom() == (li.getBottom()) && i.getTop() == li.getTop()) {
-                    i.setQuantity(li.getQuantity());
-                    //lineItems = items;
+                if (i.getBottom() == li.getBottom() && i.getTop() == li.getTop()) {
+                    i.addQuantity(li.getQuantity());
                 }else {
                     lineItems.add(li);
                 }
