@@ -11,17 +11,18 @@ import presentation.model.User;
 public class ValidateUserController {
 
     public static boolean validateUser(String username, String password) {
-        boolean validate = false;
+        if(username == null || password == null || username.equals("") || password.equals("")) return false;
         UserMapper um = new UserMapper();
         try {
-        User user = um.getUser(username);
-        if(user.getPassword().equals(password)) validate = true;
+            User user = um.getUser(username);
+            return user.getPassword().equals(password);
         } catch (SQLException ex) {
             ex.printStackTrace();
+            return false;
         }
-        return validate;
     }
-        public static void main(String[] args) {
+
+    public static void main(String[] args) {
         ValidateUserController vuc = new ValidateUserController();
         System.out.println(vuc.validateUser("vikke", "1234"));
     }
