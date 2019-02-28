@@ -35,6 +35,8 @@ public class ProductControl extends HttpServlet {
             throws ServletException, IOException {
         
         CupcakeController cc = new CupcakeController();
+        
+        
         CupcakePart bottom = cc.getCupcakePart(CupcakePartEnum.BOTTOM, Integer.parseInt(request.getParameter("bottom")));
         CupcakePart top = cc.getCupcakePart(CupcakePartEnum.TOP, Integer.parseInt(request.getParameter("top")));
         
@@ -42,8 +44,9 @@ public class ProductControl extends HttpServlet {
         int invoice = Integer.parseInt(request.getParameter("invoice"));
         
         ShoppingCart sc = new ShoppingCart();
-        
         sc.setLineItem(new LineItem(bottom, top, qty, invoice));
+        
+        
         
         HttpSession session = request.getSession();
         session.setAttribute("ShoppingCart", sc);
@@ -65,8 +68,6 @@ public class ProductControl extends HttpServlet {
                 out.println("<p>Mængde: "+ li.getQuantity()+ "</p>");
                 out.println("<p>Pris: " + Calculator.calculate(sc));
             }
-            
-            
             out.println("</body>");
             out.println("</html>");
         }
