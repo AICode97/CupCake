@@ -1,5 +1,6 @@
 package data;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,20 +23,22 @@ public class UserMapper implements IUserMapper {
 
     @Override
     public void addUser(String username, String email, String password) throws SQLException {
+        Connection connection = connector.getConnection();
         String quary = "INSERT INTO users(username, email, password) VALUES(?,?,?);";
-        PreparedStatement ps = connector.getConnection().prepareCall(quary);
+        PreparedStatement ps = connection.prepareCall(quary);
         try {
             ps.setString(1, username);
             ps.setString(2, email);
             ps.setString(3, password);
             ps.executeUpdate();
+            connection.setAutoCommit(false);
         } catch (SQLException ex) {
             ex.printStackTrace();
-            connector.getConnection().rollback();
-            if (connector.getConnection() != null) {
-                connector.getConnection().rollback();
+            if (connection != null) {
+                connection.rollback();
             }
         } finally {
+            connection.setAutoCommit(true);
             if (ps != null) {
                 ps.close();
             }
@@ -78,7 +81,7 @@ public class UserMapper implements IUserMapper {
             for (User u : users) {
                 System.out.println(u.getUsername());
             }
-            /*um.addUser("Vikke", "vikkedesign@gmail.dk", "1234");
+            /*um.addUser("Asger", "AsgerErHerIkke@gmail.dk", "1234");
             User user = um.getUser("vikke");
             User user1 = um.getUser("William");
             System.out.println(user.getPassword());
