@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author William Hussfeldt & Martin Frederiksen
+ * @author William Hussfeldt & Martin Frederiksen & Andreas Vikke
  */
 public class ValidateUserController {
 
