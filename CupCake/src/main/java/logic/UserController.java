@@ -34,11 +34,12 @@ public class UserController {
         }
     }
 
-    public void addUser(String username, String email, String password) {
+    public int addUser(String username, String email, String password) {
         try {
-            new UserMapper().addUser(username, email, password);
+            return new UserMapper().addUser(username, email, password);
         } catch (SQLException ex) {
             ex.printStackTrace();
+            return -1;
         }
     }
     
