@@ -6,7 +6,7 @@ import presentation.model.User;
 
 /**
  *
- * @author willi & Martin Frederiksen
+ * @author William Hussfeldt & Martin Frederiksen
  */
 public class ValidateUserController {
 
@@ -14,8 +14,7 @@ public class ValidateUserController {
         if(username == null || password == null || username.equals("") || password.equals("")) return false;
         UserMapper um = new UserMapper();
         try {
-            User user = um.getUser(username);
-            return user.getPassword().equals(password);
+            return um.validateUser(username, password);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
