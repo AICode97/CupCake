@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import presentation.model.User;
 
 /**
  *
@@ -23,10 +24,22 @@ public class UserMapper implements IUserMapper {
     public void addUser(String username, String email, String password) throws SQLException {
         String quary = "INSERT INTO users(username, email, password) VALUES(?,?,?);";
         PreparedStatement ps = connector.getConnection().prepareCall(quary);
-        ps.setString(1, username);
-        ps.setString(2, email);
-        ps.setString(3, password);
-        ps.executeUpdate();
+        try {
+            ps.setString(1, username);
+            ps.setString(2, email);
+            ps.setString(3, password);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            connector.getConnection().rollback();
+            if (connector.getConnection() != null) {
+                connector.getConnection().rollback();
+            }
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
     }
 
     @Override

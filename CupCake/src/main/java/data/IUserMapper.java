@@ -2,6 +2,7 @@ package data;
 
 import java.sql.SQLException;
 import java.util.List;
+import presentation.model.User;
 
 /**
  *
