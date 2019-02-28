@@ -24,6 +24,9 @@ public class LineItem {
     public CupcakePart getTop() {
         return top;
     }
+    public int setQuantity(int qty){
+        return quantity + qty;
+    }
 
     public int getQuantity() {
         return quantity;

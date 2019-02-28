@@ -11,7 +11,7 @@ import presentation.model.ShoppingCart;
 public class Calculator {
     
     public static int calculate(ShoppingCart sc){
-        List<LineItem> li = sc.getLineItem();
+        List<LineItem> li = sc.getLineItems();
         int price = 0;
         for(LineItem i : li){
             price += i.getBottom().getPrice();
