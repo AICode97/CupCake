@@ -1,7 +1,4 @@
 package presentation.model;
-
-import data.*;
-
 /**
  *
  * @author Martin Frederiksen && Andreas Vikke
