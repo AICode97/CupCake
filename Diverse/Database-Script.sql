@@ -43,7 +43,7 @@ CREATE TABLE `cupcake`.`cupcakes` (
     ON UPDATE CASCADE
 );
 
-INSERT INTO `cupcake`.`users` VALUES ('Vikke', 'vikkedesign@gmail.com', '1234', 100);
+INSERT INTO `cupcake`.`users` VALUES ('Vikke', 'vikkedesign@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100);
 
 INSERT INTO `cupcake`.`cupcakeBottoms` (`name`, `price`) VALUES 
 ('Chocolate', 5.00),
