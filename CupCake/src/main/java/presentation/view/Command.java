@@ -4,6 +4,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Response;
 import presentation.view.*;
 
 /**
@@ -22,7 +23,7 @@ public abstract class Command {
                 break;
             case "login":
                 c = new LoginCommand();
-                break;
+                break; 
             default:
                 c = new FrontPageCommand();
         }

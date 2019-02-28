@@ -14,7 +14,7 @@ public class ShoppingCart {
         lineItems = new ArrayList();
     }
 
-    public List<LineItem> getLineItems() {
+    public List<LineItem> getLineItem() {
         return lineItems;
     }
 
