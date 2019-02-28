@@ -22,7 +22,7 @@ public class UserMapper implements IUserMapper {
     }
 
     @Override
-    public void addUser(String username, String email, String password) throws SQLException {
+    public int addUser(String username, String email, String password) throws SQLException {
         Connection connection = connector.getConnection();
         String quary = "INSERT INTO users(username, email, password) VALUES(?,?,?);";
         PreparedStatement ps = connection.prepareCall(quary);
@@ -30,8 +30,9 @@ public class UserMapper implements IUserMapper {
             ps.setString(1, username);
             ps.setString(2, email);
             ps.setString(3, password);
-            ps.executeUpdate();
             connection.setAutoCommit(false);
+            int result = ps.executeUpdate();
+            return result;
         } catch (SQLException ex) {
             ex.printStackTrace();
             if (connection != null) {
@@ -43,6 +44,7 @@ public class UserMapper implements IUserMapper {
                 ps.close();
             }
         }
+        return -1;
     }
 
     @Override
