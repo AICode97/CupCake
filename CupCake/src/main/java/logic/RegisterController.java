@@ -5,7 +5,7 @@
  */
 package logic;
 
-import data.User;
+import presentation.model.User;
 import data.UserMapper;
 
 /**
