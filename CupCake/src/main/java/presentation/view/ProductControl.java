@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.Calculator;
+import logic.CupcakeController;
+import presentation.model.CupcakePart;
+import presentation.model.CupcakePartEnum;
 import presentation.model.LineItem;
 import presentation.model.ShoppingCart;
 
@@ -36,13 +39,16 @@ public class ProductControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String bottom = request.getParameter("bottom");
-        String top = request.getParameter("top");
+        CupcakeController cc = new CupcakeController();
+        CupcakePart bottom = cc.getCupcakePart(CupcakePartEnum.BOTTOM, Integer.parseInt(request.getParameter("bottom")));
+        CupcakePart top = cc.getCupcakePart(CupcakePartEnum.TOP, Integer.parseInt(request.getParameter("top")));
+        
         int qty = Integer.parseInt(request.getParameter("qty"));
         int invoice = Integer.parseInt(request.getParameter("invoice"));
         
         ShoppingCart sc = new ShoppingCart();
-        sc.setLineItems(new LineItem(bottom, top, qty, invoice));
+        
+        sc.setLineItem(new LineItem(bottom, top, qty, invoice));
         
         HttpSession session = request.getSession();
         session.setAttribute("ShoppingCart", sc);
@@ -57,10 +63,10 @@ public class ProductControl extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>LineItems</h1>");
-            for(LineItem li : sc.getLineItem()){
+            for(LineItem li : sc.getLineItems()){
                 out.println("<p><b>Nr: "+ li.getInvoiceId() + "</b>");
-                out.println("<p>Bund: "+ li.getBottom() + "</p>"); 
-                out.println("<p>Top: "+ li.getTop() + "</p>");
+                out.println("<p>Bund: "+ li.getBottom().getName() + "</p>"); 
+                out.println("<p>Top: "+ li.getTop().getName() + "</p>");
                 out.println("<p>Mængde: "+ li.getQuantity()+ "</p>");
                 out.println("<p>Pris: " + Calculator.calculate(sc));
             }
