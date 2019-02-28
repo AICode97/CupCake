@@ -41,13 +41,12 @@ public class LoginServlet extends HttpServlet {
         ValidateUserController vuc = new ValidateUserController();
         UserController uc = new UserController();
         boolean valid = vuc.validateUser(username, password);
-
         
+        if(valid){
         uc.getUser(username);
-
         HttpSession session = request.getSession();
         session.setAttribute("username", username);
-
+        }
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
@@ -57,16 +56,18 @@ public class LoginServlet extends HttpServlet {
             out.println("<title>Servlet LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
+            out.println("<form action=\"" + request.getContextPath() + "/LoginServlet\" method=\"GET\">");
             out.println("Username: <br>");
             out.println("<input type=\"text\" name=\"UsernameLogin\"><br>");
             out.println("<br>Password : <br>");
             out.println("<input type=\"password\" name=\"PasswordLogin\"><br>");
             out.println("<input type=\"submit\" name=\"LoginLogin\" value=\"Login\"> <br>");
-            if(valid){
+            if (valid) {
                 out.println("<h1>You are now logged in.</h1>");
-            }else{
+            } else {
                 out.println("<h1>Incorrect username and/or password</h1>");
             }
+            out.println("</form>");
             out.println("</body>");
             out.println("</html>");
         }
