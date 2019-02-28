@@ -2,11 +2,10 @@ package logic;
 
 import data.UserMapper;
 import java.sql.SQLException;
-import presentation.model.User;
 
 /**
  *
- * @author William Hussfeldt & Martin Frederiksen
+ * @author William Hussfeldt & Martin Frederiksen & Andreas Vikke
  */
 public class ValidateUserController {
 
