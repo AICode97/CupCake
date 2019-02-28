@@ -26,6 +26,7 @@ public class RegisterServlet extends HttpServlet {
         
         try (PrintWriter out = response.getWriter()) {
             
+            //PreparedStatement ps = 
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");
