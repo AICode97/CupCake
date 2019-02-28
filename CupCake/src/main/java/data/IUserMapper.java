@@ -8,7 +8,7 @@ import java.util.List;
  * @author Martin Frederiksen
  */
 public interface IUserMapper {
-    void addUser() throws SQLException;
+    void addUser(String username, String email, String password) throws SQLException;
     List<User> getUsers() throws SQLException;
     User getUser(String username) throws SQLException;
 }

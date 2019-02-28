@@ -20,8 +20,13 @@ public class UserMapper implements IUserMapper {
     }
 
     @Override
-    public void addUser() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addUser(String username, String email, String password) throws SQLException {
+        String quary = "INSERT INTO users(username, email, password) VALUES(?,?,?);";
+        PreparedStatement ps = connector.getConnection().prepareCall(quary);
+        ps.setString(1, username);
+        ps.setString(2, email);
+        ps.setString(3, password);
+        ps.executeUpdate();
     }
 
     @Override
@@ -60,10 +65,12 @@ public class UserMapper implements IUserMapper {
             for (User u : users) {
                 System.out.println(u.getUsername());
             }
+            /*um.addUser("Vikke", "vikkedesign@gmail.dk", "1234");
             User user = um.getUser("vikke");
-            User user1 = um.getUser("vi");
+            User user1 = um.getUser("William");
             System.out.println(user.getPassword());
-            //System.out.println(user1.getPassword());
+            System.out.println(user1.getPassword());
+            System.out.println(user1.getBalance());*/
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
