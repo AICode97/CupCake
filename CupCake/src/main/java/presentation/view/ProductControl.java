@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import logic.Calculator;
 import presentation.model.LineItem;
 import presentation.model.ShoppingCart;
 
@@ -60,7 +61,8 @@ public class ProductControl extends HttpServlet {
                 out.println("<p><b>Nr: "+ li.getInvoiceId() + "</b>");
                 out.println("<p>Bund: "+ li.getBottom() + "</p>"); 
                 out.println("<p>Top: "+ li.getTop() + "</p>");
-                out.println("<p>Quantity: "+ li.getQuantity()+ "</p>");
+                out.println("<p>Mængde: "+ li.getQuantity()+ "</p>");
+                out.println("<p>Pris: " + Calculator.calculate(sc));
             }
             
             

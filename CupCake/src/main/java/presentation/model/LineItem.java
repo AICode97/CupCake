@@ -5,24 +5,24 @@ package presentation.model;
  * @author Martin Frederiksen
  */
 public class LineItem {
-    private String bottomName;
-    private String topName;
+    private CupcakePart bottom;
+    private CupcakePart top;
     private int quantity;
     private int invoiceId;
 
-    public LineItem(String bottomName, String topName, int quantity, int invoiceId) {
-        this.bottomName = bottomName;
-        this.topName = topName;
+    public LineItem(CupcakePart bottom, CupcakePart top, int quantity, int invoiceId) {
+        this.bottom = bottom;
+        this.top = top;
         this.quantity = quantity;
         this.invoiceId = invoiceId;
     }
 
-    public String getBottom() {
-        return bottomName;
+    public CupcakePart getBottom() {
+        return bottom;
     }
 
-    public String getTop() {
-        return topName;
+    public CupcakePart getTop() {
+        return top;
     }
 
     public int getQuantity() {

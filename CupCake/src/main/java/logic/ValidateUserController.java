@@ -2,7 +2,6 @@ package logic;
 
 import data.UserMapper;
 import java.sql.SQLException;
-import presentation.model.User;
 
 /**
  *
