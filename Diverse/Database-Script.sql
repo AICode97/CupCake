@@ -1,7 +1,9 @@
 DROP TABLE IF EXISTS `cupcake`.`cupcakes`;
 DROP TABLE IF EXISTS `cupcake`.`cupcakeTops`;
 DROP TABLE IF EXISTS `cupcake`.`cupcakeBottoms`;
+DROP TABLE IF EXISTS `cupcake`.`invoice`;
 DROP TABLE IF EXISTS `cupcake`.`users`;
+
 
 CREATE TABLE `cupcake`.`users` (
   `username` VARCHAR(45) NOT NULL,
@@ -11,6 +13,15 @@ CREATE TABLE `cupcake`.`users` (
   `role` ENUM('ADMIN', 'CUSTOMER') NOT NULL DEFAULT 'CUSTOMER',
   PRIMARY KEY (`username`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
+);
+
+create table `cupcake`.`invoice`(
+`invoiceID` INT NOT NULL AUTO_INCREMENT,
+`cake_buttom` INT NOT NULL,
+`cake_top` INT NOT NULL,
+`quantity` INT NOT NULL,
+`price` INT NOT NULL,
+PRIMARY KEY (`invoiceID`)
 );
 
 CREATE TABLE `cupcake`.`cupcakeBottoms` (
