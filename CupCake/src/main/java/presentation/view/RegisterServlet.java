@@ -3,6 +3,7 @@ package presentation.view;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +29,7 @@ public class RegisterServlet extends HttpServlet {
         
         UserController rc = new UserController();
         rc.addUser(username, email, password);
+        User u = rc.getUser(username);
         
         try (PrintWriter out = response.getWriter()) {
             
@@ -37,7 +39,7 @@ public class RegisterServlet extends HttpServlet {
             out.println("<title>Servlet LoginServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>User: " + rc.getUser(username) +" was suscessfully registered</h1>");
+            out.println("<h1>User: " + u.getUsername() +" was suscessfully registered</h1>");
             out.println("</body>");
             out.println("</html>");
             

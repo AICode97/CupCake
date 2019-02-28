@@ -6,13 +6,11 @@ package presentation.model;
 public class User {
     private String username;
     private String email;
-    private String password;
     private double balance;
 
-    public User(String username, String email, String password, double balance) {
+    public User(String username, String email, double balance) {
         this.username = username;
         this.email = email;
-        this.password = password;
         this.balance = balance;
     }
 
@@ -24,15 +22,16 @@ public class User {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public double getBalance() {
         return balance;
     }
     
     public void setBalance(double newBal) {
         balance = newBal;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "username=" + username + ", email=" + email + ", balance=" + balance + '}';
     }
 }
