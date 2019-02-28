@@ -1,5 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package presentation.view;
 
+import logic.ValidateUserController;
+import logic.UserController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -8,19 +15,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import logic.Calculator;
-import logic.CupcakeController;
-import presentation.model.CupcakePart;
-import presentation.model.CupcakePartEnum;
-import presentation.model.LineItem;
-import presentation.model.ShoppingCart;
 
 /**
  *
- * @author Martin Frederiksen
+ * @author Asger Hermind Sørensen
  */
-@WebServlet(name = "ProductControl", urlPatterns = {"/ProductControl"})
-public class ProductControl extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,41 +34,40 @@ public class ProductControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        ValidateUserController vuc = new ValidateUserController();
+        UserController uc = new UserController();
+        boolean valid = vuc.validateUser(username, password);
         
-        CupcakeController cc = new CupcakeController();
-        
-        
-        CupcakePart bottom = cc.getCupcakePart(CupcakePartEnum.BOTTOM, Integer.parseInt(request.getParameter("bottom")));
-        CupcakePart top = cc.getCupcakePart(CupcakePartEnum.TOP, Integer.parseInt(request.getParameter("top")));
-        
-        int qty = Integer.parseInt(request.getParameter("qty"));
-        int invoice = Integer.parseInt(request.getParameter("invoice"));
-        
-        ShoppingCart sc = new ShoppingCart();
-        sc.setLineItem(new LineItem(bottom, top, qty, invoice));
-        
-        
-        
+        if(valid){
+        uc.getUser(username);
         HttpSession session = request.getSession();
-        session.setAttribute("ShoppingCart", sc);
-        
+        session.setAttribute("username", username);
+        }
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductControl</title>");            
+            out.println("<title>Servlet LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>LineItems</h1>");
-            for(LineItem li : sc.getLineItems()){
-                out.println("<p><b>Nr: "+ li.getInvoiceId() + "</b>");
-                out.println("<p>Bund: "+ li.getBottom().getName() + "</p>"); 
-                out.println("<p>Top: "+ li.getTop().getName() + "</p>");
-                out.println("<p>Mængde: "+ li.getQuantity()+ "</p>");
-                out.println("<p>Pris: " + Calculator.calculate(sc));
+            out.println("<form action=\"" + request.getContextPath() + "/LoginServlet\" method=\"GET\">");
+            out.println("Username: <br>");
+            out.println("<input type=\"text\" name=\"username\"><br>");
+            out.println("<br>Password : <br>");
+            out.println("<input type=\"password\" name=\"password\"><br>");
+            out.println("<input type=\"submit\" name=\"LoginLogin\" value=\"Login\"> <br>");
+            if (valid) {
+                out.println("<h1>You are now logged in.</h1>");
+            } else {
+                out.println("<h1>Incorrect username and/or password</h1>");
             }
+            out.println("</form>");
             out.println("</body>");
             out.println("</html>");
         }
