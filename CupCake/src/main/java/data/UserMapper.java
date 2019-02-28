@@ -22,7 +22,7 @@ public class UserMapper implements IUserMapper {
     }
 
     @Override
-    public void addUser(String username, String email, String password) throws SQLException {
+    public int addUser(String username, String email, String password) throws SQLException {
         Connection connection = connector.getConnection();
         String quary = "INSERT INTO users(username, email, password) VALUES(?,?,?);";
         PreparedStatement ps = connection.prepareCall(quary);
@@ -30,8 +30,9 @@ public class UserMapper implements IUserMapper {
             ps.setString(1, username);
             ps.setString(2, email);
             ps.setString(3, password);
-            ps.executeUpdate();
             connection.setAutoCommit(false);
+            int result = ps.executeUpdate();
+            return result;
         } catch (SQLException ex) {
             ex.printStackTrace();
             if (connection != null) {
@@ -43,6 +44,7 @@ public class UserMapper implements IUserMapper {
                 ps.close();
             }
         }
+        return -1;
     }
 
     @Override
@@ -53,7 +55,7 @@ public class UserMapper implements IUserMapper {
         ResultSet rs = stmt.executeQuery(quary);
 
         while (rs.next()) {
-            users.add(new User(rs.getString("username"), rs.getString("email"), rs.getString("password"), rs.getDouble("balance")));
+            users.add(new User(rs.getString("username"), rs.getString("email"), rs.getDouble("balance")));
         }
         return users;
     }
@@ -67,10 +69,27 @@ public class UserMapper implements IUserMapper {
         User user = null;
         while (rs.next()) {
             if (username.equalsIgnoreCase(rs.getString("username"))) {
-                user = new User(username, rs.getString("email"), rs.getString("password"), rs.getDouble("balance"));
+                user = new User(username, rs.getString("email"), rs.getDouble("balance"));
             }
         }
         return user;
+    }
+    
+    @Override
+    public boolean validateUser(String username, String password) throws SQLException {
+        String quary = "SELECT username, email FROM users WHERE (username = ? OR email = ?)AND password = ?;";
+        PreparedStatement ps = connector.getConnection().prepareStatement(quary);
+        ps.setString(1, username);
+        ps.setString(2, username);
+        ps.setString(3, password);
+        ResultSet rs = ps.executeQuery();
+        boolean valid = false;
+        while (rs.next()) {
+            if (username.equalsIgnoreCase(rs.getString("username")) || username.equalsIgnoreCase(rs.getString("email"))) {
+                valid = true;
+            }
+        }
+        return valid;
     }
 
     public static void main(String[] args) {

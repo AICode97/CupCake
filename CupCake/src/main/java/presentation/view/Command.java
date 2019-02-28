@@ -22,7 +22,7 @@ public abstract class Command {
                 break;
             case "login":
                 c = new LoginCommand();
-                break;
+                break; 
             default:
                 c = new FrontPageCommand();
         }
