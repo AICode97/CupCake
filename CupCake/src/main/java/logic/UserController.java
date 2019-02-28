@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author willi
+ * @author willi & Martin Frederiksen
  */
 public class UserController {
 

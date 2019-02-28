@@ -1,35 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import data.UserMapper;
+import java.sql.SQLException;
+import presentation.model.User;
 
 /**
  *
- * @author willi
+ * @author willi & Martin Frederiksen
  */
 public class ValidateUserController {
 
-    public static boolean checkUser(String username, String password) {
-        boolean st = false;
+    public static boolean validateUser(String username, String password) {
+        boolean validate = false;
+        UserMapper um = new UserMapper();
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://andreasvikke.dk:3306/cupcake", "transformer", "f7qGtArm");
-            PreparedStatement ps = con.prepareStatement("select * from users where username=? and password=?");
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();
-            st = rs.next();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        User user = um.getUser(username);
+        if(user.getPassword().equals(password)) validate = true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        return st;
+        return validate;
     }
-
+        public static void main(String[] args) {
+        ValidateUserController vuc = new ValidateUserController();
+        System.out.println(vuc.validateUser("vikke", "1234"));
+    }
 }
