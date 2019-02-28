@@ -22,11 +22,17 @@ public class ShoppingCart {
 
     public void setLineItem(LineItem li) {
         List<LineItem> items = getLineItems();
-        for (LineItem i : items) {
-            if (i.getBottom().getName().equals(li.getBottom().getName()) && i.getTop().getName().equals(li.getTop().getName())) {
-                i.setQuantity(li.getQuantity());
-            } else {
-                lineItems.add(li);
+        if (items.isEmpty()) {
+            lineItems.add(li);
+            System.out.println("LISTEN ER TOM");
+        } else {
+            for (LineItem i : items) {
+                if (i.getBottom() == (li.getBottom()) && i.getTop() == li.getTop()) {
+                    i.setQuantity(li.getQuantity());
+                    //lineItems = items;
+                }else {
+                    lineItems.add(li);
+                }
             }
         }
     }
@@ -35,10 +41,9 @@ public class ShoppingCart {
         ShoppingCart sc = new ShoppingCart();
         CupcakeController cc = new CupcakeController();
         sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 0), cc.getCupcakePart(CupcakePartEnum.TOP, 0), 1, 1));
-        sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 0), cc.getCupcakePart(CupcakePartEnum.TOP, 0), 1, 1));
+        sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 0), cc.getCupcakePart(CupcakePartEnum.TOP, 0), 2, 1));
         for (LineItem item : sc.getLineItems()) {
             System.out.println(item.getQuantity());
-            System.out.println("BAL");
         }
 
     }
