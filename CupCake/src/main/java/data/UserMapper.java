@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import presentation.model.RoleEnum;
 import presentation.model.User;
 
 /**
@@ -50,26 +51,26 @@ public class UserMapper implements IUserMapper {
     @Override
     public List<User> getUsers() throws SQLException {
         List<User> users = new ArrayList();
-        String quary = "SELECT * FROM users;";
+        String quary = "SELECT username, email, balance, role FROM users;";
         Statement stmt = connector.getConnection().createStatement();
         ResultSet rs = stmt.executeQuery(quary);
 
         while (rs.next()) {
-            users.add(new User(rs.getString("username"), rs.getString("email"), rs.getDouble("balance")));
+            users.add(new User(rs.getString("username"), rs.getString("email"), rs.getDouble("balance"), RoleEnum.valueOf(rs.getString("role"))));
         }
         return users;
     }
 
     @Override
     public User getUser(String username) throws SQLException {
-        String quary = "SELECT * FROM users WHERE username = ?;";
+        String quary = "SELECT username, email, balance, role FROM users WHERE username = ?;";
         PreparedStatement ps = connector.getConnection().prepareStatement(quary);
         ps.setString(1, username);
         ResultSet rs = ps.executeQuery();
         User user = null;
         while (rs.next()) {
             if (username.equalsIgnoreCase(rs.getString("username"))) {
-                user = new User(username, rs.getString("email"), rs.getDouble("balance"));
+                user = new User(username, rs.getString("email"), rs.getDouble("balance"), RoleEnum.valueOf(rs.getString("role")));
             }
         }
         return user;
