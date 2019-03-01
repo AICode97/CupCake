@@ -63,7 +63,7 @@ public class LoginCommand extends Command {
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
-                out.println("<title>Servlet LoginServlet</title>");
+                out.println("<title>CupCake Login</title>");
                 out.println("</head>");
                 out.println("<body>");
                 out.println("<h1>CupCake Login Page</h1>");

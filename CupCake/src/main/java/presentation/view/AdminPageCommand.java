@@ -22,9 +22,7 @@ public class AdminPageCommand extends Command {
                 out.println("<title>Cupcake</title>");
                 out.println("</head>");
                 out.println("<body>");
-                
                 out.println("<h1>CupCake Admin Page</h1>");
-                
                 out.println("</body>");
                 out.println("</html>");
             }
