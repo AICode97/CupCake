@@ -16,7 +16,7 @@ public class FrontController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          try {
-            Command c = Command.from(request);
+            Command c = Command.from(request, response);
             c.execute(request, response);
         } catch (Exception e) {
             e.printStackTrace();

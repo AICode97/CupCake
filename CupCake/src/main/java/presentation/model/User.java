@@ -7,11 +7,13 @@ public class User {
     private String username;
     private String email;
     private double balance;
+    private RoleEnum role;
 
-    public User(String username, String email, double balance) {
+    public User(String username, String email, double balance, RoleEnum role) {
         this.username = username;
         this.email = email;
         this.balance = balance;
+        this.role = role;
     }
 
     public String getUsername() {
@@ -24,6 +26,10 @@ public class User {
 
     public double getBalance() {
         return balance;
+    }
+
+    public RoleEnum getRole() {
+        return role;
     }
     
     public void setBalance(double newBal) {
