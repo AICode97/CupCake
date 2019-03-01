@@ -33,7 +33,6 @@ public abstract class Command {
                 break;
             case "admin":
                 HttpSession session = request.getSession();
-                System.out.println(session.getAttribute("username"));
                 if(session.getAttribute("user") == null) {
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
                     dispatcher.forward(request, response);
