@@ -44,6 +44,17 @@ public abstract class Command {
                     c = new FrontPageCommand();
                 }
                 break;
+            case "customer":
+                HttpSession customerSession = request.getSession();
+                if (customerSession.getAttribute("user") == null) {
+                    RequestDispatcher customerDispatcher = request.getRequestDispatcher("/login");
+                    customerDispatcher.forward(request, response);
+                    c = null;
+                } else {
+                    c = new CustomerCommand();
+                }
+                break;
+
             default:
                 c = new FrontPageCommand();
         }
