@@ -9,13 +9,12 @@ import presentation.model.ShoppingCart;
  *
  * @author Martin Frederiksen
  */
-public class InvoiceMapper implements iInvoiceMapper {
+public class InvoiceMapper implements IInvoiceMapper {
     DBConnector connector;
 
     public InvoiceMapper() {
         connector = new DBConnector();
     }
-    
     
     
     @Override
