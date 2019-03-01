@@ -24,10 +24,8 @@ public class RegisterCommand extends Command {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
             String email = request.getParameter("email");
-
-            UserController rc = new UserController();
-            int result = rc.addUser(username, email, password);
-            if (result == -1) {
+            
+            if(username.isEmpty() || username == null || password.isEmpty() || password == null || email.isEmpty() || password == null) {
                 try (PrintWriter out = response.getWriter()) {
                     out.println("<!DOCTYPE html>");
                     out.println("<html>");
@@ -35,23 +33,39 @@ public class RegisterCommand extends Command {
                     out.println("<title>Cupcake</title>");
                     out.println("</head>");
                     out.println("<body>");
-                    out.println("<h1>Error: User with same username or email is already registered...</h1>");
+                    out.println("<h1>Error: All fields needs to be filled</h1>");
                     out.println("</body>");
                     out.println("</html>");
                 }
             } else {
-                User u = rc.getUser(username);
+                UserController rc = new UserController();
+                int result = rc.addUser(username, email, password);
+                if (result == -1) {
+                    try (PrintWriter out = response.getWriter()) {
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>Cupcake</title>");
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<h1>Error: User with same username or email is already registered...</h1>");
+                        out.println("</body>");
+                        out.println("</html>");
+                    }
+                } else {
+                    User u = rc.getUser(username);
 
-                try (PrintWriter out = response.getWriter()) {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Cupcake</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>User: " + u.getUsername() + " was suscessfully registered</h1>");
-                    out.println("</body>");
-                    out.println("</html>");
+                    try (PrintWriter out = response.getWriter()) {
+                        out.println("<!DOCTYPE html>");
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>Cupcake</title>");
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<h1>User: " + u.getUsername() + " was suscessfully registered</h1>");
+                        out.println("</body>");
+                        out.println("</html>");
+                    }
                 }
             }
         } else {
@@ -75,5 +89,4 @@ public class RegisterCommand extends Command {
             }
         }
     }
-
 }
