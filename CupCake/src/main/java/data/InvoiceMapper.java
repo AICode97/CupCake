@@ -7,21 +7,19 @@ import presentation.model.ShoppingCart;
  *
  * @author Martin Frederiksen
  */
-public class InvoiceMapper implements IInvoiceMapper {
+public class InvoiceMapper implements iInvoiceMapper {
     DBConnector connector;
 
     public InvoiceMapper() {
         connector = new DBConnector();
     }
     
-    public static void main(String[] args) {
-        
-    }
+    
     
     @Override
     public void AddShoppingCartData(ShoppingCart sc) {
         Connection connection = connector.getConnection();
-        String query = "INSER INTO invoice VALUES(?,?,?,?)";
+        String query = "INSER INTO invoice VALUES( )";
         
     }
     
