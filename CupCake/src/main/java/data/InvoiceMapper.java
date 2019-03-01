@@ -14,10 +14,15 @@ public class InvoiceMapper implements IInvoiceMapper {
         connector = new DBConnector();
     }
     
+    public static void main(String[] args) {
+        
+    }
+    
     @Override
     public void AddShoppingCartData(ShoppingCart sc) {
         Connection connection = connector.getConnection();
-        String quray = "INSER INTO invoice VALUES(?,?,?,?)";
+        String query = "INSER INTO invoice VALUES(?,?,?,?)";
+        
     }
     
 }
