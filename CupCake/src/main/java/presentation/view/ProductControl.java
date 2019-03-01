@@ -62,7 +62,7 @@ public class ProductControl extends HttpServlet {
             out.println("<body>");
             out.println("<h1>LineItems</h1>");
             for(LineItem li : sc.getLineItems()){
-                out.println("<p><b>Nr: "+ li.getInvoiceId() + "</b>");
+                out.println("<p><b>Nr::: "+ li.getInvoiceId() + "</b>");
                 out.println("<p>Bund: "+ li.getBottom().getName() + "</p>"); 
                 out.println("<p>Top: "+ li.getTop().getName() + "</p>");
                 out.println("<p>Mængde: "+ li.getQuantity()+ "</p>");
