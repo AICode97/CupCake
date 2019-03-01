@@ -32,7 +32,7 @@ public class LoginCommand extends Command {
             if (valid) {
                 User user = uc.getUser(username);
                 HttpSession session = request.getSession();
-                session.setAttribute("username", username);
+                session.setAttribute("user", user);
 
                 try (PrintWriter out = response.getWriter()) {
                     out.println("<!DOCTYPE html>");
@@ -63,7 +63,7 @@ public class LoginCommand extends Command {
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
-                out.println("<title>Servlet LoginServlet</title>");
+                out.println("<title>CupCake Login</title>");
                 out.println("</head>");
                 out.println("<body>");
                 out.println("<h1>CupCake Login Page</h1>");
