@@ -30,14 +30,17 @@ public abstract class Command {
                 break;
             case "admin":
                 HttpSession session = request.getSession();
+                System.out.println(session.getAttribute("username"));
                 if(session.getAttribute("user") == null) {
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
                     dispatcher.forward(request, response);
+                    c = null;
                 }
                 else if(((User)session.getAttribute("user")).getRole() == RoleEnum.ADMIN) {
                     c = new AdminPageCommand();
+                } else {
+                    c = new FrontPageCommand();
                 }
-                c = new FrontPageCommand();
                 break;
             default:
                 c = new FrontPageCommand();

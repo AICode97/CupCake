@@ -32,7 +32,7 @@ public class LoginCommand extends Command {
             if (valid) {
                 User user = uc.getUser(username);
                 HttpSession session = request.getSession();
-                session.setAttribute("username", username);
+                session.setAttribute("user", user);
 
                 try (PrintWriter out = response.getWriter()) {
                     out.println("<!DOCTYPE html>");
