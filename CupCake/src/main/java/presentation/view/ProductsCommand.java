@@ -17,15 +17,13 @@ import presentation.model.ShoppingCart;
  *
  * @author Martin Frederiksen
  */
-public class ProductCommand extends Command{
+public class ProductsCommand extends Command{
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CupcakeController cc = new CupcakeController();
-        
+        CupcakeController cc = new CupcakeController();     
         CupcakePart bottom = cc.getCupcakePart(CupcakePartEnum.BOTTOM, Integer.parseInt(request.getParameter("bottom")));
         CupcakePart top = cc.getCupcakePart(CupcakePartEnum.TOP, Integer.parseInt(request.getParameter("top")));
-        
         int qty = Integer.parseInt(request.getParameter("qty"));
         int invoice = Integer.parseInt(request.getParameter("invoice"));
         
@@ -46,7 +44,7 @@ public class ProductCommand extends Command{
             out.println("<body>");
             out.println("<h1>LineItems</h1>");
             for(LineItem li : sc.getLineItems()){
-                out.println("<p><b>Nr: "+ li.getInvoiceId() + "</b>");
+                out.println("<p><b>Nr: "+ li.getInvoiceId() + "</b></p>");
                 out.println("<p>Bund: "+ li.getBottom().getName() + "</p>"); 
                 out.println("<p>Top: "+ li.getTop().getName() + "</p>");
                 out.println("<p>Mængde: "+ li.getQuantity()+ "</p>");

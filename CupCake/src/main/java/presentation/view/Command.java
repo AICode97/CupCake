@@ -28,13 +28,15 @@ public abstract class Command {
             case "login":
                 c = new LoginCommand();
                 break;
+            case "products":
+                c = new ProductsCommand();
+                break;
             case "admin":
                 HttpSession session = request.getSession();
-                if(session.getAttribute("user") == null) {
+                if (session.getAttribute("user") == null) {
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
                     dispatcher.forward(request, response);
-                }
-                else if(((User)session.getAttribute("user")).getRole() == RoleEnum.ADMIN) {
+                } else if (((User) session.getAttribute("user")).getRole() == RoleEnum.ADMIN) {
                     c = new AdminPageCommand();
                 }
                 c = new FrontPageCommand();
