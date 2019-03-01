@@ -1,5 +1,6 @@
 package data;
 
+import java.sql.SQLException;
 import presentation.model.ShoppingCart;
 
 /**
@@ -7,5 +8,5 @@ import presentation.model.ShoppingCart;
  * @author Asger Hermind Sørensen
  */
 public interface IInvoiceMapper {
-    public void AddShoppingCartData(ShoppingCart sc);
+    public void AddShoppingCartData(ShoppingCart sc) throws SQLException;
 }

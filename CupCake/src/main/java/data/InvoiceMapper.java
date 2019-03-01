@@ -1,6 +1,8 @@
 package data;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import presentation.model.ShoppingCart;
 
 /**
@@ -19,9 +21,11 @@ public class InvoiceMapper implements IInvoiceMapper {
     }
     
     @Override
-    public void AddShoppingCartData(ShoppingCart sc) {
+    public void AddShoppingCartData(ShoppingCart sc) throws SQLException{
         Connection connection = connector.getConnection();
         String query = "INSER INTO invoice VALUES(?,?,?,?)";
+        PreparedStatement ps = connection.prepareCall(query);
+        
         
     }
     

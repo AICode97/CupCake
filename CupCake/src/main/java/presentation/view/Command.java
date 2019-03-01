@@ -24,6 +24,7 @@ public abstract class Command {
             case "login":
                 c = new LoginCommand();
                 break;
+
             default:
                 c = new FrontPageCommand();
         }
