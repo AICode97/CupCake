@@ -102,7 +102,10 @@ public class CupcakeMapper implements ICupcakeMapper {
             for (CupcakePart ccp : cupcakes) {
                 System.out.println(ccp);
             }
-
+            System.out.println(ccm.getCupcakePartById(CupcakePartEnum.TOP, 5));
+            System.out.println(ccm.getCupcakePartById(CupcakePartEnum.BOTTOM, 5));
+            System.out.println(ccm.getCupcakePartById(CupcakePartEnum.TOP, 1));
+            System.out.println(ccm.getCupcakePartById(CupcakePartEnum.BOTTOM, 1));
 //            CupcakePart cupcake = ccm.getCupcakePartById(CupcakePartEnum.TOP, 7);
 //            CupcakePart cupcake2 = ccm.getCupcakePartById(CupcakePartEnum.BOTTOM, 5);
 //            System.out.println(cupcake);

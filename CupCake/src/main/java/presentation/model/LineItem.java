@@ -34,5 +34,9 @@ public class LineItem {
 
     public int getInvoiceId() {
         return invoiceId;
-    } 
+    }
+    
+    public double getPrice(){
+        return bottom.getPrice() + top.getPrice();
+    }
 }
