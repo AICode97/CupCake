@@ -25,7 +25,7 @@ and open the template in the editor.
     background-color: #f5f5f5;
     padding: 15px;
     border-radius: 10px;
-    
+    margin-top: 1rem;
 }
 
 .form-control
@@ -39,5 +39,23 @@ and open the template in the editor.
 margin: 0 auto;
     
 }
+
+
+
+
+
+.adminBox:first-of-type {
+    width: 33.333%;
+}
+.adminBox {
+    width: 66.666%;
+    float: left;
+    padding: 1rem;
+}
+.adminBoxContent {
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
 
 

@@ -53,8 +53,8 @@ CREATE TABLE `cupcake`.`cupcakeTops` (
 
 CREATE TABLE `cupcake`.`orderLines` (
   `orderId` INT NOT NULL,
-  `cupcakeTop` INT NOT NULL,
-  `cupcakeBottom` INT NOT NULL,
+  `cupcakeTopId` INT NOT NULL,
+  `cupcakeBottomId` INT NOT NULL,
   `qty` INT NOT NULL default 0,
   `price` DOUBLE NOT NULL default 0,
   PRIMARY KEY (`orderId`),
@@ -64,12 +64,12 @@ CREATE TABLE `cupcake`.`orderLines` (
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `orderLineToCupcakesTopsFK`
-	FOREIGN KEY (`cupcakeTop`)
+	FOREIGN KEY (`cupcakeTopId`)
     REFERENCES `cupcake`.`cupcakeTops` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `orderLineToCupcakesBottomsFK`
-	FOREIGN KEY (`cupcakeBottom`)
+	FOREIGN KEY (`cupcakeBottomId`)
     REFERENCES `cupcake`.`cupcakeBottoms` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
