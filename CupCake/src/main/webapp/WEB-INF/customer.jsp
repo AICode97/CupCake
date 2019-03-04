@@ -5,14 +5,9 @@
 --%>
 
 <%@page import="logic.model.User"%>
-<%@include file = "header.jsp" %>
-
-<%
-        HttpSession customerSession = request.getSession();
-        User u = (User)customerSession.getAttribute("user");
-    %>
+<%@include file = "../header.jsp" %>
 
 <h1>You are logged in as: <% out.println(u.getUsername()); %></h1>
 
-<%@include file = "footer.jsp" %>
+<%@include file = "../footer.jsp" %>
 

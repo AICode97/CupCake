@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package presentation.controller;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,16 +26,12 @@ public class AdminController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if(session.getAttribute("user") == null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
-            dispatcher.forward(request, response);
-        }
-        else if(((User)session.getAttribute("user")).getRole() == RoleEnum.ADMIN) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/admin.jsp");
-            dispatcher.forward(request, response);
+        if (session.getAttribute("user") == null) {
+            request.getRequestDispatcher("/login").forward(request, response);
+        } else if (((User) session.getAttribute("user")).getRole() == RoleEnum.ADMIN) {
+            request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/customer");
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/customer").forward(request, response);
         }
     }
 

@@ -6,8 +6,8 @@
 
 <%@include file = "header.jsp" %>
 
-<form action="${pageContext.request.contextPath}/register">
-    <input type="hidden" name="origin" value="register">
+<form action="${pageContext.request.contextPath}/CommandController">
+    <input type="hidden" name="command" value="register">
     <div class="form-group">
         <label>Email</label>
         <input type="email" class="form-control" name="email" placeholder="Email...">

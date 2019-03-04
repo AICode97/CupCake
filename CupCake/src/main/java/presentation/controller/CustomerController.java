@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package presentation.controller;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,15 +28,12 @@ public class CustomerController extends HttpServlet {
 
         HttpSession session = request.getSession();
         if (session.getAttribute("user") == null) {
-            RequestDispatcher customerDispatcher = request.getRequestDispatcher("/login");
-            customerDispatcher.forward(request, response);
+            request.getRequestDispatcher("/login").forward(request, response);
         } else {
             User u = (User) session.getAttribute("user");
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/customer.jsp");
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/customer.jsp").forward(request, response);
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

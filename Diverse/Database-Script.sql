@@ -1,4 +1,7 @@
 DROP TABLE IF EXISTS `cupcake`.`cupcakes`;
+DROP TABLE IF EXISTS `cupcake`.`orderLines`;
+DROP TABLE IF EXISTS `cupcake`.`invoices`;
+DROP TABLE IF EXISTS `cupcake`.`orders`;
 DROP TABLE IF EXISTS `cupcake`.`cupcakeTops`;
 DROP TABLE IF EXISTS `cupcake`.`cupcakeBottoms`;
 DROP TABLE IF EXISTS `cupcake`.`users`;
@@ -14,46 +17,25 @@ CREATE TABLE `cupcake`.`users` (
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
 );
 
-  CREATE TABLE `cupcake`.`order` (
-  `orderId` INT NOT NULL,
-  `invoiceId` INT NOT NULL,
-  `date` DATETIME NOT NULL,
-  PRIMARY KEY (`orderId`, `invoiceId`));
-  
-  CREATE TABLE `cupcake`.`orderLine` (
-  `orderId` INT NOT NULL,
-  `cupcakeTop` INT NOT NULL,
-  `cupcakeBottom` INT NOT NULL,
-  `qty` INT NOT NULL,
-  `price` INT NOT NULL,
-  PRIMARY KEY (`orderId`),
-  CONSTRAINT `orderLineToOrderFK`
-	FOREIGN KEY (`orderId`)
-	REFERENCES `cupcake`.`order` (`orderId`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `orderLineToCupcakesTopsFK`
-	FOREIGN KEY (`cupcakeTop`)
-    REFERENCES `cupcake`.`cupcakeTops` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `orderLineToCupcakesBottomsFK`
-	FOREIGN KEY (`cupcakeBottom`)
-    REFERENCES `cupcake`.`cupcakeBottoms` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+CREATE TABLE `cupcake`.`orders` (
+  `orderId` INT NOT NULL auto_increment,
+  `date` DATETIME NOT NULL DEFAULT current_timestamp,
+  PRIMARY KEY (`orderId`)
+);
     
-    CREATE TABLE `cupcake`.`Invoice` (
-  `invoiceId` INT NOT NULL,
-  `price` INT NOT NULL,
-  `date` DATETIME NOT NULL,
+CREATE TABLE `cupcake`.`invoices` (
+  `invoiceId` INT NOT NULL auto_increment,
+  `orderId` INT NOT NULL,
+  `price` DOUBLE NOT NULL,
+  `date` DATETIME NOT NULL default current_timestamp,
   PRIMARY KEY (`invoiceId`),
-  CONSTRAINT `InvoiceToOrder`
-    FOREIGN KEY (`invoiceId`)
-    REFERENCES `cupcake`.`order` (`orderId`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE);
+  CONSTRAINT `InvoiceToOrderFK`
+    FOREIGN KEY (`orderId`)
+    REFERENCES `cupcake`.`orders` (`orderId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
 
+);
 
 CREATE TABLE `cupcake`.`cupcakeBottoms` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -67,6 +49,30 @@ CREATE TABLE `cupcake`.`cupcakeTops` (
   `name` VARCHAR(45) NOT NULL,
   `price` DOUBLE NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `cupcake`.`orderLines` (
+  `orderId` INT NOT NULL,
+  `cupcakeTop` INT NOT NULL,
+  `cupcakeBottom` INT NOT NULL,
+  `qty` INT NOT NULL default 0,
+  `price` DOUBLE NOT NULL default 0,
+  PRIMARY KEY (`orderId`),
+  CONSTRAINT `orderLineToOrderFK`
+	FOREIGN KEY (`orderId`)
+	REFERENCES `cupcake`.`orders` (`orderId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `orderLineToCupcakesTopsFK`
+	FOREIGN KEY (`cupcakeTop`)
+    REFERENCES `cupcake`.`cupcakeTops` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `orderLineToCupcakesBottomsFK`
+	FOREIGN KEY (`cupcakeBottom`)
+    REFERENCES `cupcake`.`cupcakeBottoms` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
 );
 
 CREATE TABLE `cupcake`.`cupcakes` (

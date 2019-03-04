@@ -21,6 +21,12 @@ public abstract class Command {
             case "login":
                 c = new LoginCommand();
                 break;
+            case "register":
+                c = new RegisterCommand();
+                break;
+            case "logout":
+                c = new LogoutCommand();
+                break;
             default:
                 c = null;
         }
