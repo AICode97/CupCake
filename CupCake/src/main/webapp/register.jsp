@@ -6,7 +6,7 @@
 
 <%@include file = "header.jsp" %>
 
-<form action="${pageContext.request.contextPath}/register" method="GET">
+<form action="${pageContext.request.contextPath}/register">
     <input type="hidden" name="origin" value="register">
     <div class="form-group">
         <label>Email</label>

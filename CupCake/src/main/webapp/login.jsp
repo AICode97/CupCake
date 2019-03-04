@@ -6,8 +6,8 @@
 
 <%@include file = "header.jsp" %>
 
-<form action="${pageContext.request.contextPath}/login" method="GET">
-    <input type="hidden" name="origin" value="login">
+<form action="${pageContext.request.contextPath}/CommandController">
+    <input type="hidden" name="command" value="login">
     <div class="form-group">
         <label>Username</label>
         <input type="text" class="form-control" name="username" placeholder="Username...">
