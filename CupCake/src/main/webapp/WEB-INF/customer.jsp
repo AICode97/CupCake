@@ -6,14 +6,16 @@
 
 <%@page import="logic.model.User"%>
 <%@include file = "../header.jsp" %>
-<h2>You are logged in as: <% out.println(u.getUsername());%></h2>
-<div class="customerBox">
-    <div class="customerBoxContent">
+
+<div class="contentBox">
+    <div class="contentBoxContent">
+        <h1>Customer Page</h1>
+        <p>Logged in as: <% out.println(u.getUsername());%></p>
         <%@include file = "changepassword.jsp" %>
     </div>
 </div>
-<div class="customerBox">
-    <div class="customerBoxContent">
+<div class="contentBox">
+    <div class="contentBoxContent">
     </div>
 </div>
 

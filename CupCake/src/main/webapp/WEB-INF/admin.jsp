@@ -13,14 +13,15 @@
     List<User> users = uc.getUsers();
 %>
 
-<div class="adminBox">
-    <div class="adminBoxContent">
+<div class="contentBox">
+    <div class="contentBoxContent">
         <h1>Admin Page</h1>
         <p>Logged in as: <% out.println(u.getUsername());%></p>
+        <%@include file = "changepassword.jsp" %>
     </div>
 </div>
-<div class="adminBox">
-    <div class="adminBoxContent">
+<div class="contentBox">
+    <div class="contentBoxContent">
         <table class="table">
             <thead class="thead-dark">
                 <tr>
