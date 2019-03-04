@@ -21,7 +21,7 @@
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>
-<image id="ccimg" src="Images/CupCakeIMG.jpg" width="30%" height="30%" align="middle"/>
+<image id="ccimg" src="Images/CupCakeIMG.jpg" width="30%" height="30%"/>
 
 
 <%@include file = "footer.jsp" %>
