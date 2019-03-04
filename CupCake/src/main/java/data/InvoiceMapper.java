@@ -8,9 +8,9 @@ import java.sql.Statement;
 import java.util.List;
 import logic.Calculator;
 import logic.CupcakeController;
-import presentation.model.CupcakePartEnum;
-import presentation.model.LineItem;
-import presentation.model.ShoppingCart;
+import logic.model.CupcakePartEnum;
+import logic.model.LineItem;
+import logic.model.ShoppingCart;
 
 /**
  *
