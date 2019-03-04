@@ -16,9 +16,6 @@ public class InvoiceMapper implements IInvoiceMapper {
         connector = new DBConnector();
     }
     
-    public static void main(String[] args) {
-        
-    }
     
     @Override
     public void AddShoppingCartData(ShoppingCart sc) throws SQLException{
