@@ -3,7 +3,7 @@ package data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import presentation.model.ShoppingCart;
+import logic.model.ShoppingCart;
 
 /**
  *

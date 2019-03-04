@@ -1,7 +1,7 @@
 package data;
 
 import java.sql.SQLException;
-import presentation.model.ShoppingCart;
+import logic.model.ShoppingCart;
 
 /**
  *

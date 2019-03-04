@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import presentation.model.CupcakePart;
-import presentation.model.CupcakePartEnum;
+import logic.model.CupcakePart;
+import logic.model.CupcakePartEnum;
 
 /**
  *

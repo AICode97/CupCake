@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.Calculator;
 import logic.CupcakeController;
-import presentation.model.CupcakePart;
-import presentation.model.CupcakePartEnum;
-import presentation.model.LineItem;
-import presentation.model.ShoppingCart;
+import logic.model.CupcakePart;
+import logic.model.CupcakePartEnum;
+import logic.model.LineItem;
+import logic.model.ShoppingCart;
 
 /**
  *

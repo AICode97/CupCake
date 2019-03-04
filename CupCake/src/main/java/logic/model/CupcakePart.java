@@ -1,4 +1,4 @@
-package presentation.model;
+package logic.model;
 
 /**
  *

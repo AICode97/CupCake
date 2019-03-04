@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import presentation.model.RoleEnum;
-import presentation.model.User;
+import logic.model.RoleEnum;
+import logic.model.User;
 
 /**
  *

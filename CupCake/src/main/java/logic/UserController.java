@@ -1,6 +1,6 @@
 package logic;
 
-import presentation.model.User;
+import logic.model.User;
 import data.UserMapper;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

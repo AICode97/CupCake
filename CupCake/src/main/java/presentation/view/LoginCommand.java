@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.UserController;
 import logic.ValidateUserController;
-import presentation.model.User;
+import logic.model.User;
 
 /**
  *

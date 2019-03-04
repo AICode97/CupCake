@@ -6,7 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import logic.UserController;
-import presentation.model.User;
+import logic.model.User;
 
 /**
  *

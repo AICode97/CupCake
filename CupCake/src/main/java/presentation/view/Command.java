@@ -6,8 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import presentation.model.RoleEnum;
-import presentation.model.User;
+import logic.model.RoleEnum;
+import logic.model.User;
 import presentation.view.*;
 
 /**
