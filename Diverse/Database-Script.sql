@@ -1,4 +1,7 @@
 DROP TABLE IF EXISTS `cupcake`.`cupcakes`;
+DROP TABLE IF EXISTS `cupcake`.`orderLines`;
+DROP TABLE IF EXISTS `cupcake`.`invoice`;
+DROP TABLE IF EXISTS `cupcake`.`order`;
 DROP TABLE IF EXISTS `cupcake`.`cupcakeTops`;
 DROP TABLE IF EXISTS `cupcake`.`cupcakeBottoms`;
 DROP TABLE IF EXISTS `cupcake`.`users`;
@@ -14,13 +17,42 @@ CREATE TABLE `cupcake`.`users` (
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
 );
 
-  CREATE TABLE `cupcake`.`order` (
+CREATE TABLE `cupcake`.`order` (
   `orderId` INT NOT NULL,
   `invoiceId` INT NOT NULL,
   `date` DATETIME NOT NULL,
-  PRIMARY KEY (`orderId`, `invoiceId`));
-  
-  CREATE TABLE `cupcake`.`orderLine` (
+  PRIMARY KEY (`orderId`, `invoiceId`)
+);
+    
+CREATE TABLE `cupcake`.`invoice` (
+  `invoiceId` INT NOT NULL,
+  `orderId` INT NOT NULL,
+  `price` INT NOT NULL,
+  `date` DATETIME NOT NULL,
+  PRIMARY KEY (`invoiceId`),
+  CONSTRAINT `InvoiceToOrderFK`
+    FOREIGN KEY (`orderId`)
+    REFERENCES `cupcake`.`order` (`orderId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+
+);
+
+CREATE TABLE `cupcake`.`cupcakeBottoms` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `price` DOUBLE NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `cupcake`.`cupcakeTops` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `price` DOUBLE NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `cupcake`.`orderLines` (
   `orderId` INT NOT NULL,
   `cupcakeTop` INT NOT NULL,
   `cupcakeBottom` INT NOT NULL,
@@ -41,32 +73,7 @@ CREATE TABLE `cupcake`.`users` (
 	FOREIGN KEY (`cupcakeBottom`)
     REFERENCES `cupcake`.`cupcakeBottoms` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-    
-    CREATE TABLE `cupcake`.`Invoice` (
-  `invoiceId` INT NOT NULL,
-  `price` INT NOT NULL,
-  `date` DATETIME NOT NULL,
-  PRIMARY KEY (`invoiceId`),
-  CONSTRAINT `InvoiceToOrder`
-    FOREIGN KEY (`invoiceId`)
-    REFERENCES `cupcake`.`order` (`orderId`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE);
-
-
-CREATE TABLE `cupcake`.`cupcakeBottoms` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `price` DOUBLE NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`)
-);
-
-CREATE TABLE `cupcake`.`cupcakeTops` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `price` DOUBLE NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`)
+    ON UPDATE NO ACTION
 );
 
 CREATE TABLE `cupcake`.`cupcakes` (
