@@ -6,7 +6,7 @@
 
 <%@include file = "header.jsp" %>
 <link rel="stylesheet" type="text/css" href="style.css">
-<div class="GreyBox">
+<div class="greyBox">
 <form action="${pageContext.request.contextPath}/CommandController">
     <input type="hidden" name="command" value="register">
     <div class="form-group">
