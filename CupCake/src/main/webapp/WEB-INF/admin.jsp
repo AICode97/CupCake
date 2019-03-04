@@ -7,6 +7,17 @@
 <%@page import="logic.model.User"%>
 <%@include file = "../header.jsp" %>
 
-<h1>You are logged in as admin: <% out.println(u.getUsername()); %></h1>
+
+
+<div class="adminBox">
+    <div class="adminBoxContent">
+        <h1>Admin Page</h1>
+        <p>Logged in as: <% out.println(u.getUsername()); %></p>
+    </div>
+</div>
+<div class="adminBox">
+    <div class="adminBoxContent">
+    </div>
+</div>
 
 <%@include file = "../footer.jsp" %>

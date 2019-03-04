@@ -21,12 +21,17 @@ public class ShoppingCart {
 
     public void setLineItem(LineItem li) {
         List<LineItem> items = getLineItems();
+        /*List<LineItem> cloneItems = new ArrayList(items.size());
+        for(LineItem l : items){
+            cloneItems.add(l);
+        }*/
         if (items.isEmpty()) {
             lineItems.add(li);
         } else {
             for (LineItem i : items) {
-                if (i.getBottom() == li.getBottom() && i.getTop() == li.getTop()) {
+                if (i.getBottom().getName().equals(li.getBottom().getName()) && i.getTop().getName().equals(li.getTop().getName())) {
                     i.addQuantity(li.getQuantity());
+
                 }else {
                     lineItems.add(li);
                 }
@@ -37,8 +42,8 @@ public class ShoppingCart {
     public static void main(String[] args) {
         ShoppingCart sc = new ShoppingCart();
         CupcakeController cc = new CupcakeController();
-        sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 0), cc.getCupcakePart(CupcakePartEnum.TOP, 0), 1, 1));
-        sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 0), cc.getCupcakePart(CupcakePartEnum.TOP, 0), 2, 1));
+        sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 1, 1));
+        sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 2, 1));
         for (LineItem item : sc.getLineItems()) {
             System.out.println(item.getQuantity());
         }
