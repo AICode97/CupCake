@@ -3,8 +3,8 @@ package logic;
 import data.CupcakeMapper;
 import java.sql.SQLException;
 import java.util.List;
-import presentation.model.CupcakePart;
-import presentation.model.CupcakePartEnum;
+import logic.model.CupcakePart;
+import logic.model.CupcakePartEnum;
 
 /**
  *

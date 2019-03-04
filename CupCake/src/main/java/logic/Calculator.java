@@ -1,8 +1,8 @@
 package logic;
 
 import java.util.List;
-import presentation.model.LineItem;
-import presentation.model.ShoppingCart;
+import logic.model.LineItem;
+import logic.model.ShoppingCart;
 
 /**
  *

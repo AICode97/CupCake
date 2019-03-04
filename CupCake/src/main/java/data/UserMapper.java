@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import presentation.model.RoleEnum;
-import presentation.model.User;
+import logic.model.RoleEnum;
+import logic.model.User;
 
 /**
  *
@@ -75,7 +75,7 @@ public class UserMapper implements IUserMapper {
         }
         return user;
     }
-    
+
     @Override
     public boolean validateUser(String username, String password) throws SQLException {
         String quary = "SELECT username, email FROM users WHERE (username = ? OR email = ?)AND password = ?;";
@@ -93,23 +93,29 @@ public class UserMapper implements IUserMapper {
         return valid;
     }
 
-    public static void main(String[] args) {
-        List<User> users = new ArrayList();
-        UserMapper um = new UserMapper();
+    @Override
+    public int changePassword(String username, String password) throws SQLException {
+        Connection connection = connector.getConnection();
+        String quary = "UPDATE users SET password = ? WHERE username = ?;";
+        PreparedStatement ps = connector.getConnection().prepareStatement(quary);
         try {
-            users = um.getUsers();
-            for (User u : users) {
-                System.out.println(u.getUsername());
-            }
-            /*um.addUser("Asger", "AsgerErHerIkke@gmail.dk", "1234");
-            User user = um.getUser("vikke");
-            User user1 = um.getUser("William");
-            System.out.println(user.getPassword());
-            System.out.println(user1.getPassword());
-            System.out.println(user1.getBalance());*/
+            ps.setString(1, password);
+            ps.setString(2, username);
+            connection.setAutoCommit(false);
+            int result = ps.executeUpdate();
+            return result;
         } catch (SQLException ex) {
             ex.printStackTrace();
+            if (connection != null) {
+                connection.rollback();
+            }
+        } finally {
+            connection.setAutoCommit(true);
+            if (ps != null) {
+                ps.close();
+            }
         }
+        return -1;
     }
 
 }

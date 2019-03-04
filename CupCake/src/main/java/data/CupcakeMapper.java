@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import presentation.model.CupcakePart;
-import presentation.model.CupcakePartEnum;
+import logic.model.CupcakePart;
+import logic.model.CupcakePartEnum;
 
 /**
  *
@@ -60,12 +60,12 @@ public class CupcakeMapper implements ICupcakeMapper {
         
         ResultSet rs = stmt.executeQuery(topQuary);
         while (rs.next()) {
-            cupcakes.add(new CupcakePart(CupcakePartEnum.TOP, rs.getString("name"), rs.getDouble("price")));
+            cupcakes.add(new CupcakePart(rs.getInt("id"), CupcakePartEnum.TOP, rs.getString("name"), rs.getDouble("price")));
         }
         
         rs = stmt.executeQuery(bottomQuary);
         while (rs.next()) {
-            cupcakes.add(new CupcakePart(CupcakePartEnum.BOTTOM, rs.getString("name"), rs.getDouble("price")));
+            cupcakes.add(new CupcakePart(rs.getInt("id"), CupcakePartEnum.BOTTOM, rs.getString("name"), rs.getDouble("price")));
         }
         
         return cupcakes;
@@ -90,7 +90,7 @@ public class CupcakeMapper implements ICupcakeMapper {
         
         CupcakePart cupcake = null;
         while (rs.next()) {
-            cupcake = new CupcakePart(partType, rs.getString("name"), rs.getDouble("price"));
+            cupcake = new CupcakePart(rs.getInt("id"), partType, rs.getString("name"), rs.getDouble("price"));
         }
         return cupcake;
     }

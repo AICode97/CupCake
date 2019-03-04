@@ -1,4 +1,4 @@
-package presentation.model;
+package logic.model;
 /**
  *
  * @author Martin Frederiksen && Andreas Vikke

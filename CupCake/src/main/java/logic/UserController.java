@@ -1,6 +1,6 @@
 package logic;
 
-import presentation.model.User;
+import logic.model.User;
 import data.UserMapper;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -40,6 +40,25 @@ public class UserController {
             String passwordHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
          
             return new UserMapper().addUser(username, email, passwordHash);
+        } catch (SQLException | NoSuchAlgorithmException ex) {
+            ex.printStackTrace();
+            return -1;
+        }
+    }
+    
+    public int changePassword(String username, String currentPassword, String newPassword) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            
+            md.update(currentPassword.getBytes());
+            byte[] digest = md.digest();
+            String passwordHash1 = DatatypeConverter.printHexBinary(digest).toUpperCase();
+            
+            md.update(newPassword.getBytes());
+            digest = md.digest();
+            String passwordHash2 = DatatypeConverter.printHexBinary(digest).toUpperCase();
+            
+            return new UserMapper().changePassword(username, currentPassword);
         } catch (SQLException | NoSuchAlgorithmException ex) {
             ex.printStackTrace();
             return -1;

@@ -5,12 +5,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logic.command.Command;
 
 /**
  *
  * @author Andreas Vikke
  */
-public class FrontController extends HttpServlet {
+public class CommandController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -22,7 +23,14 @@ public class FrontController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        try {
+            Command c = Command.from(request, response);
+            c.execute(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errormessage", "Unknown Command");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
