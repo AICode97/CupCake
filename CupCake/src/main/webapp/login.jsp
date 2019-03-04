@@ -7,7 +7,7 @@
 <%@include file = "header.jsp" %>
 
 <link rel="stylesheet" type="text/css" href="style.css">
-<div class="loginBox">
+<div class="GreyBox">
     <form action="${pageContext.request.contextPath}/CommandController">
         <input type="hidden" name="command" value="login">
         <div class="form-group">
