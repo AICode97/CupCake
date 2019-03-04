@@ -19,8 +19,14 @@ CREATE TABLE `cupcake`.`users` (
 
 CREATE TABLE `cupcake`.`orders` (
   `orderId` INT NOT NULL auto_increment,
+  `username` VARCHAR(45) NOT NULL,
   `date` DATETIME NOT NULL DEFAULT current_timestamp,
-  PRIMARY KEY (`orderId`)
+  PRIMARY KEY (`orderId`),
+  CONSTRAINT `UsernameToUserFK`
+    FOREIGN KEY (`username`)
+    REFERENCES `cupcake`.`users` (`username`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
 );
     
 CREATE TABLE `cupcake`.`invoices` (
@@ -112,7 +118,7 @@ INSERT INTO `cupcake`.`cupcakeTops` (`name`, `price`) VALUES
 ('Lemon', 8.00),
 ('Blue cheese', 9.00);
 
-INSERT INTO `cupcake`.`orders` VALUES(),(),(),();
+INSERT INTO `cupcake`.`orders` (`username`) VALUES('vikke'),('vikke'),('vikke'),('vikke');
 
 INSERT INTO `cupcake`.`orderLines` VALUES
 (1, 8, 4, 3, 42),
