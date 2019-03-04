@@ -34,19 +34,8 @@ public class CommandController extends HttpServlet {
             c.execute(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-
-            response.setContentType("text/html;charset=UTF-8");
-            try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Cupcake</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Error - Unknown Command</h1>");
-                out.println("</body>");
-                out.println("</html>");
-            }
+            request.setAttribute("errormessage", "Unknown Command");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 

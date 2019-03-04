@@ -24,10 +24,10 @@ CREATE TABLE `cupcake`.`orders` (
 );
     
 CREATE TABLE `cupcake`.`invoices` (
-  `invoiceId` INT NOT NULL,
+  `invoiceId` INT NOT NULL auto_increment,
   `orderId` INT NOT NULL,
-  `price` INT NOT NULL,
-  `date` DATETIME NOT NULL,
+  `price` DOUBLE NOT NULL,
+  `date` DATETIME NOT NULL default current_timestamp,
   PRIMARY KEY (`invoiceId`),
   CONSTRAINT `InvoiceToOrderFK`
     FOREIGN KEY (`orderId`)
@@ -55,8 +55,8 @@ CREATE TABLE `cupcake`.`orderLines` (
   `orderId` INT NOT NULL,
   `cupcakeTop` INT NOT NULL,
   `cupcakeBottom` INT NOT NULL,
-  `qty` INT NOT NULL,
-  `price` INT NOT NULL,
+  `qty` INT NOT NULL default 0,
+  `price` DOUBLE NOT NULL default 0,
   PRIMARY KEY (`orderId`),
   CONSTRAINT `orderLineToOrderFK`
 	FOREIGN KEY (`orderId`)

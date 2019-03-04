@@ -6,8 +6,16 @@
 
 <%@include file = "header.jsp" %>
 
+<%
+    String errormessage = "Error occurred...";
+    if(request.getAttribute("errormessage") != null)
+    {
+        errormessage = (String) request.getAttribute("errormessage");
+    }
+%>
+
 <h1>Error:</h1>
-<p><% out.println(request.getParameter("error")); %></p>
+<p><%= errormessage %></p>
 
 <%@include file = "footer.jsp" %>
 

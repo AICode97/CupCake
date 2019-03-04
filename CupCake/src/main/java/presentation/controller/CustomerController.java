@@ -34,15 +34,12 @@ public class CustomerController extends HttpServlet {
 
         HttpSession session = request.getSession();
         if (session.getAttribute("user") == null) {
-            RequestDispatcher customerDispatcher = request.getRequestDispatcher("/login");
-            customerDispatcher.forward(request, response);
+            request.getRequestDispatcher("/login").forward(request, response);
         } else {
             User u = (User) session.getAttribute("user");
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/customer.jsp");
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/customer.jsp").forward(request, response);
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -32,16 +32,12 @@ public class AdminController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if(session.getAttribute("user") == null) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
-            dispatcher.forward(request, response);
-        }
-        else if(((User)session.getAttribute("user")).getRole() == RoleEnum.ADMIN) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/admin.jsp");
-            dispatcher.forward(request, response);
+        if (session.getAttribute("user") == null) {
+            request.getRequestDispatcher("/login").forward(request, response);
+        } else if (((User) session.getAttribute("user")).getRole() == RoleEnum.ADMIN) {
+            request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/customer");
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/customer").forward(request, response);
         }
     }
 

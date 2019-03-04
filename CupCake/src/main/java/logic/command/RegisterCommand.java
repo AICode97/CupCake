@@ -22,32 +22,14 @@ public class RegisterCommand extends Command {
         String email = request.getParameter("email");
 
         if (username.isEmpty() || username == null || password.isEmpty() || password == null || email.isEmpty() || password == null) {
-            try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Cupcake</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Error: All fields needs to be filled</h1>");
-                out.println("</body>");
-                out.println("</html>");
-            }
+            request.setAttribute("errormessage", "All fields needs to be filled");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         } else {
             UserController rc = new UserController();
             int result = rc.addUser(username, email, password);
             if (result == -1) {
-                try (PrintWriter out = response.getWriter()) {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Cupcake</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>Error: User with same username or email is already registered...</h1>");
-                    out.println("</body>");
-                    out.println("</html>");
-                }
+                request.setAttribute("errormessage", "User with same username or email is already registered");
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
             } else {
                 User u = rc.getUser(username);
 
