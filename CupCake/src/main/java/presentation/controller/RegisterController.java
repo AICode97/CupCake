@@ -32,61 +32,9 @@ public class RegisterController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String origin = request.getParameter("origin");
-
-        if (origin != null && origin.equals("register")) {
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            String email = request.getParameter("email");
-            
-            if(username.isEmpty() || username == null || password.isEmpty() || password == null || email.isEmpty() || password == null) {
-                try (PrintWriter out = response.getWriter()) {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Cupcake</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>Error: All fields needs to be filled</h1>");
-                    out.println("</body>");
-                    out.println("</html>");
-                }
-            } else {
-                UserController rc = new UserController();
-                int result = rc.addUser(username, email, password);
-                if (result == -1) {
-                    try (PrintWriter out = response.getWriter()) {
-                        out.println("<!DOCTYPE html>");
-                        out.println("<html>");
-                        out.println("<head>");
-                        out.println("<title>Cupcake</title>");
-                        out.println("</head>");
-                        out.println("<body>");
-                        out.println("<h1>Error: User with same username or email is already registered...</h1>");
-                        out.println("</body>");
-                        out.println("</html>");
-                    }
-                } else {
-                    User u = rc.getUser(username);
-
-                    try (PrintWriter out = response.getWriter()) {
-                        out.println("<!DOCTYPE html>");
-                        out.println("<html>");
-                        out.println("<head>");
-                        out.println("<title>Cupcake</title>");
-                        out.println("</head>");
-                        out.println("<body>");
-                        out.println("<h1>User: " + u.getUsername() + " was suscessfully registered</h1>");
-                        out.println("</body>");
-                        out.println("</html>");
-                    }
-                }
-            }
-        } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/register.jsp");
-            dispatcher.forward(request, response);
-        }
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/register.jsp");
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

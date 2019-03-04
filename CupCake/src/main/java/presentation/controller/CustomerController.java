@@ -39,7 +39,7 @@ public class CustomerController extends HttpServlet {
         } else {
             User u = (User) session.getAttribute("user");
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/customer.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/customer.jsp");
             dispatcher.forward(request, response);
         }
         

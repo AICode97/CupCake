@@ -37,10 +37,10 @@ public class AdminController extends HttpServlet {
             dispatcher.forward(request, response);
         }
         else if(((User)session.getAttribute("user")).getRole() == RoleEnum.ADMIN) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/admin.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/admin.jsp");
             dispatcher.forward(request, response);
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/customer");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/customer");
             dispatcher.forward(request, response);
         }
     }
