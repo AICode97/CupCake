@@ -27,6 +27,9 @@ public abstract class Command {
             case "logout":
                 c = new LogoutCommand();
                 break;
+            case "changePassword":
+                c = new ChangePasswordCommand();
+                break;
             default:
                 c = null;
         }
