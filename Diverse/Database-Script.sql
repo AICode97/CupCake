@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS `cupcake`.`cupcakes`;
 DROP TABLE IF EXISTS `cupcake`.`orderLines`;
-DROP TABLE IF EXISTS `cupcake`.`invoice`;
-DROP TABLE IF EXISTS `cupcake`.`order`;
+DROP TABLE IF EXISTS `cupcake`.`invoices`;
+DROP TABLE IF EXISTS `cupcake`.`orders`;
 DROP TABLE IF EXISTS `cupcake`.`cupcakeTops`;
 DROP TABLE IF EXISTS `cupcake`.`cupcakeBottoms`;
 DROP TABLE IF EXISTS `cupcake`.`users`;
@@ -17,14 +17,13 @@ CREATE TABLE `cupcake`.`users` (
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
 );
 
-CREATE TABLE `cupcake`.`order` (
-  `orderId` INT NOT NULL,
-  `invoiceId` INT NOT NULL,
-  `date` DATETIME NOT NULL,
-  PRIMARY KEY (`orderId`, `invoiceId`)
+CREATE TABLE `cupcake`.`orders` (
+  `orderId` INT NOT NULL auto_increment,
+  `date` DATETIME NOT NULL DEFAULT current_timestamp,
+  PRIMARY KEY (`orderId`)
 );
     
-CREATE TABLE `cupcake`.`invoice` (
+CREATE TABLE `cupcake`.`invoices` (
   `invoiceId` INT NOT NULL,
   `orderId` INT NOT NULL,
   `price` INT NOT NULL,
@@ -32,7 +31,7 @@ CREATE TABLE `cupcake`.`invoice` (
   PRIMARY KEY (`invoiceId`),
   CONSTRAINT `InvoiceToOrderFK`
     FOREIGN KEY (`orderId`)
-    REFERENCES `cupcake`.`order` (`orderId`)
+    REFERENCES `cupcake`.`orders` (`orderId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 
@@ -61,7 +60,7 @@ CREATE TABLE `cupcake`.`orderLines` (
   PRIMARY KEY (`orderId`),
   CONSTRAINT `orderLineToOrderFK`
 	FOREIGN KEY (`orderId`)
-	REFERENCES `cupcake`.`order` (`orderId`)
+	REFERENCES `cupcake`.`orders` (`orderId`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `orderLineToCupcakesTopsFK`
