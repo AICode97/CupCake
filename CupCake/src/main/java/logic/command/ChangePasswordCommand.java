@@ -20,7 +20,7 @@ public class ChangePasswordCommand extends Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String currentPassword = request.getParameter("password");
+        String currentPassword = request.getParameter("currentPassword");
         String newPassword = request.getParameter("newPassword");
         String newPassword2 = request.getParameter("newPassword2");
 
@@ -48,7 +48,7 @@ public class ChangePasswordCommand extends Command {
             request.setAttribute("errormessage", "New passwords doesn't match.");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         } else if (valid) {
-            int result = uc.changePassword(u.getUsername(), currentPassword, newPassword);
+            int result = uc.changePassword(u.getUsername(), newPassword);
             if (result == -1) {
                 request.setAttribute("errormessage", "Something went wrong. Please try again.");
                 request.getRequestDispatcher("/error.jsp").forward(request, response);
