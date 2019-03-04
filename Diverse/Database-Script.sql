@@ -57,7 +57,7 @@ CREATE TABLE `cupcake`.`orderLines` (
   `cupcakeBottomId` INT NOT NULL,
   `qty` INT NOT NULL default 0,
   `price` DOUBLE NOT NULL default 0,
-  PRIMARY KEY (`orderId`),
+  PRIMARY KEY (`orderId`, `cupcakeTopId`, `cupcakeBottomId`),
   CONSTRAINT `orderLineToOrderFK`
 	FOREIGN KEY (`orderId`)
 	REFERENCES `cupcake`.`orders` (`orderId`)
@@ -111,3 +111,18 @@ INSERT INTO `cupcake`.`cupcakeTops` (`name`, `price`) VALUES
 ('Orange', 8.00),
 ('Lemon', 8.00),
 ('Blue cheese', 9.00);
+
+INSERT INTO `cupcake`.`orders` VALUES(),(),(),();
+
+INSERT INTO `cupcake`.`orderLines` VALUES
+(1, 8, 4, 3, 42),
+(1, 1, 1, 6, 60),
+(2, 3, 1, 3, 30),
+(3, 2, 2, 1, 10),
+(4, 3, 2, 7, 70);
+
+INSERT INTO `cupcake`.`invoices` (`orderId`, `price`) VALUES
+(1, 102),
+(2, 30),
+(3, 10),
+(4, 70);
