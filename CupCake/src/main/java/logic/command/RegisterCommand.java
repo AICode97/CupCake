@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import logic.UserController;
 import logic.model.User;
 
@@ -31,19 +32,11 @@ public class RegisterCommand extends Command {
                 request.setAttribute("errormessage", "User with same username or email is already registered");
                 request.getRequestDispatcher("/error.jsp").forward(request, response);
             } else {
-                User u = rc.getUser(username);
-
-                try (PrintWriter out = response.getWriter()) {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Cupcake</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>User: " + u.getUsername() + " was suscessfully registered</h1>");
-                    out.println("</body>");
-                    out.println("</html>");
-                }
+                User user = rc.getUser(username);
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                
+                response.sendRedirect(request.getContextPath() + "/customer");
             }
         }
     }
