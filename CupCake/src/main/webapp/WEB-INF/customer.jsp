@@ -27,9 +27,9 @@
             if(origin == null) { %>
                 <h1>Username: <% out.println(u.getUsername()); %></h1><br />
                 <%@include file = "changepassword.jsp" %>
-            <% } else if(origin.equals("orders")) {
-                // TODO: Add user Invoices / Orders here
-            } %>
+            <% } else if(origin.equals("orders")) { %>
+                <%@include file = "lists/orderlist.jsp" %>
+           <% } %>
     </div>
 </div>
 
