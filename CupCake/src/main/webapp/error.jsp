@@ -15,7 +15,7 @@
 %>
 
 <h1>Error:</h1>
-<p><%= errormessage %></p>
+<p id="errorMessage"><%= errormessage %></p>
 
 <%@include file = "footer.jsp" %>
 

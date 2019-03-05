@@ -34,29 +34,20 @@ $(document).ready(function () {
             $("#errorBox").show();
         } else {
             e.preventDefault();
-            ajaxPost(document.getElementById("changePasswordForm"));
+            $.ajax({
+                url: $(this).find('button').attr('formaction'),
+                data: $(this).serialize()
+            }).done(function (data) {
+                if($(data).filter('#errorMessage').text() != "") {
+                    $("#errorBox").html($(data).filter('#errorMessage').text());
+                    $("#errorBox").show();
+                    $("#successBox").hide();
+                } else {
+                    $("#successBox").html("Password has successfully been updated");
+                    $("#successBox").show();
+                    $("#errorBox").hide();
+                }
+            });
         }
     });
 });
-
-function ajaxPost(form) {
-    var url = form.action,
-            xhr = new XMLHttpRequest();
-    alert(form.elements)
-    var params = [].filter.call(form.elements, function (el) {
-        return typeof (el.checked) === 'undefined' || el.checked;
-    }).filter(function (el) {
-        return !!el.name;
-    }) //Nameless elements die.
-    .filter(function (el) {
-        return el.disabled;
-    }) //Disabled elements die.
-    .map(function (el) {
-        //Map each field into a name=value string, make sure to properly escape!
-        return encodeURIComponent(el.name) + '=' + encodeURIComponent(el.value);
-    }).join('&'); //Then join all the strings by &
-
-    xhr.open("POST", url);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send(params);
-}

@@ -47,7 +47,7 @@ footer {
     background-color: #f5f5f5;
 }
 
-#errorBox {
+#errorBox, #successBox {
     display: none;
 }
 

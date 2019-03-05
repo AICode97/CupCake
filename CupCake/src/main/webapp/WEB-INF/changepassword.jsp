@@ -8,6 +8,7 @@
 
 <form id="changePasswordForm" method="POST">
     <div id="errorBox" class="alert alert-danger" role="alert"></div>
+    <div id="successBox" class="alert alert-success" role="alert"></div>
     <div class="form-group">
         <label>Current password</label>
         <input type="password" class="form-control" name="currentPassword" placeholder="Current password...">
