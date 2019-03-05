@@ -36,6 +36,9 @@ public abstract class Command {
             case "products":
                 c = new ProductCommand();
                 break;
+            case "addBalance":
+                c = new addBalanceCommand();
+                break;
             default:
                 c = null;
         }

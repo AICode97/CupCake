@@ -14,4 +14,6 @@ public interface IUserMapper {
     User getUser(String username) throws SQLException;
     boolean validateUser(String username, String password) throws SQLException;
     int changePassword(String username, String password) throws SQLException;
+    void addBalance(User user, int balance) throws SQLException;
+    void checkout(User user, int balance) throws SQLException;
 }

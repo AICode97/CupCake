@@ -18,12 +18,14 @@ import logic.model.User;
  * @author Martin Frederiksen
  */
 public class UserMapper implements IUserMapper {
+
     private DBConnector connector;
     //private DatabaseConnector connector;
 
     public UserMapper() {
         //connector = new DatabaseConnector();
     }
+
     /*
     public void setDataSource(DataSource ds){
         connector.setDataSource(ds);
@@ -32,16 +34,14 @@ public class UserMapper implements IUserMapper {
     @Override
     public int addUser(String username, String email, String password) throws SQLException {
         //connector.open();
-        
+
         Connection connection = connector.getConnection();
-        
+
         String quary = "INSERT INTO users(username, email, password) VALUES(?,?,?);";
-        
+
         //PreparedStatement ps = connector.preparedStatement(quary, Statement.RETURN_GENERATED_KEYS);
-        
         PreparedStatement ps = connection.prepareCall(quary);
-        
-        
+
         try {
             ps.setString(1, username);
             ps.setString(2, email);
@@ -73,10 +73,10 @@ public class UserMapper implements IUserMapper {
         while (rs.next()) {
             users.add(new User(rs.getString("username"), rs.getString("email"), rs.getInt("balance"), RoleEnum.valueOf(rs.getString("role"))));
         }
-        if(ps != null){
+        if (ps != null) {
             ps.close();
         }
-        if(rs != null){
+        if (rs != null) {
             rs.close();
         }
         return users;
@@ -94,10 +94,10 @@ public class UserMapper implements IUserMapper {
                 user = new User(username, rs.getString("email"), rs.getInt("balance"), RoleEnum.valueOf(rs.getString("role")));
             }
         }
-        if(ps != null){
+        if (ps != null) {
             ps.close();
         }
-        if(rs != null){
+        if (rs != null) {
             rs.close();
         }
         return user;
@@ -117,10 +117,10 @@ public class UserMapper implements IUserMapper {
                 valid = true;
             }
         }
-        if(ps != null){
+        if (ps != null) {
             ps.close();
         }
-        if(rs != null){
+        if (rs != null) {
             rs.close();
         }
         return valid;
@@ -152,14 +152,62 @@ public class UserMapper implements IUserMapper {
         return -1;
     }
 
+    @Override
+    public void addBalance(User user, int balance) throws SQLException {
+        Connection connection = connector.getConnection();
+        String quary = "UPDATE users SET balance = ? WHERE username = ?;";
+        PreparedStatement ps = connector.getConnection().prepareStatement(quary);
+        try {
+            ps.setInt(1, user.getBalance() + balance);
+            ps.setString(2, user.getUsername());
+            ps.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            if (connection != null) {
+                connection.rollback();
+            }
+        }
+        if (connection != null) {
+            connection = null;
+        }
+        if (ps != null) {
+            ps.close();
+        }
+    }
+
+    @Override
+    public void checkout(User user, int balance) throws SQLException {
+        Connection connection = connector.getConnection();
+        String quary = "UPDATE users SET balance = ? WHERE username = ?;";
+        PreparedStatement ps = connector.getConnection().prepareStatement(quary);
+        try {
+            ps.setInt(1, user.getBalance() - balance);
+            ps.setString(2, user.getUsername());
+            ps.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            if (connection != null) {
+                connection.rollback();
+            }
+        }
+        if (connection != null) {
+            connection = null;
+        }
+        if (ps != null) {
+            ps.close();
+        }
+    }
+
     public static void main(String[] args) {
         UserMapper um = new UserMapper();
-        try{
-        um.addUser("Martin", "JegKoderFlestLinjer@pwned.io", "Mojn");
-        } catch(SQLException ex){
+        try {
+            User user = um.getUser("Martin");
+            um.checkout(user, 100);
+            //um.addUser("Martin", "JegKoderFlestLinjer@pwned.io", "Mojn");
+            System.out.println(user.getBalance());
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    
-    
+
 }
