@@ -23,7 +23,6 @@ public class CheckoutCommand extends Command {
 
         if (user.getBalance() >= sc.calculate()) {
             user.setBalance(user.getBalance() - sc.calculate());
-            System.out.println("Skal user gemmes igen?!");
         } else {
             request.setAttribute("errormessage", "Balance to low");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
