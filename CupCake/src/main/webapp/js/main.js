@@ -8,22 +8,6 @@ $(document).ready(function () {
             e.preventDefault();
             $("#errorBox").html("Please fill out all fields");
             $("#errorBox").show();
-        } else {
-            e.preventDefault();
-            $.ajax({
-                url: $(this).find('button').attr('formaction'),
-                data: $(this).serialize()
-            }).done(function (data) {
-                if($(data).filter('#errorMessage').text() != "") {
-                    $("#errorBox").html($(data).filter('#errorMessage').text());
-                    $("#errorBox").show();
-                    $("#successBox").hide();
-                } else {
-                    $("#successBox").html("Password has successfully been updated");
-                    $("#successBox").show();
-                    $("#errorBox").hide();
-                }
-            });
         }
     });
 
@@ -66,20 +50,24 @@ $(document).ready(function () {
             $("#errorBox").show();
         } else {
             e.preventDefault();
-            $.ajax({
-                url: $(this).find('button').attr('formaction'),
-                data: $(this).serialize()
-            }).done(function (data) {
-                if($(data).filter('#errorMessage').text() != "") {
-                    $("#errorBox").html($(data).filter('#errorMessage').text());
-                    $("#errorBox").show();
-                    $("#successBox").hide();
-                } else {
-                    $("#successBox").html("Password has successfully been updated");
-                    $("#successBox").show();
-                    $("#errorBox").hide();
-                }
-            });
+            ajax($(this));
         }
     });
 });
+
+function ajax(formObj) {
+    $.ajax({
+        url: $(formObj).find('button').attr('formaction'),
+        data: $(formObj).serialize()
+    }).done(function (data) {
+        if($(data).filter('#errorMessage').text() != "") {
+            $("#errorBox").html($(data).filter('#errorMessage').text());
+            $("#errorBox").show();
+            $("#successBox").hide();
+        } else {
+            $("#successBox").html("Password has successfully been updated");
+            $("#successBox").show();
+            $("#errorBox").hide();
+        }
+    });
+}
