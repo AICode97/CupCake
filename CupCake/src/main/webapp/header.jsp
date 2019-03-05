@@ -32,7 +32,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/shop"><i class="fas fa-shopping-basket"></i> Shop</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/shop"><i class="fas fa-shopping-cart"></i> Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/cart"><i class="fas fa-shopping-basket"></i> Basket</a>
                     </li>
                     <% if (u == null) { %>
                         <li class="nav-item">
