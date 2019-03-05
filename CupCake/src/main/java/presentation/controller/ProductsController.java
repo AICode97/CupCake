@@ -34,10 +34,9 @@ public class ProductsController extends HttpServlet {
         CupcakePart bottom = cc.getCupcakePart(CupcakePartEnum.BOTTOM, Integer.parseInt(request.getParameter("bottom")));
         CupcakePart top = cc.getCupcakePart(CupcakePartEnum.TOP, Integer.parseInt(request.getParameter("top")));
         int qty = Integer.parseInt(request.getParameter("qty"));
-        int invoice = Integer.parseInt(request.getParameter("invoice"));
         
         ShoppingCart sc = new ShoppingCart();
-        sc.setLineItem(new LineItem(bottom, top, qty, invoice));
+        sc.setLineItem(new LineItem(bottom, top, qty));
         
         HttpSession session = request.getSession();
         session.setAttribute("ShoppingCart", sc);
@@ -52,7 +51,6 @@ public class ProductsController extends HttpServlet {
             out.println("<body>");
             out.println("<h1>LineItems</h1>");
             for(LineItem li : sc.getLineItems()){
-                out.println("<p><b>Nr: "+ li.getInvoiceId() + "</b></p>");
                 out.println("<p>Bund: "+ li.getBottom().getName() + "</p>"); 
                 out.println("<p>Top: "+ li.getTop().getName() + "</p>");
                 out.println("<p>Mængde: "+ li.getQuantity()+ "</p>");

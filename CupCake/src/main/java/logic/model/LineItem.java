@@ -8,13 +8,11 @@ public class LineItem {
     private CupcakePart bottom;
     private CupcakePart top;
     private int quantity;
-    private int invoiceId;
 
-    public LineItem(CupcakePart bottom, CupcakePart top, int quantity, int invoiceId) {
+    public LineItem(CupcakePart bottom, CupcakePart top, int quantity) {
         this.bottom = bottom;
         this.top = top;
         this.quantity = quantity;
-        this.invoiceId = invoiceId;
     }
 
     public CupcakePart getBottom() {
@@ -30,10 +28,6 @@ public class LineItem {
 
     public int getQuantity() {
         return quantity;
-    }
-
-    public int getInvoiceId() {
-        return invoiceId;
     }
     
     public double getPrice(){
