@@ -4,6 +4,8 @@
     Author     : Martin Frederiksen
 --%>
 
+<%@page import="logic.model.CupcakePart"%>
+<%@page import="logic.CupcakeController"%>
 <%@page import="logic.model.ShoppingCart"%>
 <%@page import="logic.model.Order"%>
 <%@page import="logic.model.LineItem"%>
@@ -12,6 +14,10 @@
 
 <%
     ShoppingCart sc = new ShoppingCart();
+    User user = null;
+    if (session.getAttribute("user") != null) {
+        user = (User) session.getAttribute("user");
+    }
     if (session.getAttribute("ShoppingCart") != null) {
         sc = (ShoppingCart) session.getAttribute("ShoppingCart");
     }
@@ -42,14 +48,17 @@
         </tr>
     </tbody>
 </table>
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div>
+
+
+<form id="balanceForm" method="POST">
+    <div class="form-group">
+        <label>Balance</label>
+        <input type="text" class="form-control" name="balance" placeholder="Add to balance" maxlength="25">
+    </div>
+    <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/CommandController?command=addBalance">add balance</button>
+</form>
+<form id="CheckoutForm" method="POST">
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/CommandController?command=checkout">Checkout</button>
+</form>
 <%@include file = "../footer.jsp" %>

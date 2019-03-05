@@ -62,6 +62,22 @@ public class UserController {
         }
     }
     
+    public void addBalance(User user, int balance){
+        try {
+            new UserMapper().addBalance(user, balance);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void changeBalance(User user, int balance){
+        try {
+            new UserMapper().checkout(user, balance);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public static void main(String[] args) {
         UserController uc = new UserController();
         List<User> users = uc.getUsers();

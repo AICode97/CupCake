@@ -85,3 +85,14 @@ footer {
 .tableButton {
     text-align: right;
 }
+
+.nav-user{
+    position: absolute;
+    right: 0;
+    margin-right: 5px;
+}
+
+.buttonCheckout{
+    position: absolute;
+    right: 0;
+}
