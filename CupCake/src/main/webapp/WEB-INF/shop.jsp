@@ -15,7 +15,6 @@
 
 <%CupcakeController ccc = new CupcakeController();%>
 <%List<CupcakePart> asd = ccc.getCupcakeParts();%>
-<%--<%CupcakePartEnum top = new CupcakePartEnum();%>--%>
 
 <h1>Shop</h1>
 
@@ -27,9 +26,9 @@
             <label>You have selected: </label>
             
             <select class="ccTopList" name="topOption">
-                <% for (CupcakePart a : asd) {
-                        out.println(a.getName());
-                    }
+                <% for (CupcakePart a : asd) { %>
+                        <option value="">Test</option>
+                <% } %>
                 
 
 
