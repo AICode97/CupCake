@@ -16,7 +16,7 @@ public abstract class Command {
     public static Command from(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command c;
         String path = request.getParameter("command");
-        
+
         switch (path) {
             case "login":
                 c = new LoginCommand();
@@ -29,6 +29,9 @@ public abstract class Command {
                 break;
             case "changePassword":
                 c = new ChangePasswordCommand();
+                break;
+            case "Checkout":
+                c = new CheckoutCommand();
                 break;
             default:
                 c = null;
