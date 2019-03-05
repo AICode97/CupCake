@@ -13,6 +13,7 @@
     List<Order> orders = oc.getAllOrders();
 %>
 
+<button class="btn btn-info">Sort By </button>
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -22,15 +23,31 @@
             <th scope="col"></th>
         </tr>
     </thead>
-    <tbody>
-        <% for (Order o : orders) {%>
-            <tr>
-                <th scope="row"><%= o.getOrderId() %></th>
-                <td><%= o.getUsername() %></td>
-                <td><%= o.getOrderDate() %></td>
-                <td class="tableButton"><a href="${pageContext.request.contextPath}/order?orderId=<%= o.getOrderId() %>"><button class="btn btn-info">Show Order</button></a></td>
-            </tr>
-        <% }%>
+    <tbody id="orderList">
     </tbody>
 </table>
 
+<script>
+    var orders = [<% for(Order o : orders) { out.println("["); out.println("\"" + o.getOrderId() + "\","); out.println("\"" + o.getUsername()+ "\","); out.println("\"" + o.getOrderDate()+ "\""); out.println("],"); } %>];
+    
+    orders.sort((function(index){
+        return function(a, b){
+            return (a[index] === b[index] ? 0 : (a[index] < b[index] ? -1 : 1));
+        };
+    })(0));
+    
+    orders.forEach(function(entry) {
+        var parenttbl = document.getElementById("orderList");
+        var newel = document.createElement('tr');
+        entry.forEach(function(eentry) {
+            var newtd = document.createElement('td');
+            newtd.innerHTML = eentry;
+            newel.appendChild(newtd);
+        });
+        var newtd = document.createElement('td');
+        newtd.innerHTML = '<a href="${pageContext.request.contextPath}/order?orderId=' + entry[0] +'"><button class="btn btn-info">Show Order</button></a>';
+        newtd.setAttribute('class', 'tableButton');
+        newel.appendChild(newtd);
+        parenttbl.appendChild(newel);
+    });
+</script>
