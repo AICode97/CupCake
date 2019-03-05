@@ -23,14 +23,13 @@
         </tr>
     </thead>
     <tbody>
-        <%
-            for (Order o : orders) {%>
-        <tr>
-            <th scope="row"><%= o.getOrderId() %></th>
-            <td><%= o.getUsername() %></td>
-            <td><%= o.getOrderDate() %></td>
-            <td class="tableButton"><a href="${pageContext.request.contextPath}/order?orderId=<%= o.getOrderId() %>"><button class="btn btn-info">Show Order</button></a></td>
-        </tr>
+        <% for (Order o : orders) {%>
+            <tr>
+                <th scope="row"><%= o.getOrderId() %></th>
+                <td><%= o.getUsername() %></td>
+                <td><%= o.getOrderDate() %></td>
+                <td class="tableButton"><a href="${pageContext.request.contextPath}/order?orderId=<%= o.getOrderId() %>"><button class="btn btn-info">Show Order</button></a></td>
+            </tr>
         <% }%>
     </tbody>
 </table>
