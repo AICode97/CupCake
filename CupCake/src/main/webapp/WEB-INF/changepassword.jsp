@@ -22,4 +22,3 @@
     </div>
     <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/CommandController?command=changePassword">Change password</button>
 </form>
-
