@@ -1,7 +1,6 @@
 package logic.model;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +17,6 @@ public class Order {
         this.orderId = orderId;
         this.username = username;
         this.orderDate = orderDate;
-        lineItems = new ArrayList();
         this.lineItems = lineItems;
     }
     
@@ -36,5 +34,12 @@ public class Order {
     
     public List<LineItem> getLineItems(){
         return lineItems;
+    }
+    
+    public double getTotalPrice() {
+        double total = 0;
+        for(LineItem li : lineItems)
+            total += li.getPrice();
+        return total;
     }
 }

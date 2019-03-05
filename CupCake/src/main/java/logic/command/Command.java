@@ -30,7 +30,7 @@ public abstract class Command {
             case "changePassword":
                 c = new ChangePasswordCommand();
                 break;
-            case "Checkout":
+            case "checkout":
                 c = new CheckoutCommand();
                 break;
             default:
