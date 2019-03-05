@@ -4,12 +4,18 @@
     Author     : Andreas Vikke
 --%>
 
+
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List" %>
+<%@page import="logic.CupcakeController"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="data.mappers.CupcakeMapper"%>
 <%@page import="logic.model.enums.CupcakePartEnum"%>
+<%@page import="logic.model.CupcakePart"%>
 <%@include file = "../header.jsp" %>
 
-<%CupcakeMapper ccm = new CupcakeMapper();%>
+<%CupcakeController ccc = new CupcakeController();%>
+<%List<CupcakePart> asd = ccc.getCupcakeParts();%>
 <%--<%CupcakePartEnum top = new CupcakePartEnum();%>--%>
 
 <h1>Shop</h1>
@@ -20,13 +26,15 @@
         <legend>Cupcake Tops</legend>
         <p>
             <label>You have selected: </label>
+            
             <select class="ccTopList" name="topOption">
-                <%-- <c:forEach items="${cupcakeTops}"  var="topid">
-                    <tr>
-                        <td>${topOption.} </td>
-                    </tr>
-                </c:forEach>
-                --%>
+                <% for (CupcakePart a : asd) {
+                        out.println(a.getName());
+                    }
+                
+
+
+                %>
                 <%--
                 <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.TOP, 1)%>>første</option>
                 <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.TOP, 2)%>>anden</option>
@@ -46,18 +54,14 @@
         <p>
             <label>You have selected: </label>
             <select class="ccTopList" name="bottomOption">
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.BOTTOM, 1)%>>første</option>
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.BOTTOM, 2)%>>anden</option>
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.BOTTOM, 3)%>>tredje</option>
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.BOTTOM, 4)%>>Fjerde</option>
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.BOTTOM, 5)%>>Femte</option>
+
             </select>
         </p>
     </fieldset>
-            <input type="number" name="quantity" placeholder="Quantity">
-            <button type="submit" class="btn btn-primary" 
-                    formaction="${pageContext.request.contextPath}/CommandController?command=products">submit order</button>
+    <input type="number" name="quantity" placeholder="Quantity">
+    <button type="submit" class="btn btn-primary" 
+            formaction="${pageContext.request.contextPath}/CommandController?command=products">submit order</button>
 </form>
-            
+
 
 <%@include file = "../footer.jsp" %>
