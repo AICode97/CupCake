@@ -30,7 +30,7 @@ public class LineItem {
         return quantity;
     }
     
-    public double getPrice(){
+    public int getPrice(){
         return (bottom.getPrice() + top.getPrice()) * quantity;
     }
 }

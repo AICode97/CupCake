@@ -9,10 +9,10 @@ import logic.model.enums.RoleEnum;
 public class User {
     private String username;
     private String email;
-    private double balance;
+    private int balance;
     private RoleEnum role;
 
-    public User(String username, String email, double balance, RoleEnum role) {
+    public User(String username, String email, int balance, RoleEnum role) {
         this.username = username;
         this.email = email;
         this.balance = balance;
@@ -27,7 +27,7 @@ public class User {
         return email;
     }
 
-    public double getBalance() {
+    public int getBalance() {
         return balance;
     }
 
@@ -35,7 +35,7 @@ public class User {
         return role;
     }
     
-    public void setBalance(double newBal) {
+    public void setBalance(int newBal) {
         balance = newBal;
     }
 

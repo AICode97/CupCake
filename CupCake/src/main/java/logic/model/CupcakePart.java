@@ -10,9 +10,9 @@ public class CupcakePart {
     private int id;
     private CupcakePartEnum part;
     private String name;
-    private double price;
+    private int price;
 
-    public CupcakePart(int id, CupcakePartEnum part, String name, double price) {
+    public CupcakePart(int id, CupcakePartEnum part, String name, int price) {
         this.id = id;
         this.part = part;
         this.name = name;
@@ -31,7 +31,7 @@ public class CupcakePart {
         return name;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 

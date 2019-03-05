@@ -11,7 +11,7 @@ CREATE TABLE `cupcake`.`users` (
   `username` VARCHAR(45) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `password` VARCHAR(200) NOT NULL,
-  `balance` DOUBLE NOT NULL DEFAULT 0,
+  `balance` INT NOT NULL DEFAULT 0,
   `role` ENUM('ADMIN', 'CUSTOMER') NOT NULL DEFAULT 'CUSTOMER',
   PRIMARY KEY (`username`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
@@ -32,7 +32,7 @@ CREATE TABLE `cupcake`.`orders` (
 CREATE TABLE `cupcake`.`invoices` (
   `invoiceId` INT NOT NULL auto_increment,
   `orderId` INT NOT NULL,
-  `price` DOUBLE NOT NULL,
+  `price` INT NOT NULL,
   `date` DATETIME NOT NULL default current_timestamp,
   PRIMARY KEY (`invoiceId`),
   CONSTRAINT `InvoiceToOrderFK`
@@ -46,14 +46,14 @@ CREATE TABLE `cupcake`.`invoices` (
 CREATE TABLE `cupcake`.`cupcakeBottoms` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `price` DOUBLE NOT NULL DEFAULT 0,
+  `price` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `cupcake`.`cupcakeTops` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `price` DOUBLE NOT NULL DEFAULT 0,
+  `price` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 );
 
@@ -62,7 +62,7 @@ CREATE TABLE `cupcake`.`orderLines` (
   `cupcakeTopId` INT NOT NULL,
   `cupcakeBottomId` INT NOT NULL,
   `qty` INT NOT NULL default 0,
-  `price` DOUBLE NOT NULL default 0,
+  `price` INT NOT NULL default 0,
   PRIMARY KEY (`orderId`, `cupcakeTopId`, `cupcakeBottomId`),
   CONSTRAINT `orderLineToOrderFK`
 	FOREIGN KEY (`orderId`)
