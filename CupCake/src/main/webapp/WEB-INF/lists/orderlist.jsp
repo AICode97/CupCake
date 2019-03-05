@@ -4,13 +4,13 @@
     Author     : Andreas Vikke
 --%>
 
+<%@page import="logic.model.Order"%>
+<%@page import="logic.OrderController"%>
 <%@page import="java.util.List"%>
-<%@page import="logic.UserController"%>
-<%@page import="logic.model.User"%>
 
 <%
-    UserController uc = new UserController();
-    List<User> users = uc.getUsers();
+    OrderController oc = new OrderController();
+    List<Order> orders = oc.getAllOrders();
 %>
 
 <table class="table">
@@ -23,14 +23,13 @@
         </tr>
     </thead>
     <tbody>
-        <% 
-            int count = 1;
-            for (User user : users) {%>
+        <%
+            for (Order o : orders) {%>
         <tr>
-            <th scope="row"><%= count++ %></th>
-            <td><%= user.getUsername()%></td>
-            <td><%= user.getEmail()%></td>
-            <td class="tableButton"><button class="btn btn-info">Show Order</button></td>
+            <th scope="row"><%= o.getOrderId() %></th>
+            <td><%= o.getUsername() %></td>
+            <td><%= o.getOrderDate() %></td>
+            <td class="tableButton"><a href="${pageContext.request.contextPath}/order?orderId=<%= o.getOrderId() %>"><button class="btn btn-info">Show Order</button></a></td>
         </tr>
         <% }%>
     </tbody>
