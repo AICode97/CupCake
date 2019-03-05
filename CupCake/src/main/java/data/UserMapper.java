@@ -134,6 +134,7 @@ public class UserMapper implements IUserMapper {
             ps.setString(2, username);
             connection.setAutoCommit(false);
             int result = ps.executeUpdate();
+            connection.commit();
             return result;
         } catch (SQLException ex) {
             ex.printStackTrace();

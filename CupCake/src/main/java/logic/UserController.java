@@ -46,19 +46,16 @@ public class UserController {
         }
     }
     
-    public int changePassword(String username, String currentPassword, String newPassword) {
+    public int changePassword(String username, String newPassword) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             
-            md.update(currentPassword.getBytes());
-            byte[] digest = md.digest();
-            String passwordHash1 = DatatypeConverter.printHexBinary(digest).toUpperCase();
-            
+          
             md.update(newPassword.getBytes());
-            digest = md.digest();
+            byte[] digest = md.digest();
             String passwordHash2 = DatatypeConverter.printHexBinary(digest).toUpperCase();
             
-            return new UserMapper().changePassword(username, currentPassword);
+            return new UserMapper().changePassword(username, passwordHash2);
         } catch (SQLException | NoSuchAlgorithmException ex) {
             ex.printStackTrace();
             return -1;

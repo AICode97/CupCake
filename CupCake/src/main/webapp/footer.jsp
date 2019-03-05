@@ -6,7 +6,7 @@
 
 <footer class="footer">
     <div class="container">
-      <span class="text-muted">© Copyright 2018 - William Hussfeldt, Asger Sørensen, Martin Frederiksen & Andreas Vikke. All rights reserved. </span>
+      <span class="text-muted">© Copyright 2018 - William Husfeldt, Asger Sørensen, Martin Frederiksen & Andreas Vikke. All rights reserved. </span>
     </div>
 </footer>
     

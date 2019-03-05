@@ -7,7 +7,32 @@
 <%@page import="logic.model.User"%>
 <%@include file = "../header.jsp" %>
 
-<h1>You are logged in as: <% out.println(u.getUsername()); %></h1>
+<div class="contentBox">
+    <div class="contentBoxContent">
+        <h1>Customer Page</h1>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/customer"><i class="far fa-user"></i> Account Information</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/customer?origin=orders"><i class="far fa-list-alt"></i> Orders</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="contentBox">
+    <div class="contentBoxContent">
+        <%
+            String origin = request.getParameter("origin");
+            if(origin == null) { %>
+                <h1>Username: <% out.println(u.getUsername()); %></h1><br />
+                <%@include file = "changepassword.jsp" %>
+            <% } else if(origin.equals("orders")) {
+                // TODO: Add user Invoices / Orders here
+            } %>
+    </div>
+</div>
+
 
 <%@include file = "../footer.jsp" %>
 
