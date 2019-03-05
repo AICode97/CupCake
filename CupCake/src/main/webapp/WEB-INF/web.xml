@@ -25,8 +25,16 @@
         <servlet-class>presentation.controller.FrontServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CommandServlet</servlet-name>
+        <servlet-name>CommandController</servlet-name>
         <servlet-class>presentation.controller.CommandServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>presentation.controller.OrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShopServlet</servlet-name>
+        <servlet-class>presentation.controller.ShopServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CartServlet</servlet-name>
@@ -57,12 +65,20 @@
         <url-pattern/>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CommandServlet</servlet-name>
+        <servlet-name>CommandController</servlet-name>
         <url-pattern>/CommandController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CartServlet</servlet-name>
         <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShopServlet</servlet-name>
+        <url-pattern>/shop</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/order</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
