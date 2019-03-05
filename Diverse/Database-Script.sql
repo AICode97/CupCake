@@ -98,10 +98,10 @@ CREATE TABLE `cupcake`.`cupcakes` (
     ON UPDATE CASCADE
 );
 
-INSERT INTO `cupcake`.`users` VALUES ('Vikke', 'vikkedesign@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'ADMIN');
-INSERT INTO `cupcake`.`users` VALUES ('Martin', 'martin@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'CUSTOMER');
-INSERT INTO `cupcake`.`users` VALUES ('William', 'william@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'CUSTOMER');
-INSERT INTO `cupcake`.`users` VALUES ('Asger', 'asger@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'CUSTOMER');
+INSERT INTO `cupcake`.`users` VALUES ('Vikke', 'asger@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'ADMIN');
+INSERT INTO `cupcake`.`users` VALUES ('Martin', 'vikke@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'CUSTOMER');
+INSERT INTO `cupcake`.`users` VALUES ('William', 'martin@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'CUSTOMER');
+INSERT INTO `cupcake`.`users` VALUES ('Asger', 'william@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'CUSTOMER');
 
 INSERT INTO `cupcake`.`cupcakeBottoms` (`name`, `price`) VALUES 
 ('Chocolate', 5.00),
