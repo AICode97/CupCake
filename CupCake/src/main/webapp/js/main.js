@@ -1,3 +1,5 @@
-$("#loginForm").submit(function(e) {
-    
+$(document).ready(function() {
+    $('#loginForm').submit( function(e) {
+        //e.preventDefault();
+    });
 });
