@@ -9,10 +9,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import logic.model.CupcakePart;
 import logic.model.LineItem;
 import logic.model.Order;
 import logic.model.ShoppingCart;
 import logic.model.User;
+import logic.model.enums.CupcakePartEnum;
 
 /**
  *
@@ -113,7 +115,8 @@ public class OrderMapper implements IOrderMapper {
         ResultSet rs = ps.executeQuery(quary);
 
         while (rs.next()) {
-            orders.add(new Order(rs.getInt("orderId"), rs.getString("username"), rs.getDate("date")));
+            orders.add(new Order(rs.getInt("orderId"), rs.getString("username"), rs.getDate("date"), getLineItemsById(rs.getInt("orderId"))));
+            
         }
         if (ps != null) {
             ps.close();
@@ -135,7 +138,9 @@ public class OrderMapper implements IOrderMapper {
 
         while (rs.next()) {
             if (id == rs.getInt("orderId")) {
-                order = new Order(id, rs.getString("username"), rs.getDate("date"));
+                order = new Order(id, rs.getString("username"), rs.getDate("date"), getLineItemsById(id));
+                
+                
             }
         }
         if (ps != null) {
@@ -157,7 +162,7 @@ public class OrderMapper implements IOrderMapper {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            orders.add(new Order(rs.getInt("orderId"), username, rs.getDate("date")));
+            orders.add(new Order(rs.getInt("orderId"), username, rs.getDate("date"), getLineItemsById(rs.getInt("orderId"))));
         }
         if (ps != null) {
             ps.close();
@@ -167,6 +172,30 @@ public class OrderMapper implements IOrderMapper {
         }
         return orders;
     }
+
+    @Override
+    public List<LineItem> getLineItemsById(int id) throws SQLException {
+        List<LineItem> lineItems = new ArrayList();
+        Connection connection = connector.getConnection();
+        String quary = "SELECT cupcakeTopId, cupcakeBottomId, qty FROM orderLines WHERE orderId = ?;";
+        PreparedStatement ps = connection.prepareStatement(quary);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        
+        CupcakeMapper cm = new CupcakeMapper();
+
+        while (rs.next()) {
+            lineItems.add(new LineItem(cm.getCupcakePartById(CupcakePartEnum.BOTTOM, rs.getInt("cupcakeBottomId")), cm.getCupcakePartById(CupcakePartEnum.TOP, rs.getInt("cupcakeTopId")), rs.getInt("qty")));
+        }
+        if (ps != null) {
+            ps.close();
+        }
+        if (rs != null) {
+            rs.close();
+        }
+        return lineItems;
+    }
+    
 
     public static void main(String[] args) {
         /*OrderMapper im = new OrderMapper();
@@ -186,6 +215,11 @@ public class OrderMapper implements IOrderMapper {
 
         OrderMapper im = new OrderMapper();
         try {
+            
+            /*for(LineItem i : im.getLineItemsById(1)){
+                System.out.println(i.getQuantity());
+            }*/
+            
             for (Order o : im.getAllOrders()) {
                 System.out.println(o.getOrderId());
             }
@@ -198,5 +232,5 @@ public class OrderMapper implements IOrderMapper {
             ex.printStackTrace();
         }
     }
-
+    
 }

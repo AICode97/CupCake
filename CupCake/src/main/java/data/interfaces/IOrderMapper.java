@@ -18,4 +18,6 @@ public interface IOrderMapper {
     List<Order> getAllOrders() throws SQLException;
     Order getOrderById(int id) throws SQLException;
     List<Order> getOrderByUser(String username) throws SQLException;
+    List<LineItem> getLineItemsById(int id) throws SQLException;
+    
 }
