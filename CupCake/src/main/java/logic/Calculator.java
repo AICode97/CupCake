@@ -14,9 +14,7 @@ public class Calculator {
         List<LineItem> li = sc.getLineItems();
         int price = 0;
         for(LineItem i : li){
-            price += i.getBottom().getPrice();
-            price += i.getTop().getPrice();
-            price *= i.getQuantity();
+            price += i.getPrice() * i.getQuantity();
         }
         
         return price;

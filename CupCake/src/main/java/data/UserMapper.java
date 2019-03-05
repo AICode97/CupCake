@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.sql.DataSource;
 import logic.model.RoleEnum;
 import logic.model.User;
 
@@ -15,18 +16,30 @@ import logic.model.User;
  * @author Martin Frederiksen
  */
 public class UserMapper implements IUserMapper {
-
     private DBConnector connector;
+    //private DatabaseConnector connector;
 
     public UserMapper() {
-        connector = new DBConnector();
+        //connector = new DatabaseConnector();
     }
+    /*
+    public void setDataSource(DataSource ds){
+        connector.setDataSource(ds);
+    }*/
 
     @Override
     public int addUser(String username, String email, String password) throws SQLException {
+        //connector.open();
+        
         Connection connection = connector.getConnection();
+        
         String quary = "INSERT INTO users(username, email, password) VALUES(?,?,?);";
+        
+        //PreparedStatement ps = connector.preparedStatement(quary, Statement.RETURN_GENERATED_KEYS);
+        
         PreparedStatement ps = connection.prepareCall(quary);
+        
+        
         try {
             ps.setString(1, username);
             ps.setString(2, email);
@@ -52,11 +65,17 @@ public class UserMapper implements IUserMapper {
     public List<User> getUsers() throws SQLException {
         List<User> users = new ArrayList();
         String quary = "SELECT username, email, balance, role FROM users;";
-        Statement stmt = connector.getConnection().createStatement();
-        ResultSet rs = stmt.executeQuery(quary);
+        PreparedStatement ps = connector.getConnection().prepareStatement(quary);
+        ResultSet rs = ps.executeQuery(quary);
 
         while (rs.next()) {
             users.add(new User(rs.getString("username"), rs.getString("email"), rs.getDouble("balance"), RoleEnum.valueOf(rs.getString("role"))));
+        }
+        if(ps != null){
+            ps.close();
+        }
+        if(rs != null){
+            rs.close();
         }
         return users;
     }
@@ -72,6 +91,12 @@ public class UserMapper implements IUserMapper {
             if (username.equalsIgnoreCase(rs.getString("username"))) {
                 user = new User(username, rs.getString("email"), rs.getDouble("balance"), RoleEnum.valueOf(rs.getString("role")));
             }
+        }
+        if(ps != null){
+            ps.close();
+        }
+        if(rs != null){
+            rs.close();
         }
         return user;
     }
@@ -89,6 +114,12 @@ public class UserMapper implements IUserMapper {
             if (username.equalsIgnoreCase(rs.getString("username")) || username.equalsIgnoreCase(rs.getString("email"))) {
                 valid = true;
             }
+        }
+        if(ps != null){
+            ps.close();
+        }
+        if(rs != null){
+            rs.close();
         }
         return valid;
     }
@@ -119,4 +150,14 @@ public class UserMapper implements IUserMapper {
         return -1;
     }
 
+    public static void main(String[] args) {
+        UserMapper um = new UserMapper();
+        try{
+        um.addUser("Martin", "JegKoderFlestLinjer@pwned.io", "Mojn");
+        } catch(SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    
 }
