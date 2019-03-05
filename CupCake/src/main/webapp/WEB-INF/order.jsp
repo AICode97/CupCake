@@ -4,6 +4,7 @@
     Author     : Andreas Vikke
 --%>
 
+<%@page import="logic.model.LineItem"%>
 <%@page import="logic.model.Order"%>
 <%@page import="logic.OrderController"%>
 <%@include file = "../header.jsp" %>
@@ -40,14 +41,23 @@
             </tr>
         </thead>
         <tbody>
+            <% for (LineItem li : order.getLineItems()) {%>
             <tr>
-                <th scope="row">Test</th>
-                <td>Test</td>
-                <td>3</td>
-                <td>60,-</td>
+                <td scope="row"><%= li.getBottom().getName()%></td>
+                <td><%= li.getTop().getName()%></td>
+                <td><%= li.getQuantity()%></td>
+                <td><%= String.valueOf(li.getPrice())%>,-</td>
+            </tr>
+            <% }%>
+            <tr class="table-active">
+                <th>Total</th>
+                <td></td>
+                <td></td>
+                <th><%= String.valueOf(order.getTotalPrice())%>,-</th>
             </tr>
         </tbody>
     </table>
+    <button class="btn btn-info" name="back" onclick="history.back()">Back</button>
 </div>
 
 <%@include file = "../footer.jsp" %>

@@ -13,6 +13,7 @@ import logic.model.LineItem;
 import logic.model.Order;
 import logic.model.ShoppingCart;
 import logic.model.User;
+import logic.model.enums.CupcakePartEnum;
 
 /**
  *
@@ -73,7 +74,7 @@ public class OrderMapper implements IOrderMapper {
             ps.setInt(2, li.getTop().getId());
             ps.setInt(3, li.getBottom().getId());
             ps.setInt(4, li.getQuantity());
-            ps.setDouble(5, li.getPrice() * li.getQuantity());
+            ps.setInt(5, (int) (li.getPrice() * li.getQuantity()));
             ps.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -113,7 +114,8 @@ public class OrderMapper implements IOrderMapper {
         ResultSet rs = ps.executeQuery(quary);
 
         while (rs.next()) {
-            orders.add(new Order(rs.getInt("orderId"), rs.getString("username"), rs.getDate("date")));
+            orders.add(new Order(rs.getInt("orderId"), rs.getString("username"), rs.getDate("date"), getLineItemsById(rs.getInt("orderId"))));
+            
         }
         if (ps != null) {
             ps.close();
@@ -135,7 +137,8 @@ public class OrderMapper implements IOrderMapper {
 
         while (rs.next()) {
             if (id == rs.getInt("orderId")) {
-                order = new Order(id, rs.getString("username"), rs.getDate("date"));
+                List<LineItem> lis = getLineItemsById(id);
+                order = new Order(id, rs.getString("username"), rs.getDate("date"), lis);
             }
         }
         if (ps != null) {
@@ -157,7 +160,7 @@ public class OrderMapper implements IOrderMapper {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            orders.add(new Order(rs.getInt("orderId"), username, rs.getDate("date")));
+            orders.add(new Order(rs.getInt("orderId"), username, rs.getDate("date"), getLineItemsById(rs.getInt("orderId"))));
         }
         if (ps != null) {
             ps.close();
@@ -168,13 +171,37 @@ public class OrderMapper implements IOrderMapper {
         return orders;
     }
 
+    @Override
+    public List<LineItem> getLineItemsById(int id) throws SQLException {
+        List<LineItem> lineItems = new ArrayList();
+        Connection connection = connector.getConnection();
+        String quary = "SELECT cupcakeTopId, cupcakeBottomId, qty FROM orderLines WHERE orderId = ?;";
+        PreparedStatement ps = connection.prepareStatement(quary);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        
+        CupcakeMapper cm = new CupcakeMapper();
+
+        while (rs.next()) {
+            lineItems.add(new LineItem(cm.getCupcakePartById(CupcakePartEnum.BOTTOM, rs.getInt("cupcakeBottomId")), cm.getCupcakePartById(CupcakePartEnum.TOP, rs.getInt("cupcakeTopId")), rs.getInt("qty")));
+        }
+        if (ps != null) {
+            ps.close();
+        }
+        if (rs != null) {
+            rs.close();
+        }
+        return lineItems;
+    }
+    
+
     public static void main(String[] args) {
         /*OrderMapper im = new OrderMapper();
         ShoppingCart sc = new ShoppingCart();
         CupcakeController cc = new CupcakeController();
         UserMapper um = new UserMapper();
-        sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 3), 10));
-        sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 5), cc.getCupcakePart(CupcakePartEnum.TOP, 5), 8));
+        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 3), 10));
+        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 5), cc.getCupcakePart(CupcakePartEnum.TOP, 5), 8));
         try {
             User user = um.getUser("vikke");
             im.addOrder(sc, user);
@@ -186,17 +213,23 @@ public class OrderMapper implements IOrderMapper {
 
         OrderMapper im = new OrderMapper();
         try {
+            
+            /*for(LineItem i : im.getLineItemsById(1)){
+                System.out.println(i.getQuantity());
+            }*/
+            
             for (Order o : im.getAllOrders()) {
                 System.out.println(o.getOrderId());
             }
             System.out.println(im.getOrderById(1).getUsername());
             for (Order o : im.getOrderByUser("vikke")) {
-                System.out.println(o.getOrderId());
+                for(LineItem li : o.getLineItems())
+                    System.out.println(li.getBottom());
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-
+    
 }

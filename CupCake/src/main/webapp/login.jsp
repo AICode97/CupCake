@@ -8,6 +8,7 @@
 
 <div class="greyBox">
     <form id="loginForm" method="POST">
+        <div id="errorBox" class="alert alert-danger" role="alert"></div>
         <div class="form-group">
             <label>Username</label>
             <input type="text" class="form-control" name="username" placeholder="Username..." maxlength="25">

@@ -56,6 +56,9 @@ public class ChangePasswordCommand extends Command {
                     out.println("</html>");
                 }
             }
+        } else {
+            request.setAttribute("errormessage", "Current Password is not correct");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 
