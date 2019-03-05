@@ -33,6 +33,9 @@ public abstract class Command {
             case "checkout":
                 c = new CheckoutCommand();
                 break;
+            case "products":
+                c = new ProductCommand();
+                break;
             default:
                 c = null;
         }
