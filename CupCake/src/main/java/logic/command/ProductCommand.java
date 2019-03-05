@@ -27,9 +27,7 @@ public class ProductCommand extends Command {
 
         if (session.getAttribute("ShoppingCart") != null) {
             ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");
-            sc.addLineItem(new LineItem(bottom, top, qty));
-            System.out.println("Set shoppingcart session again?");
-            //session.setAttribute("ShoppingCart", sc);
+            sc.setLineItem(new LineItem(bottom, top, qty));
         } else {
             ShoppingCart sc = new ShoppingCart();
             sc.addLineItem(new LineItem(bottom, top, qty));
@@ -37,5 +35,4 @@ public class ProductCommand extends Command {
         }
         response.sendRedirect(request.getContextPath() + "/shop");
     }
-
 }
