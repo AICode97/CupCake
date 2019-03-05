@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import logic.Calculator;
 import logic.model.LineItem;
 import logic.model.Order;
 import logic.model.ShoppingCart;
@@ -94,7 +93,7 @@ public class OrderMapper implements IOrderMapper {
         PreparedStatement ps = connection.prepareCall(query);
         try {
             ps.setInt(1, id);
-            ps.setInt(2, Calculator.calculate(sc));
+            ps.setInt(2, sc.calculate());
             ps.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
