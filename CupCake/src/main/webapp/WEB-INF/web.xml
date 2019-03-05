@@ -2,35 +2,35 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>presentation.controller.LoginController</servlet-class>
+        <servlet-class>presentation.controller.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegisterController</servlet-name>
-        <servlet-class>presentation.controller.RegisterController</servlet-class>
+        <servlet-class>presentation.controller.RegisterServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CustomerController</servlet-name>
-        <servlet-class>presentation.controller.CustomerController</servlet-class>
+        <servlet-class>presentation.controller.CustomerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminController</servlet-name>
-        <servlet-class>presentation.controller.AdminController</servlet-class>
+        <servlet-class>presentation.controller.AdminServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProductsController</servlet-name>
-        <servlet-class>presentation.controller.ProductsController</servlet-class>
+        <servlet-class>presentation.controller.ProductsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FrontController</servlet-name>
-        <servlet-class>presentation.controller.FrontController</servlet-class>
+        <servlet-class>presentation.controller.FrontServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CommandController</servlet-name>
-        <servlet-class>presentation.controller.CommandController</servlet-class>
+        <servlet-class>presentation.controller.CommandServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ShopController</servlet-name>
-        <servlet-class>presentation.controller.ShopController</servlet-class>
+        <servlet-class>presentation.controller.ShopServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>

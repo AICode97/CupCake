@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.UserController;
 import logic.ValidateUserController;
-import logic.model.RoleEnum;
+import logic.model.enums.RoleEnum;
 import logic.model.User;
 
 /**

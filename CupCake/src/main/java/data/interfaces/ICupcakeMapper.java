@@ -1,6 +1,6 @@
-package data;
+package data.interfaces;
 
-import logic.model.CupcakePartEnum;
+import logic.model.enums.CupcakePartEnum;
 import logic.model.CupcakePart;
 import java.sql.SQLException;
 import java.util.List;

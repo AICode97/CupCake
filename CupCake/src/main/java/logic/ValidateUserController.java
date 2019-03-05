@@ -1,6 +1,6 @@
 package logic;
 
-import data.UserMapper;
+import data.mappers.UserMapper;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;

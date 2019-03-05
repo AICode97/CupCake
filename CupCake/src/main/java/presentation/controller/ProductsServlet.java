@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import logic.Calculator;
 import logic.CupcakeController;
 import logic.model.CupcakePart;
-import logic.model.CupcakePartEnum;
+import logic.model.enums.CupcakePartEnum;
 import logic.model.LineItem;
 import logic.model.ShoppingCart;
 
@@ -18,7 +18,7 @@ import logic.model.ShoppingCart;
  *
  * @author Andreas Vikke
  */
-public class ProductsController extends HttpServlet {
+public class ProductsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

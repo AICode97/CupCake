@@ -1,4 +1,7 @@
 package logic.model;
+
+import logic.model.enums.RoleEnum;
+
 /**
  *
  * @author Martin Frederiksen && Andreas Vikke

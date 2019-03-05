@@ -1,10 +1,10 @@
 package logic;
 
-import data.CupcakeMapper;
+import data.mappers.CupcakeMapper;
 import java.sql.SQLException;
 import java.util.List;
 import logic.model.CupcakePart;
-import logic.model.CupcakePartEnum;
+import logic.model.enums.CupcakePartEnum;
 
 /**
  *

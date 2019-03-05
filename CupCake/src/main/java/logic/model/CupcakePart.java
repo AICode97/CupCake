@@ -1,5 +1,7 @@
 package logic.model;
 
+import logic.model.enums.CupcakePartEnum;
+
 /**
  *
  * @author Andreas Vikke

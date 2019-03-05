@@ -11,7 +11,7 @@ import logic.command.Command;
  *
  * @author Andreas Vikke
  */
-public class CommandController extends HttpServlet {
+public class CommandServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

@@ -1,5 +1,7 @@
-package data;
+package data.mappers;
 
+import data.DBConnector;
+import data.interfaces.ICupcakeMapper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import logic.model.CupcakePart;
-import logic.model.CupcakePartEnum;
+import logic.model.enums.CupcakePartEnum;
 
 /**
  *

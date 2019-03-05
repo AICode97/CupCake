@@ -1,5 +1,7 @@
-package data;
+package data.mappers;
 
+import data.DBConnector;
+import data.interfaces.IUserMapper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
-import logic.model.RoleEnum;
+import logic.model.enums.RoleEnum;
 import logic.model.User;
 
 /**
