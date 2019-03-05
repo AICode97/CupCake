@@ -31,6 +31,6 @@ public class LineItem {
     }
     
     public double getPrice(){
-        return bottom.getPrice() + top.getPrice();
+        return (bottom.getPrice() + top.getPrice()) * quantity;
     }
 }

@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import logic.model.CupcakePart;
 import logic.model.LineItem;
 import logic.model.Order;
 import logic.model.ShoppingCart;
@@ -138,9 +137,8 @@ public class OrderMapper implements IOrderMapper {
 
         while (rs.next()) {
             if (id == rs.getInt("orderId")) {
-                order = new Order(id, rs.getString("username"), rs.getDate("date"), getLineItemsById(id));
-                
-                
+                List<LineItem> lis = getLineItemsById(id);
+                order = new Order(id, rs.getString("username"), rs.getDate("date"), lis);
             }
         }
         if (ps != null) {
@@ -225,7 +223,8 @@ public class OrderMapper implements IOrderMapper {
             }
             System.out.println(im.getOrderById(1).getUsername());
             for (Order o : im.getOrderByUser("vikke")) {
-                System.out.println(o.getOrderId());
+                for(LineItem li : o.getLineItems())
+                    System.out.println(li.getBottom());
             }
 
         } catch (SQLException ex) {

@@ -7,9 +7,7 @@
 <%@include file = "header.jsp" %>
 
 <div class="greyBox">
-    <div id="errorBox" class="alert alert-danger" role="alert">
-        
-    </div>
+    <div id="errorBox" class="alert alert-danger" role="alert"></div>
     <form id="loginForm" method="POST">
         <div class="form-group">
             <label>Username</label>
