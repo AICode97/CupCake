@@ -16,18 +16,23 @@
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/admin?origin=orders"><i class="far fa-list-alt"></i> Orders</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/admin?origin=changepassword"><i class="far fa-edit"></i> Change Password</a>
+            </li>
         </ul>
-        <%@include file = "changepassword.jsp" %>
     </div>
 </div>
 <div class="contentBox">
     <div class="contentBoxContent">
         <%
             String origin = request.getParameter("origin");
-            if(origin != null && origin.equals("orders")) { %>
-                <%@include file = "lists/orderlist.jsp" %>
-            <% } else { %>
+            if(origin == null) { %>
                 <%@include file = "lists/userlist.jsp" %>
+            <% } else if(origin.equals("orders")) { %>
+                <%@include file = "lists/orderlist.jsp" %>
+            <% } else if(origin.equals("changepassword")) { %>
+                <h1>Username: <% out.println(u.getUsername()); %></h1><br />
+                <%@include file = "changepassword.jsp" %>
             <% } %>
     </div>
 </div>
