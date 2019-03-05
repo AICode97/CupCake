@@ -118,7 +118,7 @@ INSERT INTO `cupcake`.`cupcakeTops` (`name`, `price`) VALUES
 ('Lemon', 8.00),
 ('Blue cheese', 9.00);
 
-INSERT INTO `cupcake`.`orders` (`username`) VALUES('vikke'),('vikke'),('vikke'),('vikke');
+INSERT INTO `cupcake`.`orders` (`username`, `date`) VALUES('vikke', current_timestamp()),('vikke', '2019-02-28'),('vikke', '2018-06-03'),('vikke', '2019-01-01');
 
 INSERT INTO `cupcake`.`orderLines` VALUES
 (1, 8, 4, 3, 42),
