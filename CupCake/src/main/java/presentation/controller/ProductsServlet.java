@@ -35,7 +35,7 @@ public class ProductsServlet extends HttpServlet {
         int qty = Integer.parseInt(request.getParameter("qty"));
         
         ShoppingCart sc = new ShoppingCart();
-        sc.setLineItem(new LineItem(bottom, top, qty));
+        sc.addLineItem(new LineItem(bottom, top, qty));
         
         HttpSession session = request.getSession();
         session.setAttribute("ShoppingCart", sc);

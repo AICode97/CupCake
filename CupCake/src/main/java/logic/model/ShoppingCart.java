@@ -20,7 +20,7 @@ public class ShoppingCart {
         return lineItems;
     }
 
-    public void setLineItem(LineItem li) {
+    public void addLineItem(LineItem li) {
         List<LineItem> items = getLineItems();
         List<LineItem> cloneItems = new ArrayList(items.size());
         for(LineItem l : items){
@@ -53,8 +53,8 @@ public class ShoppingCart {
     public static void main(String[] args) {
         ShoppingCart sc = new ShoppingCart();
         CupcakeController cc = new CupcakeController();
-        sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 1));
-        sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 2));
+        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 1));
+        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 2));
         for (LineItem item : sc.getLineItems()) {
             System.out.println(item.getQuantity());
         }
