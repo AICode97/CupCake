@@ -31,48 +31,54 @@
 </table>
 
 <script>
-    var orderList = [<% for(Order o : orders) { out.println("["); out.println("\"" + o.getOrderId() + "\","); out.println("\"" + o.getUsername()+ "\","); out.println("\"" + o.getOrderDate()+ "\""); out.println("],"); } %>];
+    var orderList = [<% for (Order o : orders) {
+            out.println("[");
+            out.println("\"" + o.getOrderId() + "\",");
+            out.println("\"" + o.getUsername() + "\",");
+            out.println("\"" + o.getOrderDate() + "\"");
+            out.println("],");
+        }%>];
     showOrders();
-    
+
     function orderById() {
-        orderList.sort((function(index){
-            return function(a, b){
+        orderList.sort((function (index) {
+            return function (a, b) {
                 return (a[index] === b[index] ? 0 : (a[index] < b[index] ? -1 : 1));
             };
         })(0));
         showOrders();
     }
     function orderByCustomer() {
-        orderList.sort((function(index){
-            return function(a, b){
+        orderList.sort((function (index) {
+            return function (a, b) {
                 return (a[index] === b[index] ? 0 : (a[index] < b[index] ? -1 : 1));
             };
         })(1));
         showOrders();
     }
     function orderByDate() {
-        orderList.sort((function(index){
-            return function(a, b){
+        orderList.sort((function (index) {
+            return function (a, b) {
                 return (a[index] === b[index] ? 0 : (a[index] < b[index] ? -1 : 1));
             };
         })(2));
         showOrders();
     }
-    
+
     function showOrders() {
         var parenttbl = document.getElementById("orderList");
         parenttbl.innerHTML = "";
-        
-        orderList.forEach(function(entry) {
+
+        orderList.forEach(function (entry) {
             var parenttbl = document.getElementById("orderList");
             var newel = document.createElement('tr');
-            entry.forEach(function(eentry) {
+            entry.forEach(function (eentry) {
                 var newtd = document.createElement('td');
                 newtd.innerHTML = eentry;
                 newel.appendChild(newtd);
             });
             var newtd = document.createElement('td');
-            newtd.innerHTML = '<a href="${pageContext.request.contextPath}/order?orderId=' + entry[0] +'"><button class="btn btn-info">Show Order</button></a>';
+            newtd.innerHTML = '<a href="${pageContext.request.contextPath}/order?orderId=' + entry[0] + '"><button class="btn btn-info">Show Order</button></a>';
             newtd.setAttribute('class', 'tableButton');
             newel.appendChild(newtd);
             parenttbl.appendChild(newel);
