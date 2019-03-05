@@ -1,7 +1,6 @@
 package logic.command;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +35,7 @@ public class ProductCommand extends Command {
             sc.addLineItem(new LineItem(bottom, top, qty));
             session.setAttribute("ShoppingCart", sc);
         }
+        response.sendRedirect(request.getContextPath() + "/shop");
     }
 
 }
