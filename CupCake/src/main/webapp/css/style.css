@@ -47,6 +47,10 @@ html, body {
     background-color: #f5f5f5;
 }
 
+#errorBox {
+    display: none;
+}
+
 #ccimg
 {
     display: block;
