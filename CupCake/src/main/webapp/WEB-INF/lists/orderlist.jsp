@@ -16,6 +16,7 @@
 <button class="btn btn-info" onclick="orderById();">Order by Id</button>
 <button class="btn btn-info" onclick="orderByDate();">Order by Date</button>
 <button class="btn btn-info" onclick="orderByCustomer();">Order by Customer</button>
+<br /><br />
 <table class="table">
     <thead class="thead-dark">
         <tr>
