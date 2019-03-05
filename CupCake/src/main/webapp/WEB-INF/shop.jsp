@@ -8,7 +8,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List" %>
 <%@page import="logic.CupcakeController"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="data.mappers.CupcakeMapper"%>
 <%@page import="logic.model.enums.CupcakePartEnum"%>
 <%@page import="logic.model.CupcakePart"%>
