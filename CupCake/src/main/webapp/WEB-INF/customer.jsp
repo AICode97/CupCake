@@ -28,7 +28,7 @@
                 <h1>Username: <% out.println(u.getUsername()); %></h1><br />
                 <%@include file = "changepassword.jsp" %>
             <% } else if(origin.equals("orders")) { %>
-                <%@include file = "lists/orderlist.jsp" %>
+                <%@include file = "lists/customerorderlist.jsp" %>
            <% } %>
     </div>
 </div>
