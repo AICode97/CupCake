@@ -39,6 +39,16 @@ public class ShoppingCart {
             }
         }
     }
+    
+    public int calculate(){
+        List<LineItem> li = lineItems;
+        int price = 0;
+        for(LineItem i : li){
+            price += i.getPrice() * i.getQuantity();
+        }
+        
+        return price;
+    }
 
     public static void main(String[] args) {
         ShoppingCart sc = new ShoppingCart();
