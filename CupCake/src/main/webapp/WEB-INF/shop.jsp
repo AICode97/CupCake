@@ -8,7 +8,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List" %>
 <%@page import="logic.CupcakeController"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="data.mappers.CupcakeMapper"%>
 <%@page import="logic.model.enums.CupcakePartEnum"%>
 <%@page import="logic.model.CupcakePart"%>
@@ -16,7 +15,6 @@
 
 <%CupcakeController ccc = new CupcakeController();%>
 <%List<CupcakePart> asd = ccc.getCupcakeParts();%>
-<%--<%CupcakePartEnum top = new CupcakePartEnum();%>--%>
 
 <h1>Shop</h1>
 
@@ -28,9 +26,9 @@
             <label>You have selected: </label>
             
             <select class="ccTopList" name="topOption">
-                <% for (CupcakePart a : asd) {
-                        out.println(a.getName());
-                    }
+                <% for (CupcakePart a : asd) { %>
+                        <option value="">Test</option>
+                <% } %>
                 
 
 
