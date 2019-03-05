@@ -7,7 +7,8 @@
 <%@include file = "header.jsp" %>
 
 <div class="greyBox">
-    <form method="POST">
+    <form id="registerForm" method="POST">
+        <div id="errorBox" class="alert alert-danger" role="alert"></div>
         <div class="form-group">
             <label>Email</label>
             <input type="email" class="form-control" name="email" placeholder="Email...">
