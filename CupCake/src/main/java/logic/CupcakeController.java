@@ -30,7 +30,7 @@ public class CupcakeController {
         }
     }
 
-    public void addCupcakePart(CupcakePartEnum partType, String name, double price) {
+    public void addCupcakePart(CupcakePartEnum partType, String name, int price) {
         try {
             new CupcakeMapper().addCupcakePart(partType, name, price);
         } catch (SQLException ex) {
