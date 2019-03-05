@@ -9,9 +9,9 @@ import logic.model.User;
 
 /**
  *
- * @author Asger Hermind Sørensen
+ * @author Martin Frederiksen
  */
-public interface IInvoiceMapper {
+public interface IOrderMapper {
     void addOrder(ShoppingCart sc, User user) throws SQLException;
     void addOrderLine(int id, LineItem li) throws SQLException;
     void addInvoice(int id, ShoppingCart sc) throws SQLException;

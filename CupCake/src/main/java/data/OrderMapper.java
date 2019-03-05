@@ -17,11 +17,11 @@ import logic.model.User;
  *
  * @author Martin Frederiksen
  */
-public class InvoiceMapper implements IInvoiceMapper {
+public class OrderMapper implements IOrderMapper {
 
     DBConnector connector;
 
-    public InvoiceMapper() {
+    public OrderMapper() {
         connector = new DBConnector();
     }
 
@@ -169,7 +169,7 @@ public class InvoiceMapper implements IInvoiceMapper {
     }
 
     public static void main(String[] args) {
-        /*InvoiceMapper im = new InvoiceMapper();
+        /*OrderMapper im = new OrderMapper();
         ShoppingCart sc = new ShoppingCart();
         CupcakeController cc = new CupcakeController();
         UserMapper um = new UserMapper();
@@ -184,7 +184,7 @@ public class InvoiceMapper implements IInvoiceMapper {
             ex.printStackTrace();
         }*/
 
-        InvoiceMapper im = new InvoiceMapper();
+        OrderMapper im = new OrderMapper();
         try {
             for (Order o : im.getAllOrders()) {
                 System.out.println(o.getOrderId());
