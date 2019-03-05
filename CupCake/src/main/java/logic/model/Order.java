@@ -36,7 +36,7 @@ public class Order {
         return lineItems;
     }
     
-    public double getTotalPrice() {
+    public int getTotalPrice() {
         int total = 0;
         for(LineItem li : lineItems)
             total += li.getPrice();
