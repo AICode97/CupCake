@@ -7,7 +7,7 @@
 <%@include file = "header.jsp" %>
 
 <div class="greyBox">
-    <form method="POST">
+    <form id="loginForm" method="POST">
         <div class="form-group">
             <label>Username</label>
             <input type="text" class="form-control" name="username" placeholder="Username..." maxlength="25">
@@ -19,6 +19,6 @@
         <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/CommandController?command=login">Login</button>
     </form>
 </div>
-<image id="ccimg" src="Images/CupCakeIMG.jpg" width="30%" height="30%"/>
+<image id="ccimg" src="images/CupCakeIMG.jpg" width="30%" height="30%"/>
 
 <%@include file = "footer.jsp" %>

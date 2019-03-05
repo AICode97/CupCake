@@ -47,7 +47,7 @@ html, body {
 }
 
 .navbar-brand {
-    background-image: url("../Images/CupCake_Logo.png");
+    background-image: url("../images/CupCake_Logo.png");
     background-size: cover;
     width: 100px;
     height: 50px;
