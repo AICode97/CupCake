@@ -99,6 +99,9 @@ CREATE TABLE `cupcake`.`cupcakes` (
 );
 
 INSERT INTO `cupcake`.`users` VALUES ('Vikke', 'vikkedesign@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'ADMIN');
+INSERT INTO `cupcake`.`users` VALUES ('Martin', 'martin@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'CUSTOMER');
+INSERT INTO `cupcake`.`users` VALUES ('William', 'william@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'CUSTOMER');
+INSERT INTO `cupcake`.`users` VALUES ('Asger', 'asger@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'CUSTOMER');
 
 INSERT INTO `cupcake`.`cupcakeBottoms` (`name`, `price`) VALUES 
 ('Chocolate', 5.00),
@@ -118,7 +121,7 @@ INSERT INTO `cupcake`.`cupcakeTops` (`name`, `price`) VALUES
 ('Lemon', 8.00),
 ('Blue cheese', 9.00);
 
-INSERT INTO `cupcake`.`orders` (`username`) VALUES('vikke'),('vikke'),('vikke'),('vikke');
+INSERT INTO `cupcake`.`orders` (`username`, `date`) VALUES('vikke', current_timestamp()),('vikke', '2019-02-28'),('martin', '2018-06-03'),('asger', '2019-01-01');
 
 INSERT INTO `cupcake`.`orderLines` VALUES
 (1, 8, 4, 3, 42),
