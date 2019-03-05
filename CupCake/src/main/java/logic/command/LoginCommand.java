@@ -32,11 +32,15 @@ public class LoginCommand extends Command {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             
-            if(user.getRole() == RoleEnum.ADMIN)
-                response.sendRedirect(request.getContextPath() + "/admin");
-            else
-                response.sendRedirect(request.getContextPath() + "/customer");
+            if(user.getRole() == RoleEnum.ADMIN) {
+                response.addHeader("redirect", request.getContextPath() + "/admin");
+                request.getRequestDispatcher("/").forward(request, response);
+            } else {
+                response.addHeader("redirect", request.getContextPath() + "/customer");
+                request.getRequestDispatcher("/").forward(request, response);
+            }
         } else {
+            response.addHeader("error", "Incorrect username and/or password");
             request.setAttribute("errormessage", "Incorrect username and/or password");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }

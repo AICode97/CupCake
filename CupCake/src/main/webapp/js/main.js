@@ -8,6 +8,9 @@ $(document).ready(function () {
             e.preventDefault();
             $("#errorBox").html("Please fill out all fields");
             $("#errorBox").show();
+        } else {
+            e.preventDefault();
+            ajax($(this));
         }
     });
 
@@ -22,20 +25,7 @@ $(document).ready(function () {
             $("#errorBox").show();
         } else {
             e.preventDefault();
-            $.ajax({
-                url: $(this).find('button').attr('formaction'),
-                data: $(this).serialize()
-            }).done(function (data) {
-                if($(data).filter('#errorMessage').text() != "") {
-                    $("#errorBox").html($(data).filter('#errorMessage').text());
-                    $("#errorBox").show();
-                    $("#successBox").hide();
-                } else {
-                    $("#successBox").html("Password has successfully been updated");
-                    $("#successBox").show();
-                    $("#errorBox").hide();
-                }
-            });
+            ajax($(this));
         }
     });
 
@@ -59,15 +49,19 @@ function ajax(formObj) {
     $.ajax({
         url: $(formObj).find('button').attr('formaction'),
         data: $(formObj).serialize()
-    }).done(function (data) {
-        if($(data).filter('#errorMessage').text() != "") {
-            $("#errorBox").html($(data).filter('#errorMessage').text());
+    }).done(function (data, textStatus, request) {
+        if (request.getResponseHeader('error') !== null) {
+            $("#errorBox").html(request.getResponseHeader('error'));
             $("#errorBox").show();
             $("#successBox").hide();
         } else {
-            $("#successBox").html("Password has successfully been updated");
-            $("#successBox").show();
-            $("#errorBox").hide();
+            if (request.getResponseHeader('redirect') !== null) {
+                window.location = request.getResponseHeader('redirect');
+            } else if(request.getResponseHeader('success') !== null) {
+                $("#successBox").html(request.getResponseHeader('success'));
+                $("#successBox").show();
+                $("#errorBox").hide();
+            }
         }
     });
 }

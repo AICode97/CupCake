@@ -33,30 +33,25 @@ public class ChangePasswordCommand extends Command {
         if (newPassword2.isEmpty() || newPassword2 == null || currentPassword.isEmpty() || currentPassword == null
                 || newPassword.isEmpty() || newPassword == null) {
             
+            response.addHeader("error", "All fields needs to be filled.");
             request.setAttribute("errormessage", "All fields needs to be filled.");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         } else if (!newPassword.equals(newPassword2)) {
+            response.addHeader("error", "New passwords doesn't match.");
             request.setAttribute("errormessage", "New passwords doesn't match.");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         } else if (valid) {
             int result = uc.changePassword(u.getUsername(), newPassword);
             if (result == -1) {
+                response.addHeader("error", "Something went wrong. Please try again.");
                 request.setAttribute("errormessage", "Something went wrong. Please try again.");
                 request.getRequestDispatcher("/error.jsp").forward(request, response);
             } else {
-                try (PrintWriter out = response.getWriter()) {
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Cupcake</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1>Password was successfully changed.</h1>");
-                    out.println("</body>");
-                    out.println("</html>");
-                }
+                response.addHeader("success", "Password was successfully changed.");
+                request.getRequestDispatcher("/").forward(request, response);
             }
         } else {
+            response.addHeader("error", "Current Password is not correct");
             request.setAttribute("errormessage", "Current Password is not correct");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
