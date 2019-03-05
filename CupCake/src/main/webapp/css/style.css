@@ -10,7 +10,6 @@ and open the template in the editor.
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 html, body {
     font-family: 'Roboto', sans-serif;
-    
 }
 
 .footer {
@@ -25,6 +24,15 @@ html, body {
 
 .greyBox  {
     width: 20%;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+.orderBox {
+    width: 75%;
     margin: 0 auto;
     text-align: center;
     background-color: #f5f5f5;

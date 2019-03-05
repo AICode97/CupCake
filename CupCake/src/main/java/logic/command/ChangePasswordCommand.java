@@ -32,18 +32,9 @@ public class ChangePasswordCommand extends Command {
 
         if (newPassword2.isEmpty() || newPassword2 == null || currentPassword.isEmpty() || currentPassword == null
                 || newPassword.isEmpty() || newPassword == null) {
-            try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Cupcake</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Error: All fields needs to be filled</h1>");
-                out.println("</body>");
-                out.println("</html>");
-            }
-
+            
+            request.setAttribute("errormessage", "All fields needs to be filled.");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         } else if (!newPassword.equals(newPassword2)) {
             request.setAttribute("errormessage", "New passwords doesn't match.");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
