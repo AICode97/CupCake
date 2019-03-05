@@ -66,6 +66,12 @@ html, body {
     border-radius: 10px;
     padding: 1rem;
 }
+.contentBox .nav-item {
+    width: 100%;
+}
+.contentBox .nav {
+    margin-bottom: 3rem;
+}
 
 .tableButton {
     text-align: right;

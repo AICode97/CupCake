@@ -18,6 +18,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>CupCake WebShop</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
@@ -29,14 +30,17 @@
                 <ul class="navbar-nav mr-auto">
                     <% if (u == null) { %>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/login">Login</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/login"><i class="fas fa-sign-in-alt"></i> Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/register">Register</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/register"><i class="far fa-edit"></i> Register</a>
                         </li>
                     <% } else { %>
                         <li class="nav-item">
-                            <a class="nav-link" href="${pageContext.request.contextPath}/CommandController?command=logout">Logout</a>
+                            <a class="nav-link" href="${pageContext.request.contextPath}/customer"><i class="far fa-user"></i> Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/CommandController?command=logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                         </li>
                     <% }%>
                 </ul>
