@@ -30,8 +30,9 @@ public class ProductCommand extends Command {
             sc.setLineItem(new LineItem(bottom, top, qty));
         } else {
             ShoppingCart sc = new ShoppingCart();
-            sc.setLineItem(new LineItem(bottom, top, qty));
+            sc.addLineItem(new LineItem(bottom, top, qty));
             session.setAttribute("ShoppingCart", sc);
         }
+        response.sendRedirect(request.getContextPath() + "/shop");
     }
 }

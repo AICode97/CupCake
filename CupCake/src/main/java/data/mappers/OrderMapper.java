@@ -200,8 +200,8 @@ public class OrderMapper implements IOrderMapper {
         ShoppingCart sc = new ShoppingCart();
         CupcakeController cc = new CupcakeController();
         UserMapper um = new UserMapper();
-        sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 3), 10));
-        sc.setLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 5), cc.getCupcakePart(CupcakePartEnum.TOP, 5), 8));
+        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 3), 10));
+        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 5), cc.getCupcakePart(CupcakePartEnum.TOP, 5), 8));
         try {
             User user = um.getUser("vikke");
             im.addOrder(sc, user);

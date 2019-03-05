@@ -33,30 +33,31 @@
 
     <table class="table">
         <thead class="thead-light">
-                <tr>
-                    <th scope="col">Cupcake Bottom</th>
-                    <th scope="col">Cupcake Topping</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Price</th>
-                </tr>
+            <tr>
+                <th scope="col">Cupcake Bottom</th>
+                <th scope="col">Cupcake Topping</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+            </tr>
         </thead>
         <tbody>
-            <% for(LineItem li : order.getLineItems()) { %>
-                <tr>
-                    <td scope="row"><%= li.getBottom().getName() %></td>
-                    <td><%= li.getTop().getName() %></td>
-                    <td><%= li.getQuantity() %></td>
-                    <td><%= String.valueOf(li.getPrice()) %>,-</td>
-                </tr>
-            <% } %>
+            <% for (LineItem li : order.getLineItems()) {%>
+            <tr>
+                <td scope="row"><%= li.getBottom().getName()%></td>
+                <td><%= li.getTop().getName()%></td>
+                <td><%= li.getQuantity()%></td>
+                <td><%= String.valueOf(li.getPrice())%>,-</td>
+            </tr>
+            <% }%>
             <tr class="table-active">
                 <th>Total</th>
                 <td></td>
                 <td></td>
-                <th><%= String.valueOf(order.getTotalPrice()) %>,-</th>
+                <th><%= String.valueOf(order.getTotalPrice())%>,-</th>
             </tr>
         </tbody>
     </table>
+    <button class="btn btn-info" name="back" onclick="history.back()">Back</button>
 </div>
 
 <%@include file = "../footer.jsp" %>
