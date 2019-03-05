@@ -6,10 +6,8 @@
 
 <%@include file = "header.jsp" %>
 
-<link rel="stylesheet" type="text/css" href="style.css">
 <div class="greyBox">
-    <form action="${pageContext.request.contextPath}/CommandController">
-        <input type="hidden" name="command" value="login">
+    <form method="POST">
         <div class="form-group">
             <label>Username</label>
             <input type="text" class="form-control" name="username" placeholder="Username..." maxlength="25">
@@ -18,10 +16,9 @@
             <label>Password</label>
             <input type="password" class="form-control" name="password" placeholder="Password..."maxlength="25">
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/CommandController?command=login">Login</button>
     </form>
 </div>
 <image id="ccimg" src="Images/CupCakeIMG.jpg" width="30%" height="30%"/>
-
 
 <%@include file = "footer.jsp" %>

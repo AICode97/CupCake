@@ -28,6 +28,9 @@
             
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/shop"><i class="fas fa-shopping-basket"></i> Shop</a>
+                    </li>
                     <% if (u == null) { %>
                         <li class="nav-item">
                             <a class="nav-link" href="${pageContext.request.contextPath}/login"><i class="fas fa-sign-in-alt"></i> Login</a>
