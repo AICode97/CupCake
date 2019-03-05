@@ -71,7 +71,7 @@ public class UserMapper implements IUserMapper {
         ResultSet rs = ps.executeQuery(quary);
 
         while (rs.next()) {
-            users.add(new User(rs.getString("username"), rs.getString("email"), rs.getDouble("balance"), RoleEnum.valueOf(rs.getString("role"))));
+            users.add(new User(rs.getString("username"), rs.getString("email"), rs.getInt("balance"), RoleEnum.valueOf(rs.getString("role"))));
         }
         if(ps != null){
             ps.close();
@@ -91,7 +91,7 @@ public class UserMapper implements IUserMapper {
         User user = null;
         while (rs.next()) {
             if (username.equalsIgnoreCase(rs.getString("username"))) {
-                user = new User(username, rs.getString("email"), rs.getDouble("balance"), RoleEnum.valueOf(rs.getString("role")));
+                user = new User(username, rs.getString("email"), rs.getInt("balance"), RoleEnum.valueOf(rs.getString("role")));
             }
         }
         if(ps != null){

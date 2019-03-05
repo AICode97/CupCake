@@ -10,7 +10,7 @@ import java.util.List;
  * @author Andreas Vikke
  */
 public interface ICupcakeMapper {
-    void addCupcakePart(CupcakePartEnum partType, String name, double price) throws SQLException;
+    void addCupcakePart(CupcakePartEnum partType, String name, int price) throws SQLException;
     List<CupcakePart> getCupcakeParts() throws SQLException;
     CupcakePart getCupcakePartById(CupcakePartEnum partType, int id) throws SQLException;
 }

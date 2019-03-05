@@ -25,7 +25,7 @@ public class CupcakeMapper implements ICupcakeMapper {
 
 
     @Override
-    public void addCupcakePart(CupcakePartEnum partType, String name, double price) throws SQLException {
+    public void addCupcakePart(CupcakePartEnum partType, String name, int price) throws SQLException {
         String quary = "";
         switch(partType) {
             case TOP:
@@ -62,12 +62,12 @@ public class CupcakeMapper implements ICupcakeMapper {
         
         ResultSet rs = stmt.executeQuery(topQuary);
         while (rs.next()) {
-            cupcakes.add(new CupcakePart(rs.getInt("id"), CupcakePartEnum.TOP, rs.getString("name"), rs.getDouble("price")));
+            cupcakes.add(new CupcakePart(rs.getInt("id"), CupcakePartEnum.TOP, rs.getString("name"), rs.getInt("price")));
         }
         
         rs = stmt.executeQuery(bottomQuary);
         while (rs.next()) {
-            cupcakes.add(new CupcakePart(rs.getInt("id"), CupcakePartEnum.BOTTOM, rs.getString("name"), rs.getDouble("price")));
+            cupcakes.add(new CupcakePart(rs.getInt("id"), CupcakePartEnum.BOTTOM, rs.getString("name"), rs.getInt("price")));
         }
         
         return cupcakes;
@@ -92,7 +92,7 @@ public class CupcakeMapper implements ICupcakeMapper {
         
         CupcakePart cupcake = null;
         while (rs.next()) {
-            cupcake = new CupcakePart(rs.getInt("id"), partType, rs.getString("name"), rs.getDouble("price"));
+            cupcake = new CupcakePart(rs.getInt("id"), partType, rs.getString("name"), rs.getInt("price"));
         }
         return cupcake;
     }

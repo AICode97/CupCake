@@ -74,7 +74,7 @@ public class OrderMapper implements IOrderMapper {
             ps.setInt(2, li.getTop().getId());
             ps.setInt(3, li.getBottom().getId());
             ps.setInt(4, li.getQuantity());
-            ps.setDouble(5, li.getPrice() * li.getQuantity());
+            ps.setInt(5, (int) (li.getPrice() * li.getQuantity()));
             ps.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();

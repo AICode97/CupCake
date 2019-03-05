@@ -24,15 +24,16 @@ public class ProductCommand extends Command {
         CupcakePart top = cc.getCupcakePart(CupcakePartEnum.TOP, Integer.parseInt(request.getParameter("top")));
         int qty = Integer.parseInt(request.getParameter("qty"));
         HttpSession session = request.getSession();
+        ShoppingCart sc;
 
         if (session.getAttribute("ShoppingCart") != null) {
-            ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");
-            sc.addLineItem(new LineItem(bottom, top, qty));
+            sc = (ShoppingCart) session.getAttribute("ShoppingCart");
         } else {
-            ShoppingCart sc = new ShoppingCart();
-            sc.addLineItem(new LineItem(bottom, top, qty));
+            sc = new ShoppingCart();
             session.setAttribute("ShoppingCart", sc);
         }
+        sc.addLineItem(new LineItem(bottom, top, qty));
+        
         response.sendRedirect(request.getContextPath() + "/shop");
     }
 }
