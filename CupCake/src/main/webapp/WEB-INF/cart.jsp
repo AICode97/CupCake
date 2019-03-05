@@ -4,23 +4,15 @@
     Author     : Martin Frederiksen
 --%>
 
+<%@page import="logic.model.ShoppingCart"%>
 <%@page import="logic.model.Order"%>
 <%@page import="logic.model.LineItem"%>
 <%@page import="logic.model.LineItem"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@include file = "../header.jsp" %>
 
 <%
-    Order order = (Order) session.getAttribute("order");
+    ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");
 %>
-
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
         <table class="table">
         <thead class="thead-light">
                 <tr>
@@ -31,7 +23,7 @@
                 </tr>
         </thead>
         <tbody>
-            <% for(LineItem li : order.getLineItems()) { %>
+            <% for(LineItem li : sc.getLineItems()) { %>
                 <tr>
                     <td scope="row"><%= li.getBottom().getName() %></td>
                     <td><%= li.getTop().getName() %></td>
@@ -43,9 +35,8 @@
                 <th>Total</th>
                 <td></td>
                 <td></td>
-                <th><%= String.valueOf(order.getTotalPrice()) %>,-</th>
+                <th><%= String.valueOf(sc.calculate()) %>,-</th>
             </tr>
         </tbody>
     </table>
-    </body>
-</html>
+<%@include file = "../footer.jsp" %>
