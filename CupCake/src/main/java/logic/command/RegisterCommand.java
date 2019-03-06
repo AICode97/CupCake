@@ -38,7 +38,7 @@ public class RegisterCommand extends Command {
                 session.setAttribute("user", user);
                 
                 response.addHeader("redirect", request.getContextPath() + "/customer");
-                request.getRequestDispatcher("/").forward(request, response);
+                request.getRequestDispatcher("/customer").forward(request, response);
             }
         }
     }

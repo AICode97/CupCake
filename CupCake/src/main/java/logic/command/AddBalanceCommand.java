@@ -12,7 +12,7 @@ import logic.model.User;
  *
  * @author Martin Frederiksen
  */
-public class addBalanceCommand extends Command {
+public class AddBalanceCommand extends Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

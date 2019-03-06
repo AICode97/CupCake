@@ -33,11 +33,11 @@ public abstract class Command {
             case "checkout":
                 c = new CheckoutCommand();
                 break;
-            case "products":
+            case "addProduct":
                 c = new ProductCommand();
                 break;
             case "addBalance":
-                c = new addBalanceCommand();
+                c = new AddBalanceCommand();
                 break;
             default:
                 c = null;
