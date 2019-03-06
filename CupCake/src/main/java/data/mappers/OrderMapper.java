@@ -35,6 +35,8 @@ public class OrderMapper implements IOrderMapper {
         int result = 0;
         ResultSet rs = null;
 
+        
+        connection.setAutoCommit(false);
         try {
             ps.setString(1, user.getUsername());
             result = ps.executeUpdate();
@@ -45,8 +47,8 @@ public class OrderMapper implements IOrderMapper {
                 addOrderLine(result, li);
             }
             addInvoice(result, sc);
-            connection.setAutoCommit(false);
-
+            
+            connection.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
             connection.rollback();
