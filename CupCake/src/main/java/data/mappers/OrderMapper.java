@@ -46,7 +46,8 @@ public class OrderMapper implements IOrderMapper {
             for (LineItem li : sc.getLineItems()) {
                 addOrderLine(result, li);
             }
-            addInvoice(result, sc);
+            InvoiceMapper im = new InvoiceMapper();
+            im.addInvoice(result, sc);
             
             connection.commit();
         } catch (SQLException ex) {
@@ -89,31 +90,12 @@ public class OrderMapper implements IOrderMapper {
     }
 
     @Override
-    public void addInvoice(int id, ShoppingCart sc) throws SQLException {
-        Connection connection = connector.getConnection();
-        String query = "INSERT INTO invoices(orderId, price) VALUES(?,?);";
-        PreparedStatement ps = connection.prepareCall(query);
-        try {
-            ps.setInt(1, id);
-            ps.setInt(2, sc.calculate());
-            ps.execute();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            connection.rollback();
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
-        }
-    }
-
-    @Override
     public List<Order> getAllOrders() throws SQLException {
         List<Order> orders = new ArrayList();
         Connection connection = connector.getConnection();
         String quary = "SELECT * FROM orders;";
         PreparedStatement ps = connection.prepareStatement(quary);
-        ResultSet rs = ps.executeQuery(quary);
+        ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
             orders.add(new Order(rs.getInt("orderId"), rs.getString("username"), rs.getDate("date"), getLineItemsById(rs.getInt("orderId"))));
