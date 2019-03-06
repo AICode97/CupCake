@@ -17,7 +17,7 @@
             <label>Password</label>
             <input type="password" class="form-control" name="password" placeholder="Password..."maxlength="25">
         </div>
-        <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/CommandController?command=login">Login</button>
+        <button type="submit" class="btn btn-primary" formaction="CommandController?command=login">Login</button>
     </form>
 </div>
 <image id="ccimg" src="images/CupCakeIMG.jpg" width="30%" height="30%"/>

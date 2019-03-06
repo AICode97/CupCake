@@ -21,7 +21,7 @@
             <label>Password</label>
             <input type="password" class="form-control" name="password" placeholder="Password...">
         </div>
-        <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/CommandController?command=register">Register</button>
+        <button type="submit" class="btn btn-primary" formaction="CommandController?command=register">Register</button>
     </form>
 </div>
 
