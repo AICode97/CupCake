@@ -26,16 +26,8 @@ public class CheckoutCommand extends Command {
         //ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");
         UserController uc = new UserController();
 
-        ShoppingCart sc = new ShoppingCart();
-        CupcakeController ccc = new CupcakeController();
-
-        sc.addLineItem(new LineItem(ccc.getCupcakePart(CupcakePartEnum.TOP, 1), ccc.getCupcakePart(CupcakePartEnum.TOP, 1), 2));
-        sc.addLineItem(new LineItem(ccc.getCupcakePart(CupcakePartEnum.TOP, 1), ccc.getCupcakePart(CupcakePartEnum.TOP, 1), 2));
-        sc.addLineItem(new LineItem(ccc.getCupcakePart(CupcakePartEnum.TOP, 2), ccc.getCupcakePart(CupcakePartEnum.TOP, 3), 2));
-        sc.addLineItem(new LineItem(ccc.getCupcakePart(CupcakePartEnum.TOP, 2), ccc.getCupcakePart(CupcakePartEnum.TOP, 3), 2));
-        sc.addLineItem(new LineItem(ccc.getCupcakePart(CupcakePartEnum.TOP, 1), ccc.getCupcakePart(CupcakePartEnum.TOP, 1), 2));
-        sc.addLineItem(new LineItem(ccc.getCupcakePart(CupcakePartEnum.TOP, 5), ccc.getCupcakePart(CupcakePartEnum.TOP, 8), 2));
-        sc.addLineItem(new LineItem(ccc.getCupcakePart(CupcakePartEnum.TOP, 5), ccc.getCupcakePart(CupcakePartEnum.TOP, 7), 2));
+        ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");
+        
 
         if (user.getBalance() >= sc.calculate()) {
             uc.changeBalance(user, sc.calculate());
