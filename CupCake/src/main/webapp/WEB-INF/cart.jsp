@@ -61,4 +61,10 @@
     <div class="form-group">
         <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/CommandController?command=checkout">Checkout</button>
 </form>
+
+<form id="removeItem" method="POST">
+    
+    <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/CommandController?command=removeItem">Remove Item</button>
+</form>
+
 <%@include file = "../footer.jsp" %>
