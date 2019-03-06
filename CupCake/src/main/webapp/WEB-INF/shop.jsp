@@ -44,7 +44,7 @@
             <label>Quantity</label>
             <input type="number" class="form-control" name="qty" placeholder="Quantity" value="1">
         </div>
-        <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/CommandController?command=addProduct">Submit Order</button>
+        <button type="submit" class="btn btn-primary" formaction="CommandController?command=addProduct">Submit Order</button>
     </form>
 </div>
 

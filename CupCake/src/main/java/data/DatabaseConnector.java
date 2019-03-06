@@ -50,4 +50,16 @@ public class DatabaseConnector {
     public PreparedStatement preparedStatement(String sql, int indicator) throws SQLException{
         return connection.prepareStatement(sql, indicator);
     }
+    
+    public void rollBack() throws SQLException{
+        connection.rollback();
+    }
+    
+    public void autoCommit(boolean flag) throws SQLException{
+        connection.setAutoCommit(flag);
+    }
+    
+    public void commit() throws SQLException{
+        connection.commit();
+    }
 }

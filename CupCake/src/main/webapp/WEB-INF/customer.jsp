@@ -12,10 +12,10 @@
         <h1>Customer Page</h1>
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/customer"><i class="far fa-user"></i> Account Information</a>
+                <a class="nav-link" href="customer"><i class="far fa-user"></i> Account Information</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/customer?origin=orders"><i class="far fa-list-alt"></i> Orders</a>
+                <a class="nav-link" href="customer?origin=orders"><i class="far fa-list-alt"></i> Orders</a>
             </li>
         </ul>
     </div>
