@@ -17,37 +17,32 @@
 <%CupcakeController ccc = new CupcakeController();%>
 <%List<CupcakePart> asd = ccc.getCupcakeParts();%>
 
-<h1>Shop</h1>
-
 <h3>Select a top and a bottom for your amazing CupCake</h3>
 <form id="shopForm" method="POST">
-    <fieldset>
-        <legend>Cupcake Tops</legend>
-        <p>
-            <label>You have selected: </label>
-            <select class="ccListSelection" name="top">
-                <% for (CupcakePart a : asd) { %>
+    <div class="form-group col-md-4">
+      <label>Cupcake Tops:</label>
+      <select class="form-control" name="top">
+        <% for (CupcakePart a : asd) { %>
                 <%if (a.getPart() == CupcakePartEnum.TOP){%>
                 <option value=<%= a.getId() %>><%=a.getName()%></option>
                 <% }} %>
-            </select>
-        </p>
-    </fieldset>
-    <fieldset>
-        <legend>Cupcake Bottoms</legend>
-        <p>
-            <label>You have selected: </label>
-            <select class="ccListSelection" name="bottom">
-                <% for (CupcakePart a : asd) { %>
-                <%if (a.getPart() == CupcakePartEnum.BOTTOM) {%>
+      </select>
+    </div>
+      <div class="form-group col-md-4">
+      <label>Cupcake Bottoms:</label>
+      <select class="form-control" name="bottom">
+        <% for (CupcakePart a : asd) { %>
+                <%if (a.getPart() == CupcakePartEnum.BOTTOM){%>
                 <option value=<%= a.getId() %>><%=a.getName()%></option>
-                <% }}%>
-            </select>
-        </p>
-    </fieldset>
-    <input type="number" name="qty" placeholder="Quantity">
-    <button type="submit" class="btn btn-primary" 
-            formaction="${pageContext.request.contextPath}/CommandController?command=products">submit order</button>
+                <% }} %>
+      </select>
+      </div>
+     <div class="form-group col-md-2">
+      <label>Quantity</label>
+      <input type="number" class="form-control" name="qty" placeholder="Quantity" value="1">
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/CommandController?command=products">Submit Order</button>
 </form>
 
 
