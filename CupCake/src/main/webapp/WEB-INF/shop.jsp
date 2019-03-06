@@ -13,6 +13,7 @@
 <%@page import="logic.model.CupcakePart"%>
 <%@include file = "../header.jsp" %>
 
+
 <%CupcakeController ccc = new CupcakeController();%>
 <%List<CupcakePart> asd = ccc.getCupcakeParts();%>
 
@@ -24,26 +25,11 @@
         <legend>Cupcake Tops</legend>
         <p>
             <label>You have selected: </label>
-            
-            <select class="ccTopList" name="topOption">
+            <select class="ccListSelection" name="top">
                 <% for (CupcakePart a : asd) { %>
-                        <option value="">Test</option>
-                <% } %>
-                
-
-
-                %>
-                <%--
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.TOP, 1)%>>første</option>
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.TOP, 2)%>>anden</option>
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.TOP, 3)%>>tredje</option>
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.TOP, 4)%>>Fjerde</option>
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.TOP, 5)%>>Femte</option>
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.TOP, 6)%>>sjete</option>
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.TOP, 7)%>>syvende</option>
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.TOP, 8)%>>ottende</option>
-                <option value=<%= ccm.getCupcakePartById(CupcakePartEnum.TOP, 9)%>>niende</option>
-                --%>
+                <%if (a.getPart() == CupcakePartEnum.TOP){%>
+                <option value=<%= a.getId() %>><%=a.getName()%></option>
+                <% }} %>
             </select>
         </p>
     </fieldset>
@@ -51,12 +37,15 @@
         <legend>Cupcake Bottoms</legend>
         <p>
             <label>You have selected: </label>
-            <select class="ccTopList" name="bottomOption">
-
+            <select class="ccListSelection" name="bottom">
+                <% for (CupcakePart a : asd) { %>
+                <%if (a.getPart() == CupcakePartEnum.BOTTOM) {%>
+                <option value=<%= a.getId() %>><%=a.getName()%></option>
+                <% }}%>
             </select>
         </p>
     </fieldset>
-    <input type="number" name="quantity" placeholder="Quantity">
+    <input type="number" name="qty" placeholder="Quantity">
     <button type="submit" class="btn btn-primary" 
             formaction="${pageContext.request.contextPath}/CommandController?command=products">submit order</button>
 </form>
