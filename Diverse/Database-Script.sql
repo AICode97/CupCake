@@ -33,13 +33,13 @@ CREATE TABLE `cupcake`.`invoices` (
   `orderId` INT NOT NULL,
   `price` INT NOT NULL,
   `date` DATETIME NOT NULL default current_timestamp,
-  PRIMARY KEY (`invoiceId`),
+  PRIMARY KEY (`invoiceId`), 
+  UNIQUE INDEX `orderId_UNIQUE` (`orderId` ASC) VISIBLE,
   CONSTRAINT `InvoiceToOrderFK`
     FOREIGN KEY (`orderId`)
     REFERENCES `cupcake`.`orders` (`orderId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
-
 );
 
 CREATE TABLE `cupcake`.`cupcakeBottoms` (
