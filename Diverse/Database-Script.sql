@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS `cupcake`.`cupcakes`;
 DROP TABLE IF EXISTS `cupcake`.`orderLines`;
 DROP TABLE IF EXISTS `cupcake`.`invoices`;
 DROP TABLE IF EXISTS `cupcake`.`orders`;
@@ -79,23 +78,6 @@ CREATE TABLE `cupcake`.`orderLines` (
     REFERENCES `cupcake`.`cupcakeBottoms` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
-);
-
-CREATE TABLE `cupcake`.`cupcakes` (
-  `bottomId` INT NOT NULL,
-  `topId` INT NOT NULL,
-  PRIMARY KEY (`bottomId`, `topId`),
-  INDEX `cupcakeTopFK_idx` (`topId` ASC) VISIBLE,
-  CONSTRAINT `cupcakeBottomFK`
-    FOREIGN KEY (`bottomId`)
-    REFERENCES `cupcake`.`cupcakeBottoms` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `cupcakeTopFK`
-    FOREIGN KEY (`topId`)
-    REFERENCES `cupcake`.`cupcakeTops` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
 );
 
 INSERT INTO `cupcake`.`users` VALUES ('Vikke', 'asger@gmail.com', '81DC9BDB52D04DC20036DBD8313ED055', 100, 'ADMIN');
