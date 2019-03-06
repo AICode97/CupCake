@@ -21,5 +21,5 @@
         <label>New password</label>
         <input type="password" class="form-control" name="newPassword2" placeholder="Type your new password again...">
     </div>
-    <button type="submit" class="btn btn-primary" formaction="${pageContext.request.contextPath}/CommandController?command=changePassword">Change password</button>
+    <button type="submit" class="btn btn-primary" formaction="CommandController?command=changePassword">Change password</button>
 </form>

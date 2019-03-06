@@ -11,13 +11,13 @@
         <h1>Admin Page</h1>
         <ul class="nav">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/admin"><i class="far fa-user"></i> Users</a>
+                <a class="nav-link" href="admin"><i class="far fa-user"></i> Users</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/admin?origin=orders"><i class="far fa-list-alt"></i> Orders</a>
+                <a class="nav-link" href="admin?origin=orders"><i class="far fa-list-alt"></i> Orders</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/admin?origin=changepassword"><i class="far fa-edit"></i> Change Password</a>
+                <a class="nav-link" href="admin?origin=changepassword"><i class="far fa-edit"></i> Change Password</a>
             </li>
         </ul>
     </div>

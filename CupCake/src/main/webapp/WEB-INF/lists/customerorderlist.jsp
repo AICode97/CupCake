@@ -71,7 +71,7 @@
                 newel.appendChild(newtd);
             });
             var newtd = document.createElement('td');
-            newtd.innerHTML = '<a href="${pageContext.request.contextPath}/order?orderId=' + entry[0] + '"><button class="btn btn-info">Show Order</button></a>';
+            newtd.innerHTML = '<a href="order?orderId=' + entry[0] + '"><button class="btn btn-info">Show Order</button></a>';
             newtd.setAttribute('class', 'tableButton');
             newel.appendChild(newtd);
             parenttbl.appendChild(newel);

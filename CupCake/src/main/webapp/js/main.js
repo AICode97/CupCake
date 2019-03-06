@@ -45,6 +45,7 @@ $(document).ready(function () {
     });
 });
 
+// Ajax Command
 function ajax(formObj) {
     $.ajax({
         url: $(formObj).find('button').attr('formaction'),

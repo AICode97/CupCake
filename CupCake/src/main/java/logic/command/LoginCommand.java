@@ -34,10 +34,10 @@ public class LoginCommand extends Command {
             
             if(user.getRole() == RoleEnum.ADMIN) {
                 response.addHeader("redirect", request.getContextPath() + "/admin");
-                request.getRequestDispatcher("/").forward(request, response);
+                request.getRequestDispatcher("/admin").forward(request, response);
             } else {
                 response.addHeader("redirect", request.getContextPath() + "/customer");
-                request.getRequestDispatcher("/").forward(request, response);
+                request.getRequestDispatcher("/customer").forward(request, response);
             }
         } else {
             response.addHeader("error", "Incorrect username and/or password");

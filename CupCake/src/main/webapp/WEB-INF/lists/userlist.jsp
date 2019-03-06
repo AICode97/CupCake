@@ -24,6 +24,7 @@
             <th scope="col">#</th>
             <th scope="col">Username</th>
             <th scope="col">Email</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody id="userList">
@@ -77,6 +78,10 @@
                 newtd.innerHTML = eentry;
                 newel.appendChild(newtd);
             });
+            var newtd = document.createElement('td');
+            newtd.innerHTML = '<a href="admin?origin=orders&username=' + entry[1] + '"><button class="btn btn-info">Show Orders</button></a>';
+            newtd.setAttribute('class', 'tableButton');
+            newel.appendChild(newtd);
             parenttbl.appendChild(newel);
         });
     }

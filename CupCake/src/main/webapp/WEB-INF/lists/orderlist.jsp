@@ -10,12 +10,17 @@
 
 <%
     OrderController oc = new OrderController();
-    List<Order> orders = oc.getAllOrders();
+    String username = request.getParameter("username");
+    List<Order> orders;
+    if(username == null)
+        orders = oc.getAllOrders();
+    else
+        orders = oc.getOrderByUser(username);
 %>
 
 <button class="btn btn-info" onclick="orderById();">Order by Id</button>
 <button class="btn btn-info" onclick="orderByDate();">Order by Date</button>
-<button class="btn btn-info" onclick="orderByCustomer();">Order by Customer</button>
+<button class="btn btn-info" onclick="orderByCustomer();">Order by Username</button>
 <br /><br />
 <table class="table">
     <thead class="thead-dark">
@@ -78,7 +83,7 @@
                 newel.appendChild(newtd);
             });
             var newtd = document.createElement('td');
-            newtd.innerHTML = '<a href="${pageContext.request.contextPath}/order?orderId=' + entry[0] + '"><button class="btn btn-info">Show Order</button></a>';
+            newtd.innerHTML = '<a href="order?orderId=' + entry[0] + '"><button class="btn btn-info">Show Order</button></a>';
             newtd.setAttribute('class', 'tableButton');
             newel.appendChild(newtd);
             parenttbl.appendChild(newel);
