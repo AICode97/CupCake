@@ -43,7 +43,7 @@
         <div class="form-group col-md-2">
             <label>Quantity</label>
             <input type="number" class="form-control" name="qty" placeholder="Quantity" value="1">
-        </div>
+        </div><br />
         <button type="submit" class="btn btn-primary" formaction="CommandController?command=addProduct">Submit Order</button>
     </form>
 </div>
