@@ -1,6 +1,5 @@
 package data.mappers;
 
-import data.DBConnector;
 import data.DataSourceMySql;
 import data.DatabaseConnector;
 import data.interfaces.IOrderMapper;
@@ -39,9 +38,9 @@ public class OrderMapper implements IOrderMapper {
         ResultSet rs = null;
 
         
-        connector.setAutoCommit(false);
         try {
             ps.setString(1, user.getUsername());
+            connector.setAutoCommit(false);
             result = ps.executeUpdate();
             rs = ps.getGeneratedKeys();
             rs.next();
@@ -50,6 +49,7 @@ public class OrderMapper implements IOrderMapper {
                 addOrderLine(result, li);
             }
             InvoiceMapper im = new InvoiceMapper();
+            im.setDataSource(new DataSourceMySql().getDataSource());
             im.addInvoice(result, sc);
             
             connector.commit();
@@ -65,11 +65,10 @@ public class OrderMapper implements IOrderMapper {
         }
     }
 
-    @Override
-    public void addOrderLine(int id, LineItem li) throws SQLException {
-        connector.open();
+    private void addOrderLine(int id, LineItem li) throws SQLException {
         String query = "INSERT INTO orderLines VALUES(?,?,?,?,?);";
         PreparedStatement ps = connector.prepareStatement(query);
+        connector.setAutoCommit(false);
         try {
             ps.setInt(1, id);
             ps.setInt(2, li.getTop().getId());
@@ -77,11 +76,12 @@ public class OrderMapper implements IOrderMapper {
             ps.setInt(4, li.getQuantity());
             ps.setInt(5, (int) (li.getPrice() * li.getQuantity()));
             ps.execute();
+            connector.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
             connector.rollback();
         } finally {
-            connector.close();
+            connector.setAutoCommit(true);
         }
     }
 
