@@ -31,6 +31,7 @@
                 <th scope="col">Cupcake Topping</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
+                <th scope="col">Select</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +41,13 @@
                 <td><%= li.getTop().getName()%></td>
                 <td><%= li.getQuantity()%></td>
                 <td><%= String.valueOf(li.getPrice())%>,-</td>
+                <td> 
+                    <form id="removeItem" method="POST"> 
+                        <button type="submit" class="btn btn-primary" 
+                                formaction="CommandController?command=deleteItem&top=<%=li.getTop().getId()%>&bottom=<%=li.getBottom().getId()%>&qty=1">Delete
+                        </button>
+                    </form>
+                </td>
             </tr>
             <% }%>
             <tr class="table-active">

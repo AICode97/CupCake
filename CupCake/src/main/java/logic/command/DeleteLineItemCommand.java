@@ -33,6 +33,13 @@ public class DeleteLineItemCommand extends Command {
         if (session.getAttribute("ShoppingCart") != null) {
             sc = (ShoppingCart) session.getAttribute("ShoppingCart");
             sc.removeLineItem(li);
+            
+            response.addHeader("success", "Successfully deleted item.");
+            request.getRequestDispatcher("/cart").forward(request, response);
+        } else {
+            response.addHeader("error", "Nothing to delete.");
+            request.setAttribute("errormessage", "Nothing to delete.");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
         
         
