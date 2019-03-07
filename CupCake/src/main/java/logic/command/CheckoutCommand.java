@@ -6,13 +6,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import logic.CupcakeController;
 import logic.OrderController;
 import logic.UserController;
-import logic.model.LineItem;
 import logic.model.ShoppingCart;
 import logic.model.User;
-import logic.model.enums.CupcakePartEnum;
 
 /**
  *
@@ -25,9 +22,9 @@ public class CheckoutCommand extends Command {
         HttpSession session = request.getSession();
 
         User user = (User) session.getAttribute("user");
-        UserController uc = new UserController();
+        UserController uc = new UserController(new DataSourceMySql().getDataSource());
         uc.setDataSource(new DataSourceMySql().getDataSource());
-        OrderController oc = new OrderController();
+        OrderController oc = new OrderController(new DataSourceMySql().getDataSource());
         oc.setDataSource(new DataSourceMySql().getDataSource());
 
         ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");

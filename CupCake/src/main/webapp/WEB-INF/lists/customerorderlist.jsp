@@ -11,7 +11,7 @@
 <%@page import="java.util.List"%>
 
 <%
-    OrderController oc = new OrderController();
+    OrderController oc = new OrderController(new DataSourceMySql().getDataSource());
     oc.setDataSource(new DataSourceMySql().getDataSource());
     User us = (User) session.getAttribute("user");
     List<Order> orders = oc.getOrderByUser(us.getUsername());

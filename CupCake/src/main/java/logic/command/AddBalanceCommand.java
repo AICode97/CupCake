@@ -20,7 +20,7 @@ public class AddBalanceCommand extends Command {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         String username = user.getUsername();
-        UserController uc = new UserController();
+        UserController uc = new UserController(new DataSourceMySql().getDataSource());
         uc.setDataSource(new DataSourceMySql().getDataSource());
         int balance;
         balance = (request.getParameter("balance").isEmpty()) ? 0 : Integer.parseInt(request.getParameter("balance"));

@@ -26,7 +26,7 @@ public class OrderServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        OrderController oc = new OrderController();
+        OrderController oc = new OrderController(new DataSourceMySql().getDataSource());
         oc.setDataSource(new DataSourceMySql().getDataSource());
         HttpSession session = request.getSession();
         

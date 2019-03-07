@@ -14,6 +14,11 @@ import logic.model.User;
  */
 public class OrderController {
     private OrderMapper om;
+    
+    public OrderController(DataSource ds) {
+        om = new OrderMapper();
+        om.setDataSource(ds);
+    }
 
     public OrderMapper setDataSource(DataSource ds) {
         om = new OrderMapper();
