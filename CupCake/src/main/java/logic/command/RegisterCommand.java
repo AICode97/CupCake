@@ -35,12 +35,8 @@ public class RegisterCommand extends Command {
                 request.setAttribute("errormessage", "User with same username or email is already registered");
                 request.getRequestDispatcher("/error.jsp").forward(request, response);
             } else {
-                User user = rc.getUser(username);
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                
-                response.addHeader("redirect", request.getContextPath() + "/customer");
-                request.getRequestDispatcher("/customer").forward(request, response);
+                response.addHeader("redirect", request.getContextPath() + "/login");
+                request.getRequestDispatcher("/login").forward(request, response);
             }
         }
     }

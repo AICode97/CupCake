@@ -13,6 +13,8 @@ CREATE TABLE `cupcake`.`users` (
   `balance` INT NOT NULL DEFAULT 0,
   `role` ENUM('ADMIN', 'CUSTOMER') NOT NULL DEFAULT 'CUSTOMER',
   PRIMARY KEY (`username`),
+  INDEX `usernameIndex` (`username` ASC) VISIBLE,
+  INDEX `emailIndex` (`email` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
 );
 
@@ -21,6 +23,8 @@ CREATE TABLE `cupcake`.`orders` (
   `username` VARCHAR(45) NOT NULL,
   `date` DATETIME NOT NULL DEFAULT current_timestamp,
   PRIMARY KEY (`orderId`),
+  INDEX `usernameIndex` (`username` ASC) VISIBLE,
+  INDEX `dateIndex` (`date` ASC) VISIBLE,
   CONSTRAINT `UsernameToUserFK`
     FOREIGN KEY (`username`)
     REFERENCES `cupcake`.`users` (`username`)
