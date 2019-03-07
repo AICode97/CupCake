@@ -13,7 +13,6 @@ import logic.model.User;
  */
 public interface IOrderMapper {
     void addOrder(ShoppingCart sc, User user) throws SQLException;
-    void addOrderLine(int id, LineItem li) throws SQLException;
     List<Order> getAllOrders() throws SQLException;
     Order getOrderById(int id) throws SQLException;
     List<Order> getOrderByUser(String username) throws SQLException;
