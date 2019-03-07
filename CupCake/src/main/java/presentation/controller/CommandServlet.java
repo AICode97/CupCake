@@ -28,7 +28,11 @@ public class CommandServlet extends HttpServlet {
             c.execute(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("errormessage", "Unknown Command");
+            String error = "Unkown Command<br/><br/>";
+            for(StackTraceElement st : e.getStackTrace()) {
+                error += st.toString() + "<br/>";
+            }
+            request.setAttribute("errormessage", error);
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
