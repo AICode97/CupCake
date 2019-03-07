@@ -47,6 +47,21 @@ footer {
     background-color: #f5f5f5;
 }
 
+.card {
+    float: left;
+    width: 18%;
+    margin: 19px;
+}
+.card .form-group {
+    float: right;
+}
+.card .form-group:first-of-type {
+    float: left;
+}
+.card button {
+    margin-top: 2rem;
+}
+
 #errorBox, #successBox, #balanceError {
     display: none;
 }
