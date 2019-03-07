@@ -41,11 +41,14 @@
                 <td><%= li.getTop().getName()%></td>
                 <td><%= li.getQuantity()%></td>
                 <td><%= String.valueOf(li.getPrice())%>,-</td>
-                <td> 
+                <td>
                     <form id="removeItem" method="POST"> 
-                        <button type="submit" class="btn btn-primary" 
-                                formaction="CommandController?command=deleteItem&top=<%=li.getTop().getId()%>&bottom=<%=li.getBottom().getId()%>&qty=1">Delete
+                        <button type="submit" class="btn btn-primary" id="deleteButton"
+                                formaction="CommandController?command=deleteItem&top=<%=li.getTop().getId()%>&bottom=<%=li.getBottom().getId()%>">Delete
                         </button>
+                        <div class="form-group col-md-2">
+                            <input type="number" class="form-control" id="delete" name="qty" placeholder="Quantity" value="1">
+                        </div><br />
                     </form>
                 </td>
             </tr>

@@ -159,3 +159,11 @@ footer {
 .form-group{
     margin: 0 auto;
 }
+
+#deleteButton{
+    float: right;
+}
+
+#delete{
+    float: left;
+}
