@@ -1,5 +1,6 @@
 package logic.command;
 
+import data.DataSourceMySql;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ public class ProductCommand extends Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CupcakeController cc = new CupcakeController();
+        cc.setDataSource(new DataSourceMySql().getDataSource());
         CupcakePart bottom = cc.getCupcakePart(CupcakePartEnum.BOTTOM, Integer.parseInt(request.getParameter("bottom")));
         CupcakePart top = cc.getCupcakePart(CupcakePartEnum.TOP, Integer.parseInt(request.getParameter("top")));
         int qty = Integer.parseInt(request.getParameter("qty"));

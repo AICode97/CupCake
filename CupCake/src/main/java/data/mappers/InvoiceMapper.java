@@ -1,13 +1,14 @@
 package data.mappers;
 
-import data.DBConnector;
+import data.DataSourceMySql;
+import data.DatabaseConnector;
 import data.interfaces.IInvoiceMapper;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.sql.DataSource;
 import logic.CupcakeController;
 import logic.model.Invoice;
 import logic.model.LineItem;
@@ -19,39 +20,33 @@ import logic.model.enums.CupcakePartEnum;
  * @author Martin Frederiksen
  */
 public class InvoiceMapper implements IInvoiceMapper{
-    DBConnector connector;
+    DatabaseConnector connector = new DatabaseConnector();
     
-    public InvoiceMapper() {
-        connector = new DBConnector();
+    public void setDataSource(DataSource ds){
+        connector.setDataSource(ds);
     }
-    
 
     @Override
     public List<Invoice> getAllInvoices() throws SQLException {
-        Connection connection = connector.getConnection();
+        connector.open();
         List<Invoice> invoices = new ArrayList();
         String quary = "SELECT * FROM invoices;";
-        PreparedStatement ps = connection.prepareStatement(quary);
+        PreparedStatement ps = connector.prepareStatement(quary);
         ResultSet rs = ps.executeQuery();
         
         while(rs.next()){
             invoices.add(new Invoice(rs.getInt("invoiceId"), rs.getInt("orderId"), rs.getInt("price"), rs.getDate("date")));
         }
-        if (ps != null) {
-            ps.close();
-        }
-        if (rs != null) {
-            rs.close();
-        }
+        connector.close();
         return invoices;
     }
 
     @Override
     public Invoice getInvoiceById(int invoiceId) throws SQLException {
-        Connection connection = connector.getConnection();
+        connector.open();
         Invoice invoice = null;
         String quary = "SELECT * FROM invoices WHERE invoiceId = ?;";
-        PreparedStatement ps = connection.prepareStatement(quary);
+        PreparedStatement ps = connector.prepareStatement(quary);
         ps.setInt(1, invoiceId);
         ResultSet rs = ps.executeQuery();
         
@@ -60,43 +55,37 @@ public class InvoiceMapper implements IInvoiceMapper{
                 invoice = new Invoice(invoiceId, rs.getInt("orderId"), rs.getInt("price"), rs.getDate("date"));
             }
         }
-        if (ps != null) {
-            ps.close();
-        }
-        if (rs != null) {
-            rs.close();
-        }
+        connector.close();
         return invoice;
     }
 
     @Override
     public void addInvoice(int id, ShoppingCart sc) throws SQLException {
-        Connection connection = connector.getConnection();
+        connector.open();
         String query = "INSERT INTO invoices(orderId, price) VALUES(?,?);";
-        PreparedStatement ps = connection.prepareCall(query);
-        connection.setAutoCommit(false);
+        PreparedStatement ps = connector.prepareStatement(query);
+        connector.setAutoCommit(false);
         try {
             ps.setInt(1, id);
             ps.setInt(2, sc.calculate());
             ps.execute();
-        connection.commit();
+        connector.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            connection.rollback();
-            if (connection != null) {
-                connection.rollback();
+            connector.rollback();
+            if (connector != null) {
+                connector.rollback();
             }
         } finally {
-            connection.setAutoCommit(true);
-            if (ps != null) {
-                ps.close();
-            }
+            connector.setAutoCommit(true);
+            connector.close();
         }
     }
     
     
     public static void main(String[] args) {
         InvoiceMapper im = new InvoiceMapper();
+        im.setDataSource(new DataSourceMySql().getDataSource());
         ShoppingCart sc = new ShoppingCart();
         CupcakeController cc = new CupcakeController();
         UserMapper um = new UserMapper();
@@ -108,6 +97,7 @@ public class InvoiceMapper implements IInvoiceMapper{
             }
             Invoice invoice = im.getInvoiceById(3);
             System.out.println(invoice.getPrice());
+            im.addInvoice(8, sc);
             
             //im.addInvoice(5, sc);
         }catch(Exception ex){

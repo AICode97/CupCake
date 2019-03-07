@@ -4,12 +4,14 @@
     Author     : Andreas Vikke
 --%>
 
+<%@page import="data.DataSourceMySql"%>
 <%@page import="logic.model.Order"%>
 <%@page import="logic.OrderController"%>
 <%@page import="java.util.List"%>
 
 <%
     OrderController oc = new OrderController();
+    oc.setDataSource(new DataSourceMySql().getDataSource());
     String username = request.getParameter("username");
     List<Order> orders;
     if(username == null)

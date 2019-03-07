@@ -1,5 +1,6 @@
 package logic.command;
 
+import data.DataSourceMySql;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ public class AddBalanceCommand extends Command {
         User user = (User) session.getAttribute("user");
         String username = user.getUsername();
         UserController uc = new UserController();
+        uc.setDataSource(new DataSourceMySql().getDataSource());
         int balance;
         balance = (request.getParameter("balance").isEmpty()) ? 0 : Integer.parseInt(request.getParameter("balance"));
         uc.addBalance(user, balance);

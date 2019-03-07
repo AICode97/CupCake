@@ -1,5 +1,6 @@
 package logic.command;
 
+import data.DataSourceMySql;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ public class RegisterCommand extends Command {
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         } else {
             UserController rc = new UserController();
+            rc.setDataSource(new DataSourceMySql().getDataSource());
             int result = rc.addUser(username, email, password);
             if (result == -1) {
                 response.addHeader("error", "User with same username or email is already registered");

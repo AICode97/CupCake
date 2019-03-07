@@ -1,11 +1,13 @@
 package logic;
 
+import data.DataSourceMySql;
 import logic.model.User;
 import data.mappers.UserMapper;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
+import javax.sql.DataSource;
 import javax.xml.bind.DatatypeConverter;
 
 /**
@@ -14,9 +16,17 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class UserController {
 
+    private UserMapper um;
+
+    public UserMapper setDataSource(DataSource ds) {
+        um = new UserMapper();
+        um.setDataSource(ds);
+        return um;
+    }
+
     public List<User> getUsers() {
         try {
-            return new UserMapper().getUsers();
+            return um.getUsers();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -25,7 +35,7 @@ public class UserController {
 
     public User getUser(String username) {
         try {
-            return new UserMapper().getUser(username);
+            return um.getUser(username);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -38,57 +48,72 @@ public class UserController {
             md.update(password.getBytes());
             byte[] digest = md.digest();
             String passwordHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
-         
-            return new UserMapper().addUser(username, email, passwordHash);
+
+            return um.addUser(username, email, passwordHash);
         } catch (SQLException | NoSuchAlgorithmException ex) {
             ex.printStackTrace();
             return -1;
         }
     }
-    
+
     public int changePassword(String username, String newPassword) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            
-          
+
             md.update(newPassword.getBytes());
             byte[] digest = md.digest();
             String passwordHash2 = DatatypeConverter.printHexBinary(digest).toUpperCase();
-            
-            return new UserMapper().changePassword(username, passwordHash2);
+
+            return um.changePassword(username, passwordHash2);
         } catch (SQLException | NoSuchAlgorithmException ex) {
             ex.printStackTrace();
             return -1;
         }
     }
-    
-    public void addBalance(User user, int balance){
+
+    public void addBalance(User user, int balance) {
         try {
-            new UserMapper().addBalance(user, balance);
+            um.addBalance(user, balance);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void changeBalance(User user, int balance) {
+        try {
+            um.checkout(user, balance);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
     
-    public void changeBalance(User user, int balance){
-        try {
-            new UserMapper().checkout(user, balance);
-        } catch (SQLException ex) {
+    public boolean validateUser(String username, String password) {
+        if(username == null || password == null || username.equals("") || password.equals("")) return false;
+        try {            
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            byte[] digest = md.digest();
+            String passwordHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
+            
+            return um.validateUser(username, passwordHash);
+        } catch (SQLException | NoSuchAlgorithmException ex) {
             ex.printStackTrace();
+            return false;
         }
     }
-    
+
     public static void main(String[] args) {
         UserController uc = new UserController();
+        uc.setDataSource(new DataSourceMySql().getDataSource());
         List<User> users = uc.getUsers();
-        for(User u : users){
+        for (User u : users) {
             System.out.println(u.getUsername());
         }
-        /*User user = uc.getUser("Asger");
+        User user = uc.getUser("Asger");
         System.out.println(user.getBalance());
-        uc.addUser("William", "ErDuFærdig?@gmail.com", "1234");*/
+        //uc.addUser("William2", "ErDuFærdig?@gmail.com", "1234");
         System.out.println(uc.getUser("William").getEmail());
+        System.out.println(uc.validateUser("William2", "1234"));
     }
-    
-    
+
 }

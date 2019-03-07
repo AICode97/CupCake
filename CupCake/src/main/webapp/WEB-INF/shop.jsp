@@ -5,6 +5,7 @@
 --%>
 
 
+<%@page import="data.DataSourceMySql"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List" %>
 <%@page import="logic.CupcakeController"%>
@@ -14,8 +15,9 @@
 <%@include file = "../header.jsp" %>
 
 
-<%CupcakeController ccc = new CupcakeController();%>
-<%List<CupcakePart> asd = ccc.getCupcakeParts();%>
+<%CupcakeController ccc = new CupcakeController();
+ccc.setDataSource(new DataSourceMySql().getDataSource());
+List<CupcakePart> asd = ccc.getCupcakeParts();%>
 
 <div class="shopper">
     <form id="shopForm" method="POST">

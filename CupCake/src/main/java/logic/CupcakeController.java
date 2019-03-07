@@ -3,6 +3,7 @@ package logic;
 import data.mappers.CupcakeMapper;
 import java.sql.SQLException;
 import java.util.List;
+import javax.sql.DataSource;
 import logic.model.CupcakePart;
 import logic.model.enums.CupcakePartEnum;
 
@@ -11,10 +12,17 @@ import logic.model.enums.CupcakePartEnum;
  * @author Andreas Vikke
  */
 public class CupcakeController {
+    private CupcakeMapper ccm;
+
+    public CupcakeMapper setDataSource(DataSource ds) {
+        ccm = new CupcakeMapper();
+        ccm.setDataSource(ds);
+        return ccm;
+    }
 
     public List<CupcakePart> getCupcakeParts() {
         try {
-            return new CupcakeMapper().getCupcakeParts();
+            return ccm.getCupcakeParts();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -23,7 +31,7 @@ public class CupcakeController {
 
     public CupcakePart getCupcakePart(CupcakePartEnum partType, int id) {
         try {
-            return new CupcakeMapper().getCupcakePartById(partType, id);
+            return ccm.getCupcakePartById(partType, id);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -32,7 +40,7 @@ public class CupcakeController {
 
     public void addCupcakePart(CupcakePartEnum partType, String name, int price) {
         try {
-            new CupcakeMapper().addCupcakePart(partType, name, price);
+            ccm.addCupcakePart(partType, name, price);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

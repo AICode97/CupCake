@@ -4,6 +4,7 @@
     Author     : William Sehested Huusfeldt
 --%>
 
+<%@page import="data.DataSourceMySql"%>
 <%@page import="logic.model.User"%>
 <%@page import="logic.model.Order"%>
 <%@page import="logic.OrderController"%>
@@ -11,6 +12,7 @@
 
 <%
     OrderController oc = new OrderController();
+    oc.setDataSource(new DataSourceMySql().getDataSource());
     User us = (User) session.getAttribute("user");
     List<Order> orders = oc.getOrderByUser(us.getUsername());
 %>
