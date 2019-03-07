@@ -1,13 +1,12 @@
 package logic.command;
 
+import data.DataSourceMySql;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.UserController;
-import logic.ValidateUserController;
 import logic.model.User;
 
 /**
@@ -24,11 +23,13 @@ public class ChangePasswordCommand extends Command {
         String newPassword = request.getParameter("newPassword");
         String newPassword2 = request.getParameter("newPassword2");
 
-        UserController uc = new UserController();
-
+        UserController uc = new UserController(new DataSourceMySql().getDataSource());
+        uc.setDataSource(new DataSourceMySql().getDataSource());
+        
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
-        boolean valid = new ValidateUserController().validateUser(u.getUsername(), currentPassword);
+        
+        boolean valid = uc.validateUser(u.getUsername(), currentPassword);
 
         if (newPassword2.isEmpty() || newPassword2 == null || currentPassword.isEmpty() || currentPassword == null
                 || newPassword.isEmpty() || newPassword == null) {

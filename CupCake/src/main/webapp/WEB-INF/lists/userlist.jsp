@@ -4,12 +4,14 @@
     Author     : Andreas Vikke
 --%>
 
+<%@page import="data.DataSourceMySql"%>
 <%@page import="java.util.List"%>
 <%@page import="logic.UserController"%>
 <%@page import="logic.model.User"%>
 
 <%
-    UserController uc = new UserController();
+    UserController uc = new UserController(new DataSourceMySql().getDataSource());
+    uc.setDataSource(new DataSourceMySql().getDataSource());
     List<User> users = uc.getUsers();
     int count = 1;
 %>

@@ -14,28 +14,35 @@ import logic.model.enums.CupcakePartEnum;
 
 /**
  *
- * @author Martin Frederiksen
+ * @author William Sehested Huusfeldt
  */
-public class ProductCommand extends Command {
+public class DeleteLineItemCommand extends Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        ShoppingCart sc;
         CupcakeController cc = new CupcakeController(new DataSourceMySql().getDataSource());
-        cc.setDataSource(new DataSourceMySql().getDataSource());
+        
         CupcakePart bottom = cc.getCupcakePart(CupcakePartEnum.BOTTOM, Integer.parseInt(request.getParameter("bottom")));
         CupcakePart top = cc.getCupcakePart(CupcakePartEnum.TOP, Integer.parseInt(request.getParameter("top")));
         int qty = Integer.parseInt(request.getParameter("qty"));
-        HttpSession session = request.getSession();
-        ShoppingCart sc;
+        
+        LineItem li = new LineItem(bottom, top, qty);
 
         if (session.getAttribute("ShoppingCart") != null) {
             sc = (ShoppingCart) session.getAttribute("ShoppingCart");
+            sc.removeLineItem(li);
+            
+            response.addHeader("success", "Successfully deleted item.");
+            request.getRequestDispatcher("/cart").forward(request, response);
         } else {
-            sc = new ShoppingCart();
-            session.setAttribute("ShoppingCart", sc);
+            response.addHeader("error", "Nothing to delete.");
+            request.setAttribute("errormessage", "Nothing to delete.");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
-        sc.addLineItem(new LineItem(bottom, top, qty));
         
-        response.sendRedirect(request.getContextPath() + "/shop");
+        
     }
+
 }

@@ -47,7 +47,7 @@ footer {
     background-color: #f5f5f5;
 }
 
-#errorBox, #successBox {
+#errorBox, #successBox, #balanceError {
     display: none;
 }
 
@@ -89,7 +89,11 @@ footer {
 .nav-user{
     position: absolute;
     right: 0;
+    color: rgba(0,0,0,.7) !important;
     margin-right: 5px;
+}
+.nav-user #username{
+    margin-right: 1.5rem;
 }
 
 .buttonCheckout{
@@ -103,7 +107,8 @@ footer {
     border-radius: 10px;
     margin-top: 1rem;
     text-align: center;
-    background-color: red;
+    width: 50%;
+    background: #f5f5f5;
 }
 
 .form-group col-md-4{
@@ -150,15 +155,18 @@ footer {
 }
 .checkoutBox button {
     margin-top: 1.9rem;
-    background-color: #f5f5f5;
 }
 
-.form-group col-md-4{
-    margin: 0 auto;
-    text-align: center;
-    
+#deleteCol {
+    width: 200px;
 }
 
-.form-group{
-    margin: 0 auto;
+
+#deleteButton{
+    float: right;
+}
+
+#deleteCol div{
+    float: left;
+    width: 45%;
 }

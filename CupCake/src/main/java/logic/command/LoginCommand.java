@@ -1,12 +1,12 @@
 package logic.command;
 
+import data.DataSourceMySql;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.UserController;
-import logic.ValidateUserController;
 import logic.model.enums.RoleEnum;
 import logic.model.User;
 
@@ -23,9 +23,10 @@ public class LoginCommand extends Command {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        UserController uc = new UserController();
+        UserController uc = new UserController(new DataSourceMySql().getDataSource());
+        uc.setDataSource(new DataSourceMySql().getDataSource());
 
-        boolean valid = new ValidateUserController().validateUser(username, password);
+        boolean valid = uc.validateUser(username, password);
 
         if (valid) {
             User user = uc.getUser(username);

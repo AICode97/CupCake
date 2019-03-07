@@ -33,4 +33,10 @@ public class LineItem {
     public int getPrice(){
         return (bottom.getPrice() + top.getPrice()) * quantity;
     }
+
+    public void subtractQuantity(int qty) {
+        quantity -= qty;
+    }
+    
+    
 }

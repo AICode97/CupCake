@@ -14,10 +14,6 @@
 
 <%
     ShoppingCart sc = new ShoppingCart();
-    User user = null;
-    if (session.getAttribute("user") != null) {
-        user = (User) session.getAttribute("user");
-    }
     if (session.getAttribute("ShoppingCart") != null) {
         sc = (ShoppingCart) session.getAttribute("ShoppingCart");
     }
@@ -31,6 +27,7 @@
                 <th scope="col">Cupcake Topping</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
+                <th scope="col">Select</th>
             </tr>
         </thead>
         <tbody>
@@ -40,13 +37,24 @@
                 <td><%= li.getTop().getName()%></td>
                 <td><%= li.getQuantity()%></td>
                 <td><%= String.valueOf(li.getPrice())%>,-</td>
+                <td id="deleteCol">
+                    <form id="removeItem" method="POST"> 
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="delete" name="qty" placeholder="Quantity" value="1">
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="deleteButton"
+                                formaction="CommandController?command=deleteItem&top=<%=li.getTop().getId()%>&bottom=<%=li.getBottom().getId()%>">Delete
+                        </button>
+                    </form>
+                </td>
             </tr>
             <% }%>
             <tr class="table-active">
                 <th>Total</th>
                 <td></td>
                 <td></td>
-                <th><%= String.valueOf(sc.calculate())%>,-</th>
+                <th><span id="totalPrice"><%= String.valueOf(sc.calculate())%></span><span>,-</span</th>
+                <td></td>
             </tr>
         </tbody>
     </table>
@@ -59,11 +67,12 @@
                 <label>Balance</label>
                 <input type="text" class="form-control" name="balance" placeholder="Add to balance" maxlength="25">
             </div>
-            <button type="submit" class="btn btn-primary" formaction=CommandController?command=addBalance">Add Balance</button>
+            <button type="submit" class="btn btn-primary" formaction="CommandController?command=addBalance">Add Balance</button>
         </form>
     </div>
     <div class="checkoutBox">
         <form id="CheckoutForm" method="POST">
+            <div class="alert alert-warning" role="alert" id="balanceError">Error: Total price higher than balance</div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" formaction="CommandController?command=checkout">Checkout</button>
         </form>

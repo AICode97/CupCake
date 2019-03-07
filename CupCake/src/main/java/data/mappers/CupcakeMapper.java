@@ -1,6 +1,7 @@
 package data.mappers;
 
-import data.DBConnector;
+import data.DataSourceMySql;
+import data.DatabaseConnector;
 import data.interfaces.ICupcakeMapper;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.sql.DataSource;
 import logic.model.CupcakePart;
 import logic.model.enums.CupcakePartEnum;
 
@@ -16,16 +18,16 @@ import logic.model.enums.CupcakePartEnum;
  * @author Andreas Vikke
  */
 public class CupcakeMapper implements ICupcakeMapper {
-    
-    private DBConnector connector;
+    private DatabaseConnector connector = new DatabaseConnector();;
 
-    public CupcakeMapper() {
-        connector = new DBConnector();
+    public void setDataSource(DataSource ds){
+        connector.setDataSource(ds);
     }
 
 
     @Override
     public void addCupcakePart(CupcakePartEnum partType, String name, int price) throws SQLException {
+        connector.open();
         String quary = "";
         switch(partType) {
             case TOP:
@@ -35,30 +37,29 @@ public class CupcakeMapper implements ICupcakeMapper {
                 quary = "INSERT INTO cupcakeBottoms(name, price) VALUES(?,?);";
                 break;
         }
-        PreparedStatement ps = connector.getConnection().prepareCall(quary);
+        PreparedStatement ps = connector.prepareStatement(quary);
         try {
             ps.setString(1, name);
             ps.setDouble(2, price);
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            connector.getConnection().rollback();
-            if (connector.getConnection() != null) {
-                connector.getConnection().rollback();
+            connector.rollback();
+            if (connector != null) {
+                connector.rollback();
             }
         } finally {
-            if (ps != null) {
-                ps.close();
-            }
+            connector.close();
         }
     }
 
     @Override
     public List<CupcakePart> getCupcakeParts() throws SQLException {
+        connector.open();
         List<CupcakePart> cupcakes = new ArrayList();
         String topQuary = "SELECT * FROM cupcakeTops;";
         String bottomQuary = "SELECT * FROM cupcakeBottoms;";
-        Statement stmt = connector.getConnection().createStatement();
+        Statement stmt = connector.createStatement();
         
         ResultSet rs = stmt.executeQuery(topQuary);
         while (rs.next()) {
@@ -69,22 +70,23 @@ public class CupcakeMapper implements ICupcakeMapper {
         while (rs.next()) {
             cupcakes.add(new CupcakePart(rs.getInt("id"), CupcakePartEnum.BOTTOM, rs.getString("name"), rs.getInt("price")));
         }
-        
+        connector.close();
         return cupcakes;
     }
 
     @Override
     public CupcakePart getCupcakePartById(CupcakePartEnum partType, int id) throws SQLException {
+        connector.open();
         String quary = "";
         PreparedStatement ps = null;
         switch(partType) {
             case TOP:
                 quary = "SELECT * FROM cupcakeTops WHERE id = ?;";
-                ps = connector.getConnection().prepareStatement(quary);
+                ps = connector.prepareStatement(quary);
                 break;
             case BOTTOM:
                 quary = "SELECT * FROM cupcakeBottoms WHERE id = ?;";
-                ps = connector.getConnection().prepareStatement(quary);
+                ps = connector.prepareStatement(quary);
                 break;
         }
         ps.setInt(1, id);
@@ -94,11 +96,13 @@ public class CupcakeMapper implements ICupcakeMapper {
         while (rs.next()) {
             cupcake = new CupcakePart(rs.getInt("id"), partType, rs.getString("name"), rs.getInt("price"));
         }
+        connector.close();
         return cupcake;
     }
     
     public static void main(String[] args) {
         CupcakeMapper ccm = new CupcakeMapper();
+        ccm.setDataSource(new DataSourceMySql().getDataSource());
         try {
             List<CupcakePart> cupcakes = ccm.getCupcakeParts();
             for (CupcakePart ccp : cupcakes) {
@@ -113,7 +117,7 @@ public class CupcakeMapper implements ICupcakeMapper {
 //            System.out.println(cupcake);
 //            System.out.println(cupcake2);
 
-//            ccm.addCupcakePart(CupcakePartEnum.BOTTOM, "Test", 5.5);
+            ccm.addCupcakePart(CupcakePartEnum.BOTTOM, "Test", 5);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
