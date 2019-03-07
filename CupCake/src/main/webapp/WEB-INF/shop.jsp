@@ -23,7 +23,7 @@ List<CupcakePart> asd = ccc.getCupcakeParts();%>
     <form id="shopForm" method="POST">
         <div class="form-group col-md-4">
             <label>Cupcake Tops:</label>
-            <select class="form-control" name="top">
+            <select class="form-control shop" name="top">
                 <% for (CupcakePart a : asd) { %>
                 <%if (a.getPart() == CupcakePartEnum.TOP) {%>
                 <option value=<%= a.getId()%>><%=a.getName()%></option>
@@ -33,7 +33,7 @@ List<CupcakePart> asd = ccc.getCupcakeParts();%>
         </div>
         <div class="form-group col-md-4">
             <label>Cupcake Bottoms:</label>
-            <select class="form-control" name="bottom">
+            <select class="form-control shop" name="bottom">
                 <% for (CupcakePart a : asd) { %>
                 <%if (a.getPart() == CupcakePartEnum.BOTTOM) {%>
                 <option value=<%= a.getId()%>><%=a.getName()%></option>
@@ -43,7 +43,7 @@ List<CupcakePart> asd = ccc.getCupcakeParts();%>
         </div>
         <div class="form-group col-md-4">
             <label>Quantity</label>
-            <input type="number" class="form-control" name="qty" placeholder="Quantity" value="1">
+            <input type="number" class="form-control-shop" name="qty" placeholder="Quantity" value="1">
         </div><br />
         <button type="submit" class="btn btn-primary" formaction="CommandController?command=addProduct">Submit Order</button>
     </form>
