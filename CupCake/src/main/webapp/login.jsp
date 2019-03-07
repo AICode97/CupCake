@@ -16,7 +16,7 @@
         <div class="form-group">
             <label>Password</label>
             <input type="password" class="form-control" name="password" placeholder="Password..."maxlength="25">
-        </div>
+        </div><br />
         <button type="submit" class="btn btn-primary" formaction="CommandController?command=login">Login</button>
     </form>
 </div>
