@@ -39,7 +39,7 @@ public abstract class Command {
             case "addBalance":
                 c = new AddBalanceCommand();
                 break;
-            case "deleteItem":
+            case "removeItem":
                 c = new DeleteLineItemCommand();
                 break;
             default:

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.CupcakeController;
+import logic.model.CupcakePart;
 import logic.model.LineItem;
 import logic.model.ShoppingCart;
 import logic.model.User;
@@ -22,11 +23,16 @@ public class DeleteLineItemCommand extends Command {
         HttpSession session = request.getSession();
         ShoppingCart sc;
         CupcakeController cc = new CupcakeController();
-        LineItem li = new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 1), 2);
+        
+        CupcakePart bottom = cc.getCupcakePart(CupcakePartEnum.BOTTOM, Integer.parseInt(request.getParameter("bottom")));
+        CupcakePart top = cc.getCupcakePart(CupcakePartEnum.TOP, Integer.parseInt(request.getParameter("top")));
+        int qty = Integer.parseInt(request.getParameter("qty"));
+        
+        LineItem li = new LineItem(bottom, top, qty);
 
         if (session.getAttribute("ShoppingCart") != null) {
             sc = (ShoppingCart) session.getAttribute("ShoppingCart");
-            sc.removeLineItem(li, 2);
+            sc.removeLineItem(li);
         }
         
         

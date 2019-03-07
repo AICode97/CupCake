@@ -32,15 +32,18 @@ public class ShoppingCart {
         lineItems.add(li);
     }
 
-    public void removeLineItem(LineItem li, int qty) {
-        //List<LineItem> toRemove = new ArrayList<LineItem>();
+    public void removeLineItem(LineItem li) {
+        List<LineItem> toRemove = new ArrayList<LineItem>();
         for (LineItem i : lineItems) {
             if (li.getBottom().getId() == i.getBottom().getId() && li.getTop().getId() == i.getTop().getId()) {
-                if (li.getQuantity() >= qty) {
-                    li.subtractQuantity(qty);
+                if (i.getQuantity() > li.getQuantity()) {
+                    i.subtractQuantity(li.getQuantity());
+                } else {
+                    toRemove.add(i);
                 }
             }
         }
+        lineItems.removeAll(toRemove);
     }
 
     public int calculate() {
@@ -56,14 +59,14 @@ public class ShoppingCart {
     public static void main(String[] args) {
         ShoppingCart sc = new ShoppingCart();
         CupcakeController cc = new CupcakeController();
-        LineItem li = new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 1), 2);
-        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 1));
+        LineItem li = new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 2);
+        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 2));
         //sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 1), 2));
-        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 1));
+        //sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 1));
         //sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 1), 2));
-        sc.addLineItem(li);
-        sc.addLineItem(li);
-        sc.removeLineItem(li, 2);
+        //sc.addLineItem(li);
+        //sc.addLineItem(li);
+        sc.removeLineItem(li);
 
         for (LineItem item : sc.getLineItems()) {
             System.out.println(item.getQuantity());
