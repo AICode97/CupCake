@@ -59,7 +59,7 @@
                 <label>Balance</label>
                 <input type="text" class="form-control" name="balance" placeholder="Add to balance" maxlength="25">
             </div>
-            <button type="submit" class="btn btn-primary" formaction=CommandController?command=addBalance">Add Balance</button>
+            <button type="submit" class="btn btn-primary" formaction="CommandController?command=addBalance">Add Balance</button>
         </form>
     </div>
     <div class="checkoutBox">
