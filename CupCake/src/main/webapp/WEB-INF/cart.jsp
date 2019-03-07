@@ -46,7 +46,7 @@
                 <th>Total</th>
                 <td></td>
                 <td></td>
-                <th><%= String.valueOf(sc.calculate())%>,-</th>
+                <th><span id="totalPrice"><%= String.valueOf(sc.calculate())%></span><span>,-</span</th>
             </tr>
         </tbody>
     </table>
@@ -64,6 +64,7 @@
     </div>
     <div class="checkoutBox">
         <form id="CheckoutForm" method="POST">
+            <div class="alert alert-warning" role="alert" id="balanceError">Error: Total price higher than balance</div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" formaction="CommandController?command=checkout">Checkout</button>
         </form>

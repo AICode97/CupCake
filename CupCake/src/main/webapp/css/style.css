@@ -47,7 +47,7 @@ footer {
     background-color: #f5f5f5;
 }
 
-#errorBox, #successBox {
+#errorBox, #successBox, #balanceError {
     display: none;
 }
 
@@ -89,7 +89,11 @@ footer {
 .nav-user{
     position: absolute;
     right: 0;
+    color: rgba(0,0,0,.7) !important;
     margin-right: 5px;
+}
+.nav-user #username{
+    margin-right: 1.5rem;
 }
 
 .buttonCheckout{
