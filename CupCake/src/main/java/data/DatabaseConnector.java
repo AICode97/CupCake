@@ -43,19 +43,19 @@ public class DatabaseConnector {
         }
     }
     
-    public PreparedStatement preparedStatement(String sql) throws SQLException{
+    public PreparedStatement prepareStatement(String sql) throws SQLException{
         return connection.prepareStatement(sql);
     }
     
-    public PreparedStatement preparedStatement(String sql, int indicator) throws SQLException{
+    public PreparedStatement prepareStatement(String sql, int indicator) throws SQLException{
         return connection.prepareStatement(sql, indicator);
     }
     
-    public void rollBack() throws SQLException{
+    public void rollback() throws SQLException{
         connection.rollback();
     }
     
-    public void autoCommit(boolean flag) throws SQLException{
+    public void setAutoCommit(boolean flag) throws SQLException{
         connection.setAutoCommit(flag);
     }
     

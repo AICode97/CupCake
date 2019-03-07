@@ -31,7 +31,6 @@
                 <th scope="col">Cupcake Topping</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
-                <th scope="col">Select</th>
             </tr>
         </thead>
         <tbody>
@@ -41,20 +40,13 @@
                 <td><%= li.getTop().getName()%></td>
                 <td><%= li.getQuantity()%></td>
                 <td><%= String.valueOf(li.getPrice())%>,-</td>
-                <td> 
-                    <form id="removeItem" method="POST"> 
-                        <button type="submit" class="btn btn-primary" 
-                                formaction="CommandController?command=removeItem&top=<%=li.getTop().getId()%>&bottom=<%=li.getBottom().getId()%>&qty=<%=li.getQuantity()%>">Delete
-                        </button>
-                    </form>
-                </td>
             </tr>
             <% }%>
             <tr class="table-active">
                 <th>Total</th>
                 <td></td>
                 <td></td>
-                <th><%= String.valueOf(sc.calculate())%>,-</th>
+                <th><span id="totalPrice"><%= String.valueOf(sc.calculate())%></span><span>,-</span</th>
             </tr>
         </tbody>
     </table>
@@ -72,15 +64,10 @@
     </div>
     <div class="checkoutBox">
         <form id="CheckoutForm" method="POST">
+            <div class="alert alert-warning" role="alert" id="balanceError">Error: Total price higher than balance</div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" formaction="CommandController?command=checkout">Checkout</button>
-            </div>
         </form>
     </div>
 </div>
-
-<form id="removeItem" method="POST">
-    <button type="submit" class="btn btn-primary" formaction="CommandController?command=removeItem&top=1&bottom=1&qty=1">Remove Item</button>
-</form>
-
 <%@include file = "../footer.jsp" %>
