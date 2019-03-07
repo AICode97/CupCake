@@ -23,8 +23,8 @@
     <table class="table">
         <thead class="thead-light">
             <tr>
-                <th scope="col">Cupcake Bottom</th>
                 <th scope="col">Cupcake Topping</th>
+                <th scope="col">Cupcake Bottom</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
                 <th scope="col">Select</th>
@@ -33,8 +33,8 @@
         <tbody>
             <% for (LineItem li : sc.getLineItems()) {%>
             <tr>
-                <td scope="row"><%= li.getBottom().getName()%></td>
                 <td><%= li.getTop().getName()%></td>
+                <td scope="row"><%= li.getBottom().getName()%></td>
                 <td><%= li.getQuantity()%></td>
                 <td><%= String.valueOf(li.getPrice())%>,-</td>
                 <td id="deleteCol">
