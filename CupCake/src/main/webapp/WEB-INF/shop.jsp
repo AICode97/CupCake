@@ -17,7 +17,6 @@
 <%CupcakeController ccc = new CupcakeController();%>
 <%List<CupcakePart> asd = ccc.getCupcakeParts();%>
 
-<h3>Select a top and a bottom for your amazing CupCake</h3><br>
 <div class="shopper">
     <form id="shopForm" method="POST">
         <div class="form-group col-md-4">

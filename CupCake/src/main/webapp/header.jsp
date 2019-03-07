@@ -57,7 +57,7 @@
                         <a class="nav-link" href="CommandController?command=logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-user"><%= u.getUsername()%>&#160&#160&#160Balance: <%= u.getBalance()%></a>
+                        <a class="nav-link nav-user"><span id="username"><%= u.getUsername()%></span><span>Balance: <span id="balance"><%= u.getBalance()%></span>,-</span></a>
                     </li>
                     <% }%>
                 </ul>

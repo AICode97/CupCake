@@ -43,6 +43,13 @@ $(document).ready(function () {
             ajax($(this));
         }
     });
+    
+    if($("#totalPrice").length > 0) {
+        if(parseInt($("#totalPrice").html()) > parseInt($("#balance").html())) {
+            $(".checkoutBox button").attr("disabled", "");
+            $("#balanceError").show();
+        }
+    }
 });
 
 // Ajax Command
