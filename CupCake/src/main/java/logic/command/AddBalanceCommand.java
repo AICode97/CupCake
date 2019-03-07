@@ -22,7 +22,6 @@ public class AddBalanceCommand extends Command {
         UserController uc = new UserController();
         int balance;
         balance = (request.getParameter("balance").isEmpty()) ? 0 : Integer.parseInt(request.getParameter("balance"));
-
         uc.addBalance(user, balance);
         user = uc.getUser(username);
         session.setAttribute("user", user);
