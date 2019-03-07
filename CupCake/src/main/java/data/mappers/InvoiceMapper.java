@@ -87,7 +87,7 @@ public class InvoiceMapper implements IInvoiceMapper{
         InvoiceMapper im = new InvoiceMapper();
         im.setDataSource(new DataSourceMySql().getDataSource());
         ShoppingCart sc = new ShoppingCart();
-        CupcakeController cc = new CupcakeController();
+        CupcakeController cc = new CupcakeController(new DataSourceMySql().getDataSource());
         UserMapper um = new UserMapper();
         sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 3), 10));
         sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 5), cc.getCupcakePart(CupcakePartEnum.TOP, 5), 8));

@@ -159,7 +159,7 @@ public class OrderMapper implements IOrderMapper {
         OrderMapper om = new OrderMapper();
         om.setDataSource(new DataSourceMySql().getDataSource());
         ShoppingCart sc = new ShoppingCart();
-        CupcakeController cc = new CupcakeController();
+        CupcakeController cc = new CupcakeController(new DataSourceMySql().getDataSource());
         cc.setDataSource(new DataSourceMySql().getDataSource());
         UserMapper um = new UserMapper();
         um.setDataSource(new DataSourceMySql().getDataSource());

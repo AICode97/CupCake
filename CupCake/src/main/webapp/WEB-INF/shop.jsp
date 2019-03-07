@@ -15,7 +15,7 @@
 <%@include file = "../header.jsp" %>
 
 
-<%CupcakeController ccc = new CupcakeController();
+<%CupcakeController ccc = new CupcakeController(new DataSourceMySql().getDataSource());
 ccc.setDataSource(new DataSourceMySql().getDataSource());
 List<CupcakePart> asd = ccc.getCupcakeParts();%>
 

@@ -13,6 +13,11 @@ import logic.model.enums.CupcakePartEnum;
  */
 public class CupcakeController {
     private CupcakeMapper ccm;
+    
+    public CupcakeController(DataSource ds) {
+        ccm = new CupcakeMapper();
+        ccm.setDataSource(ds);
+    }
 
     public CupcakeMapper setDataSource(DataSource ds) {
         ccm = new CupcakeMapper();

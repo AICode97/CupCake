@@ -1,8 +1,8 @@
 package logic.model;
 
+import data.DataSourceMySql;
 import logic.model.enums.CupcakePartEnum;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import logic.CupcakeController;
 
@@ -58,7 +58,7 @@ public class ShoppingCart {
 
     public static void main(String[] args) {
         ShoppingCart sc = new ShoppingCart();
-        CupcakeController cc = new CupcakeController();
+        CupcakeController cc = new CupcakeController(new DataSourceMySql().getDataSource());
         LineItem li = new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 2);
         sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 2));
         //sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 1), 2));
