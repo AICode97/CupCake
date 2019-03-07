@@ -41,7 +41,7 @@ List<CupcakePart> asd = ccc.getCupcakeParts();%>
                     }%>
             </select>
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-4">
             <label>Quantity</label>
             <input type="number" class="form-control" name="qty" placeholder="Quantity" value="1">
         </div><br />
