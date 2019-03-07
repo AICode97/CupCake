@@ -14,10 +14,6 @@
 
 <%
     ShoppingCart sc = new ShoppingCart();
-    User user = null;
-    if (session.getAttribute("user") != null) {
-        user = (User) session.getAttribute("user");
-    }
     if (session.getAttribute("ShoppingCart") != null) {
         sc = (ShoppingCart) session.getAttribute("ShoppingCart");
     }
@@ -41,14 +37,14 @@
                 <td><%= li.getTop().getName()%></td>
                 <td><%= li.getQuantity()%></td>
                 <td><%= String.valueOf(li.getPrice())%>,-</td>
-                <td>
+                <td id="deleteCol">
                     <form id="removeItem" method="POST"> 
+                        <div class="form-group">
+                            <input type="number" class="form-control" id="delete" name="qty" placeholder="Quantity" value="1">
+                        </div>
                         <button type="submit" class="btn btn-primary" id="deleteButton"
                                 formaction="CommandController?command=deleteItem&top=<%=li.getTop().getId()%>&bottom=<%=li.getBottom().getId()%>">Delete
                         </button>
-                        <div class="form-group col-md-2">
-                            <input type="number" class="form-control" id="delete" name="qty" placeholder="Quantity" value="1">
-                        </div><br />
                     </form>
                 </td>
             </tr>
@@ -58,6 +54,7 @@
                 <td></td>
                 <td></td>
                 <th><span id="totalPrice"><%= String.valueOf(sc.calculate())%></span><span>,-</span</th>
+                <td></td>
             </tr>
         </tbody>
     </table>

@@ -150,20 +150,16 @@ footer {
     margin-top: 1.9rem;
 }
 
-.form-group col-md-4{
-    margin: 0 auto;
-    text-align: center;
-    
+#deleteCol {
+    width: 200px;
 }
 
-.form-group{
-    margin: 0 auto;
-}
 
 #deleteButton{
     float: right;
 }
 
-#delete{
+#deleteCol div{
     float: left;
+    width: 45%;
 }
