@@ -62,4 +62,8 @@ public class DatabaseConnector {
     public void commit() throws SQLException{
         connection.commit();
     }
+    
+    public Statement createStatement() throws SQLException{
+        return connection.createStatement();
+    }
 }

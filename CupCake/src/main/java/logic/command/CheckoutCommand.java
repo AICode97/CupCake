@@ -1,5 +1,6 @@
 package logic.command;
 
+import data.DataSourceMySql;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +25,10 @@ public class CheckoutCommand extends Command {
         HttpSession session = request.getSession();
 
         User user = (User) session.getAttribute("user");
-        //ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");
         UserController uc = new UserController();
+        uc.setDataSource(new DataSourceMySql().getDataSource());
         OrderController oc = new OrderController();
+        oc.setDataSource(new DataSourceMySql().getDataSource());
 
         ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");
 

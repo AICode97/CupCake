@@ -1,6 +1,8 @@
 package data.mappers;
 
 import data.DBConnector;
+import data.DataSourceMySql;
+import data.DatabaseConnector;
 import data.interfaces.IOrderMapper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.sql.DataSource;
+import logic.CupcakeController;
 import logic.model.LineItem;
 import logic.model.Order;
 import logic.model.ShoppingCart;
@@ -20,23 +24,22 @@ import logic.model.enums.CupcakePartEnum;
  * @author Martin Frederiksen
  */
 public class OrderMapper implements IOrderMapper {
+    private DatabaseConnector connector = new DatabaseConnector();;
 
-    DBConnector connector;
-
-    public OrderMapper() {
-        connector = new DBConnector();
+    public void setDataSource(DataSource ds){
+        connector.setDataSource(ds);
     }
 
     @Override
     public void addOrder(ShoppingCart sc, User user) throws SQLException {
-        Connection connection = connector.getConnection();
+        connector.open();
         String query = "INSERT INTO orders(username) VALUES(?);";
-        PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement ps = connector.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         int result = 0;
         ResultSet rs = null;
 
         
-        connection.setAutoCommit(false);
+        connector.setAutoCommit(false);
         try {
             ps.setString(1, user.getUsername());
             result = ps.executeUpdate();
@@ -49,29 +52,24 @@ public class OrderMapper implements IOrderMapper {
             InvoiceMapper im = new InvoiceMapper();
             im.addInvoice(result, sc);
             
-            connection.commit();
+            connector.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            connection.rollback();
-            if (connection != null) {
-                connection.rollback();
+            connector.rollback();
+            if (connector != null) {
+                connector.rollback();
             }
         } finally {
-            connection.setAutoCommit(true);
-            if (ps != null) {
-                ps.close();
-            }
-            if (rs != null) {
-                rs.close();
-            }
+            connector.setAutoCommit(true);
+            connector.close();
         }
     }
 
     @Override
     public void addOrderLine(int id, LineItem li) throws SQLException {
-        Connection connection = connector.getConnection();
+        connector.open();
         String query = "INSERT INTO orderLines VALUES(?,?,?,?,?);";
-        PreparedStatement ps = connection.prepareStatement(query);
+        PreparedStatement ps = connector.prepareStatement(query);
         try {
             ps.setInt(1, id);
             ps.setInt(2, li.getTop().getId());
@@ -81,41 +79,34 @@ public class OrderMapper implements IOrderMapper {
             ps.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            connection.rollback();
+            connector.rollback();
         } finally {
-            if (ps != null) {
-                ps.close();
-            }
+            connector.close();
         }
     }
 
     @Override
     public List<Order> getAllOrders() throws SQLException {
+        connector.open();
         List<Order> orders = new ArrayList();
-        Connection connection = connector.getConnection();
         String quary = "SELECT * FROM orders;";
-        PreparedStatement ps = connection.prepareStatement(quary);
+        PreparedStatement ps = connector.prepareStatement(quary);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
             orders.add(new Order(rs.getInt("orderId"), rs.getString("username"), rs.getDate("date"), getLineItemsById(rs.getInt("orderId"))));
             
         }
-        if (ps != null) {
-            ps.close();
-        }
-        if (rs != null) {
-            rs.close();
-        }
+        connector.close();
         return orders;
     }
 
     @Override
     public Order getOrderById(int id) throws SQLException {
+        connector.open();
         Order order = null;
-        Connection connection = connector.getConnection();
         String quary = "SELECT * FROM orders WHERE orderId = ?;";
-        PreparedStatement ps = connection.prepareStatement(quary);
+        PreparedStatement ps = connector.prepareStatement(quary);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
 
@@ -125,42 +116,32 @@ public class OrderMapper implements IOrderMapper {
                 order = new Order(id, rs.getString("username"), rs.getDate("date"), lis);
             }
         }
-        if (ps != null) {
-            ps.close();
-        }
-        if (rs != null) {
-            rs.close();
-        }
+        connector.close();
         return order;
     }
 
     @Override
     public List<Order> getOrderByUser(String username) throws SQLException {
+        connector.open();
         List<Order> orders = new ArrayList();
-        Connection connection = connector.getConnection();
         String quary = "SELECT * FROM orders WHERE username = ?;";
-        PreparedStatement ps = connection.prepareStatement(quary);
+        PreparedStatement ps = connector.prepareStatement(quary);
         ps.setString(1, username);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
             orders.add(new Order(rs.getInt("orderId"), username, rs.getDate("date"), getLineItemsById(rs.getInt("orderId"))));
         }
-        if (ps != null) {
-            ps.close();
-        }
-        if (rs != null) {
-            rs.close();
-        }
+        connector.close();
         return orders;
     }
 
     @Override
     public List<LineItem> getLineItemsById(int id) throws SQLException {
+        connector.open();
         List<LineItem> lineItems = new ArrayList();
-        Connection connection = connector.getConnection();
         String quary = "SELECT cupcakeTopId, cupcakeBottomId, qty FROM orderLines WHERE orderId = ?;";
-        PreparedStatement ps = connection.prepareStatement(quary);
+        PreparedStatement ps = connector.prepareStatement(quary);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         
@@ -169,38 +150,35 @@ public class OrderMapper implements IOrderMapper {
         while (rs.next()) {
             lineItems.add(new LineItem(cm.getCupcakePartById(CupcakePartEnum.BOTTOM, rs.getInt("cupcakeBottomId")), cm.getCupcakePartById(CupcakePartEnum.TOP, rs.getInt("cupcakeTopId")), rs.getInt("qty")));
         }
-        if (ps != null) {
-            ps.close();
-        }
-        if (rs != null) {
-            rs.close();
-        }
+        connector.close();
         return lineItems;
     }
     
 
     public static void main(String[] args) {
-        /*OrderMapper im = new OrderMapper();
+        OrderMapper om = new OrderMapper();
+        om.setDataSource(new DataSourceMySql().getDataSource());
         ShoppingCart sc = new ShoppingCart();
         CupcakeController cc = new CupcakeController();
+        cc.setDataSource(new DataSourceMySql().getDataSource());
         UserMapper um = new UserMapper();
+        um.setDataSource(new DataSourceMySql().getDataSource());
         sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 3), 10));
         sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 5), cc.getCupcakePart(CupcakePartEnum.TOP, 5), 8));
         try {
             User user = um.getUser("vikke");
-            im.addOrder(sc, user);
-            System.out.println("order added");
+            //om.addOrder(sc, user);
+            //System.out.println("order added");
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }*/
+        }
 
-        OrderMapper im = new OrderMapper();
-        try {
+        /*try {
             
-            /*for(LineItem i : im.getLineItemsById(1)){
+            for(LineItem i : im.getLineItemsById(1)){
                 System.out.println(i.getQuantity());
-            }*/
+            }
             
             for (Order o : im.getAllOrders()) {
                 System.out.println(o.getOrderId());
@@ -213,7 +191,7 @@ public class OrderMapper implements IOrderMapper {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
+        }*/
     }
     
 }
