@@ -33,7 +33,7 @@
 
 <div class="shopper">
     <form id="shopForm" method="POST">
-        <div class="form-group col-md-4">
+        <div class="form-group">
             <label>Cupcake Tops:</label>
             <select class="form-control shop" name="top">
                 <% for (CupcakePart a : cupcakeParts) { %>
@@ -43,7 +43,7 @@
                     } %>
             </select>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group">
             <label>Cupcake Bottoms:</label>
             <select class="form-control shop" name="bottom">
                 <% for (CupcakePart a : cupcakeParts) { %>
@@ -53,7 +53,7 @@
                     }%>
             </select>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group">
             <label>Quantity</label>
             <input type="number" class="form-control shop" name="qty" placeholder="Quantity" value="1">
         </div><br />
