@@ -1,0 +1,24 @@
+-classpath
+'/home/andreas/.m2/repository/javax/xml/bind/jaxb-api/2.4.0-b180830.0359/jaxb-api-2.4.0-b180830.0359.jar:/home/andreas/.m2/repository/javax/activation/javax.activation-api/1.2.0/javax.activation-api-1.2.0.jar:/home/andreas/.m2/repository/org/codehaus/plexus/plexus-container-default/1.0-alpha-8/plexus-container-default-1.0-alpha-8.jar:/home/andreas/.m2/repository/org/codehaus/plexus/plexus-utils/1.0.4/plexus-utils-1.0.4.jar:/home/andreas/.m2/repository/com/google/protobuf/protobuf-java/3.6.1/protobuf-java-3.6.1.jar:/home/andreas/.m2/repository/classworlds/classworlds/1.1-alpha-2/classworlds-1.1-alpha-2.jar:/home/andreas/.m2/repository/javax/javaee-web-api/7.0/javaee-web-api-7.0.jar:/home/andreas/.m2/repository/mysql/mysql-connector-java/8.0.15/mysql-connector-java-8.0.15.jar:/home/andreas/.m2/repository/org/codehaus/plexus/plexus-digest/1.0/plexus-digest-1.0.jar:/home/andreas/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/media/andreas/OS/Users/vikke/OneDrive/Documents/Skole/Datamatiker/2.Semester/Modul2/Week9/CupCake/CupCake/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2019. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/media/andreas/OS/Users/vikke/OneDrive/Documents/Skole/Datamatiker/2.Semester/Modul2/Week9/CupCake/CupCake/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'CupCake 1.0 API'
+-linkoffline
+'https://docs.oracle.com/javase/7/docs/api' '/media/andreas/OS/Users/vikke/OneDrive/Documents/Skole/Datamatiker/2.Semester/Modul2/Week9/CupCake/CupCake/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'CupCake 1.0 API'

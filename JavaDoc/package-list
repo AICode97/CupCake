@@ -1,0 +1,8 @@
+data
+data.interfaces
+data.mappers
+logic
+logic.command
+logic.model
+logic.model.enums
+presentation.controller
