@@ -147,6 +147,7 @@ public class OrderMapper implements IOrderMapper {
         while (rs.next()) {
             lineItems.add(new LineItem(cm.getCupcakePartById(CupcakePartEnum.BOTTOM, rs.getInt("cupcakeBottomId")), cm.getCupcakePartById(CupcakePartEnum.TOP, rs.getInt("cupcakeTopId")), rs.getInt("qty")));
         }
+
         return lineItems;
     }
     
