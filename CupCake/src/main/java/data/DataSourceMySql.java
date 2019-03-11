@@ -13,7 +13,6 @@ public class DataSourceMySql {
 
     public DataSourceMySql() {
         {
-            dataSource.setServerName("andreasvikke.dk");
             try {
                 dataSource.setServerName("andreasvikke.dk");
                 dataSource.setPort(3306);
