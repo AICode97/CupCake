@@ -20,7 +20,7 @@ import logic.model.User;
 public class UserMapper implements IUserMapper {
     private DatabaseConnector connector = new DatabaseConnector();;
 
-    public void setDataSource(DataSource ds){
+    public UserMapper(DataSource ds) {
         connector.setDataSource(ds);
     }
 
@@ -160,8 +160,7 @@ public class UserMapper implements IUserMapper {
     }
 
     public static void main(String[] args) {
-        UserMapper um = new UserMapper();
-        um.setDataSource(new DataSourceMySql().getDataSource());
+        UserMapper um = new UserMapper(new DataSourceMySql().getDataSource());
         List<User> users = new ArrayList();
         try {
             User user = um.getUser("Martin");

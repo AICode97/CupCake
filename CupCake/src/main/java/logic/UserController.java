@@ -19,14 +19,7 @@ public class UserController {
     private UserMapper um;
 
     public UserController(DataSource ds) {
-        um = new UserMapper();
-        um.setDataSource(ds);
-    }
-    
-    public UserMapper setDataSource(DataSource ds) {
-        um = new UserMapper();
-        um.setDataSource(ds);
-        return um;
+        um = new UserMapper(ds);
     }
 
     public List<User> getUsers() {
@@ -109,7 +102,6 @@ public class UserController {
 
     public static void main(String[] args) {
         UserController uc = new UserController(new DataSourceMySql().getDataSource());
-        uc.setDataSource(new DataSourceMySql().getDataSource());
         List<User> users = uc.getUsers();
         for (User u : users) {
             System.out.println(u.getUsername());

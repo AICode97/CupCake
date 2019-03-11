@@ -1,5 +1,6 @@
 package logic;
 
+import data.DataSourceMySql;
 import data.mappers.CupcakeMapper;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,13 +16,11 @@ public class CupcakeController {
     private CupcakeMapper ccm;
     
     public CupcakeController(DataSource ds) {
-        ccm = new CupcakeMapper();
-        ccm.setDataSource(ds);
+        ccm = new CupcakeMapper(new DataSourceMySql().getDataSource());
     }
 
     public CupcakeMapper setDataSource(DataSource ds) {
-        ccm = new CupcakeMapper();
-        ccm.setDataSource(ds);
+        ccm = new CupcakeMapper(new DataSourceMySql().getDataSource());
         return ccm;
     }
 

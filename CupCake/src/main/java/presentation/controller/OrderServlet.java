@@ -27,7 +27,6 @@ public class OrderServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OrderController oc = new OrderController(new DataSourceMySql().getDataSource());
-        oc.setDataSource(new DataSourceMySql().getDataSource());
         HttpSession session = request.getSession();
         
         String orderId = request.getParameter("orderId");

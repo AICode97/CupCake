@@ -11,7 +11,6 @@
 
 <%
     OrderController oc = new OrderController(new DataSourceMySql().getDataSource());
-    oc.setDataSource(new DataSourceMySql().getDataSource());
     String username = request.getParameter("username");
     List<Order> orders;
     if(username == null)

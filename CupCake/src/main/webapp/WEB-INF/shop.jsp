@@ -16,7 +16,6 @@
 
 
 <%CupcakeController ccc = new CupcakeController(new DataSourceMySql().getDataSource());
-    ccc.setDataSource(new DataSourceMySql().getDataSource());
     List<CupcakePart> cupcakeParts = ccc.getCupcakeParts();
     List<CupcakePart> tops = new ArrayList();
     List<CupcakePart> bottoms = new ArrayList();

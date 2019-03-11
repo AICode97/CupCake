@@ -13,21 +13,14 @@ import logic.model.User;
  * @author Martin Frederiksen
  */
 public class OrderController {
+
     private OrderMapper om;
-    
+
     public OrderController(DataSource ds) {
-        om = new OrderMapper();
-        om.setDataSource(ds);
+        om = new OrderMapper(ds);
     }
 
-    public OrderMapper setDataSource(DataSource ds) {
-        om = new OrderMapper();
-        om.setDataSource(ds);
-        return om;
-    }
-    
-    
-public List<Order> getAllOrders() {
+    public List<Order> getAllOrders() {
         try {
             return om.getAllOrders();
         } catch (SQLException ex) {
@@ -36,7 +29,7 @@ public List<Order> getAllOrders() {
         }
     }
 
-    public Order getOrderById(int id){
+    public Order getOrderById(int id) {
         try {
             return om.getOrderById(id);
         } catch (SQLException ex) {
@@ -44,8 +37,8 @@ public List<Order> getAllOrders() {
             return null;
         }
     }
-    
-    public List<Order> getOrderByUser(String username){
+
+    public List<Order> getOrderByUser(String username) {
         try {
             return om.getOrderByUser(username);
         } catch (SQLException ex) {
@@ -53,8 +46,8 @@ public List<Order> getAllOrders() {
             return null;
         }
     }
-    
-    public void addOrder(ShoppingCart sc, User user){
+
+    public void addOrder(ShoppingCart sc, User user) {
         try {
             om.addOrder(sc, user);
         } catch (SQLException ex) {

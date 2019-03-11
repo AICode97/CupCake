@@ -28,7 +28,6 @@ public class RegisterCommand extends Command {
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         } else {
             UserController rc = new UserController(new DataSourceMySql().getDataSource());
-            rc.setDataSource(new DataSourceMySql().getDataSource());
             int result = rc.addUser(username, email, password);
             if (result == -1) {
                 response.addHeader("error", "User with same username or email is already registered");

@@ -22,10 +22,10 @@ import logic.model.enums.CupcakePartEnum;
 public class InvoiceMapper implements IInvoiceMapper{
     DatabaseConnector connector = new DatabaseConnector();
     
-    public void setDataSource(DataSource ds){
+    public InvoiceMapper(DataSource ds) {
         connector.setDataSource(ds);
     }
-
+    
     @Override
     public List<Invoice> getAllInvoices() throws SQLException {
         connector.open();
@@ -84,11 +84,10 @@ public class InvoiceMapper implements IInvoiceMapper{
     
     
     public static void main(String[] args) {
-        InvoiceMapper im = new InvoiceMapper();
-        im.setDataSource(new DataSourceMySql().getDataSource());
+        InvoiceMapper im = new InvoiceMapper(new DataSourceMySql().getDataSource());
         ShoppingCart sc = new ShoppingCart();
         CupcakeController cc = new CupcakeController(new DataSourceMySql().getDataSource());
-        UserMapper um = new UserMapper();
+        UserMapper um = new UserMapper(new DataSourceMySql().getDataSource());
         sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 3), 10));
         sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 5), cc.getCupcakePart(CupcakePartEnum.TOP, 5), 8));
         try{

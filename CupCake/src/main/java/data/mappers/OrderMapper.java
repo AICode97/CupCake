@@ -3,7 +3,6 @@ package data.mappers;
 import data.DataSourceMySql;
 import data.DatabaseConnector;
 import data.interfaces.IOrderMapper;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,10 +24,10 @@ import logic.model.enums.CupcakePartEnum;
 public class OrderMapper implements IOrderMapper {
     private DatabaseConnector connector = new DatabaseConnector();;
 
-    public void setDataSource(DataSource ds){
+    public OrderMapper(DataSource ds) {
         connector.setDataSource(ds);
     }
-
+    
     @Override
     public void addOrder(ShoppingCart sc, User user) throws SQLException {
         connector.open();
@@ -48,8 +47,7 @@ public class OrderMapper implements IOrderMapper {
             for (LineItem li : sc.getLineItems()) {
                 addOrderLine(result, li);
             }
-            InvoiceMapper im = new InvoiceMapper();
-            im.setDataSource(new DataSourceMySql().getDataSource());
+            InvoiceMapper im = new InvoiceMapper(new DataSourceMySql().getDataSource());
             im.addInvoice(result, sc);
             
             connector.commit();
@@ -136,8 +134,7 @@ public class OrderMapper implements IOrderMapper {
         return orders;
     }
 
-    @Override
-    public List<LineItem> getLineItemsById(int id) throws SQLException {
+    private List<LineItem> getLineItemsById(int id) throws SQLException {
         connector.open();
         List<LineItem> lineItems = new ArrayList();
         String quary = "SELECT cupcakeTopId, cupcakeBottomId, qty FROM orderLines WHERE orderId = ?;";
@@ -145,24 +142,21 @@ public class OrderMapper implements IOrderMapper {
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         
-        CupcakeMapper cm = new CupcakeMapper();
+        CupcakeMapper cm = new CupcakeMapper(new DataSourceMySql().getDataSource());
 
         while (rs.next()) {
             lineItems.add(new LineItem(cm.getCupcakePartById(CupcakePartEnum.BOTTOM, rs.getInt("cupcakeBottomId")), cm.getCupcakePartById(CupcakePartEnum.TOP, rs.getInt("cupcakeTopId")), rs.getInt("qty")));
         }
-        connector.close();
         return lineItems;
     }
     
 
     public static void main(String[] args) {
-        OrderMapper om = new OrderMapper();
-        om.setDataSource(new DataSourceMySql().getDataSource());
+        OrderMapper om = new OrderMapper(new DataSourceMySql().getDataSource());
         ShoppingCart sc = new ShoppingCart();
         CupcakeController cc = new CupcakeController(new DataSourceMySql().getDataSource());
         cc.setDataSource(new DataSourceMySql().getDataSource());
-        UserMapper um = new UserMapper();
-        um.setDataSource(new DataSourceMySql().getDataSource());
+        UserMapper um = new UserMapper(new DataSourceMySql().getDataSource());
         sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 3), 10));
         sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 5), cc.getCupcakePart(CupcakePartEnum.TOP, 5), 8));
         try {

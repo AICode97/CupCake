@@ -23,9 +23,7 @@ public class CheckoutCommand extends Command {
 
         User user = (User) session.getAttribute("user");
         UserController uc = new UserController(new DataSourceMySql().getDataSource());
-        uc.setDataSource(new DataSourceMySql().getDataSource());
         OrderController oc = new OrderController(new DataSourceMySql().getDataSource());
-        oc.setDataSource(new DataSourceMySql().getDataSource());
 
         ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");
 

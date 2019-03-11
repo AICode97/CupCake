@@ -24,7 +24,6 @@ public class LoginCommand extends Command {
         String password = request.getParameter("password");
 
         UserController uc = new UserController(new DataSourceMySql().getDataSource());
-        uc.setDataSource(new DataSourceMySql().getDataSource());
 
         boolean valid = uc.validateUser(username, password);
 

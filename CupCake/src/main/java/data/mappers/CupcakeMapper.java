@@ -18,8 +18,12 @@ import logic.model.enums.CupcakePartEnum;
  * @author Andreas Vikke
  */
 public class CupcakeMapper implements ICupcakeMapper {
-    private DatabaseConnector connector = new DatabaseConnector();;
+    private DatabaseConnector connector = new DatabaseConnector();
 
+    public CupcakeMapper(DataSource ds) {
+        connector.setDataSource(ds);
+    }
+    
     public void setDataSource(DataSource ds){
         connector.setDataSource(ds);
     }
@@ -101,7 +105,7 @@ public class CupcakeMapper implements ICupcakeMapper {
     }
     
     public static void main(String[] args) {
-        CupcakeMapper ccm = new CupcakeMapper();
+        CupcakeMapper ccm = new CupcakeMapper(new DataSourceMySql().getDataSource());
         ccm.setDataSource(new DataSourceMySql().getDataSource());
         try {
             List<CupcakePart> cupcakes = ccm.getCupcakeParts();

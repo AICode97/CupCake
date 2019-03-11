@@ -24,7 +24,6 @@ public class ChangePasswordCommand extends Command {
         String newPassword2 = request.getParameter("newPassword2");
 
         UserController uc = new UserController(new DataSourceMySql().getDataSource());
-        uc.setDataSource(new DataSourceMySql().getDataSource());
         
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("user");
