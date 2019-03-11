@@ -138,7 +138,7 @@ public class OrderMapper implements IOrderMapper {
 
     @Override
     public List<LineItem> getLineItemsById(int id) throws SQLException {
-        connector.open();
+        //connector.open();
         List<LineItem> lineItems = new ArrayList();
         String quary = "SELECT cupcakeTopId, cupcakeBottomId, qty FROM orderLines WHERE orderId = ?;";
         PreparedStatement ps = connector.prepareStatement(quary);
@@ -146,11 +146,12 @@ public class OrderMapper implements IOrderMapper {
         ResultSet rs = ps.executeQuery();
         
         CupcakeMapper cm = new CupcakeMapper();
+        cm.setDataSource(new DataSourceMySql().getDataSource());
 
         while (rs.next()) {
             lineItems.add(new LineItem(cm.getCupcakePartById(CupcakePartEnum.BOTTOM, rs.getInt("cupcakeBottomId")), cm.getCupcakePartById(CupcakePartEnum.TOP, rs.getInt("cupcakeTopId")), rs.getInt("qty")));
         }
-        connector.close();
+        //connector.close();
         return lineItems;
     }
     
