@@ -1,7 +1,5 @@
 package data.mappers;
 
-
-import data.DataSourceMySql;
 import data.DatabaseConnector;
 import data.interfaces.IUserMapper;
 import java.sql.PreparedStatement;
@@ -18,12 +16,21 @@ import logic.model.User;
  * @author Martin Frederiksen
  */
 public class UserMapper implements IUserMapper {
-    private DatabaseConnector connector = new DatabaseConnector();;
+
+    private DatabaseConnector connector = new DatabaseConnector();
 
     public UserMapper(DataSource ds) {
         connector.setDataSource(ds);
     }
 
+    /**
+     * Adds a new User to the Database
+     * @param username Username of new User
+     * @param email Email of new User
+     * @param password Password of new User
+     * @return Id of the new User
+     * @throws SQLException 
+     */
     @Override
     public int addUser(String username, String email, String password) throws SQLException {
         connector.open();
@@ -48,6 +55,11 @@ public class UserMapper implements IUserMapper {
         return -1;
     }
 
+    /**
+     * Returns a list of all Users in the Database
+     * @return List of Users
+     * @throws SQLException 
+     */
     @Override
     public List<User> getUsers() throws SQLException {
         connector.open();
@@ -63,6 +75,12 @@ public class UserMapper implements IUserMapper {
         return users;
     }
 
+    /**
+     * Returns specific User from Database
+     * @param username Username of specific User
+     * @return Specific User
+     * @throws SQLException 
+     */
     @Override
     public User getUser(String username) throws SQLException {
         connector.open();
@@ -80,6 +98,13 @@ public class UserMapper implements IUserMapper {
         return user;
     }
 
+    /**
+     * Validates the User from the Database
+     * @param username Username to validate
+     * @param password Password to validate
+     * @return Boolean (True = Valid)
+     * @throws SQLException 
+     */
     @Override
     public boolean validateUser(String username, String password) throws SQLException {
         connector.open();
@@ -99,6 +124,13 @@ public class UserMapper implements IUserMapper {
         return valid;
     }
 
+    /**
+     * Changes Password of specific User in Database
+     * @param username Username of specific User
+     * @param password New Password of specific User
+     * @return Error integer
+     * @throws SQLException 
+     */
     @Override
     public int changePassword(String username, String password) throws SQLException {
         connector.open();
@@ -123,6 +155,12 @@ public class UserMapper implements IUserMapper {
         return -1;
     }
 
+    /**
+     * Adds a balance to a specific User
+     * @param user Specific User
+     * @param balance Balance to add
+     * @throws SQLException 
+     */
     @Override
     public void addBalance(User user, int balance) throws SQLException {
         connector.open();
@@ -141,6 +179,12 @@ public class UserMapper implements IUserMapper {
         connector.close();
     }
 
+    /**
+     * Removes Balance from specific User after Checkout
+     * @param user Specific User
+     * @param balance Balance to remove
+     * @throws SQLException 
+     */
     @Override
     public void checkout(User user, int balance) throws SQLException {
         connector.open();
@@ -158,24 +202,4 @@ public class UserMapper implements IUserMapper {
         }
         connector.close();
     }
-
-    public static void main(String[] args) {
-        UserMapper um = new UserMapper(new DataSourceMySql().getDataSource());
-        List<User> users = new ArrayList();
-        try {
-            User user = um.getUser("Martin");
-            //um.changePassword(user.getUsername(), "1234");
-            //System.out.println(um.validateUser(user.getUsername(), "1234"));
-            //um.checkout(user, 100);
-            /*users = um.getUsers();
-            for(User u : users){
-                System.out.println(u.getUsername());
-            }*/
-            //um.addUser("MartinTest", "JegKoderFlestLinjer@pwned.io", "Mojn");
-            //System.out.println(user.getBalance());
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
 }

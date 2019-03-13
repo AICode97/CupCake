@@ -12,7 +12,7 @@ import javax.xml.bind.DatatypeConverter;
 
 /**
  *
- * @author William Hussfeldt & Martin Frederiksen
+ * @author William Hussfeldt - Martin Frederiksen
  */
 public class UserController {
 
@@ -99,18 +99,4 @@ public class UserController {
             return false;
         }
     }
-
-    public static void main(String[] args) {
-        UserController uc = new UserController(new DataSourceMySql().getDataSource());
-        List<User> users = uc.getUsers();
-        for (User u : users) {
-            System.out.println(u.getUsername());
-        }
-        User user = uc.getUser("Asger");
-        System.out.println(user.getBalance());
-        //uc.addUser("William2", "ErDuFærdig?@gmail.com", "1234");
-        System.out.println(uc.getUser("William").getEmail());
-        System.out.println(uc.validateUser("William2", "1234"));
-    }
-
 }

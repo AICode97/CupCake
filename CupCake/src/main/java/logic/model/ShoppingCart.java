@@ -55,21 +55,4 @@ public class ShoppingCart {
 
         return price;
     }
-
-    public static void main(String[] args) {
-        ShoppingCart sc = new ShoppingCart();
-        CupcakeController cc = new CupcakeController(new DataSourceMySql().getDataSource());
-        LineItem li = new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 2);
-        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 2));
-        //sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 1), 2));
-        //sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 3), cc.getCupcakePart(CupcakePartEnum.TOP, 4), 1));
-        //sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 1), 2));
-        //sc.addLineItem(li);
-        //sc.addLineItem(li);
-        sc.removeLineItem(li);
-
-        for (LineItem item : sc.getLineItems()) {
-            System.out.println(item.getQuantity());
-        }
-    }
 }

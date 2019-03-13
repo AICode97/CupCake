@@ -22,7 +22,7 @@ public class OrderController {
 
     public List<Order> getAllOrders() {
         try {
-            return om.getAllOrders();
+            return om.getOrders();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -40,7 +40,7 @@ public class OrderController {
 
     public List<Order> getOrderByUser(String username) {
         try {
-            return om.getOrderByUser(username);
+            return om.getOrdersByUser(username);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
