@@ -29,17 +29,18 @@ public class UserMapper implements IUserMapper {
      * @param email Email of new User
      * @param password Password of new User
      * @return Id of the new User
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
     @Override
-    public int addUser(String username, String email, String password) throws SQLException {
+    public int addUser(String username, String email, String password, RoleEnum role) throws SQLException {
         connector.open();
-        String quary = "INSERT INTO users(username, email, password) VALUES(?,?,?);";
+        String quary = "INSERT INTO users(username, email, password, role) VALUES(?,?,?,?);";
         PreparedStatement ps = connector.prepareStatement(quary);
         try {
             ps.setString(1, username);
             ps.setString(2, email);
             ps.setString(3, password);
+            ps.setString(4, role.toString());
             connector.setAutoCommit(false);
             int result = ps.executeUpdate();
             return result;
@@ -58,7 +59,7 @@ public class UserMapper implements IUserMapper {
     /**
      * Returns a list of all Users in the Database
      * @return List of Users
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
     @Override
     public List<User> getUsers() throws SQLException {
@@ -79,7 +80,7 @@ public class UserMapper implements IUserMapper {
      * Returns specific User from Database
      * @param username Username of specific User
      * @return Specific User
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
     @Override
     public User getUser(String username) throws SQLException {
@@ -103,7 +104,7 @@ public class UserMapper implements IUserMapper {
      * @param username Username to validate
      * @param password Password to validate
      * @return Boolean (True = Valid)
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
     @Override
     public boolean validateUser(String username, String password) throws SQLException {

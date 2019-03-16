@@ -12,5 +12,5 @@ import java.util.List;
 public interface ICupcakeMapper {
     void addCupcakePart(CupcakePartEnum partType, String name, int price) throws SQLException;
     List<CupcakePart> getCupcakeParts() throws SQLException;
-    CupcakePart getCupcakePartById(CupcakePartEnum partType, int id) throws SQLException;
+    CupcakePart getCupcakePartById(int id) throws SQLException;
 }

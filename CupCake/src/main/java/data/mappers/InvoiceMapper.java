@@ -26,7 +26,7 @@ public class InvoiceMapper implements IInvoiceMapper{
      * Adds an Invoice to the Database based on a OrderId
      * @param orderId Specific Id of order
      * @param sc Sessions ShoppingCart
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
     @Override
     public void addInvoice(int orderId, ShoppingCart sc) throws SQLException {
@@ -54,7 +54,7 @@ public class InvoiceMapper implements IInvoiceMapper{
     /**
      * Returns a list of all Invoices from the Database
      * @return List of Invoices
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
     @Override
     public List<Invoice> getInvoices() throws SQLException {
@@ -75,7 +75,7 @@ public class InvoiceMapper implements IInvoiceMapper{
      * Returns a specific Invoice from the Database
      * @param invoiceId Specific Invoice Id
      * @return Specific Invoice
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
     @Override
     public Invoice getInvoiceById(int invoiceId) throws SQLException {

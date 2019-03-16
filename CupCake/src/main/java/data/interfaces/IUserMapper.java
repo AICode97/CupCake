@@ -3,13 +3,14 @@ package data.interfaces;
 import java.sql.SQLException;
 import java.util.List;
 import logic.model.User;
+import logic.model.enums.RoleEnum;
 
 /**
  *
  * @author Martin Frederiksen
  */
 public interface IUserMapper {
-    int addUser(String username, String email, String password) throws SQLException;
+    int addUser(String username, String email, String password, RoleEnum role) throws SQLException;
     List<User> getUsers() throws SQLException;
     User getUser(String username) throws SQLException;
     boolean validateUser(String username, String password) throws SQLException;

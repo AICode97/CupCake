@@ -31,7 +31,7 @@ public class OrderMapper implements IOrderMapper {
      * Adds a new Order to the Database
      * @param sc Sessions ShoppingCart
      * @param user Sessions User
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
     @Override
     public void addOrder(ShoppingCart sc, User user) throws SQLException {
@@ -91,7 +91,7 @@ public class OrderMapper implements IOrderMapper {
     /**
      * Returns all Orders from the Database
      * @return List of Orders
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
     @Override
     public List<Order> getOrders() throws SQLException {
@@ -113,7 +113,7 @@ public class OrderMapper implements IOrderMapper {
      * Returns specific order form the Database
      * @param id Specific Order Id
      * @return Specific Order
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
     @Override
     public Order getOrderById(int id) throws SQLException {
@@ -138,7 +138,7 @@ public class OrderMapper implements IOrderMapper {
      * Returns a List of Users specific Orders from Database
      * @param username Specific Users Username
      * @return List of Orders
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
     @Override
     public List<Order> getOrdersByUser(String username) throws SQLException {
@@ -167,7 +167,7 @@ public class OrderMapper implements IOrderMapper {
         CupcakeMapper cm = new CupcakeMapper(new DataSourceMySql().getDataSource());
 
         while (rs.next()) {
-            lineItems.add(new LineItem(cm.getCupcakePartById(CupcakePartEnum.BOTTOM, rs.getInt("cupcakeBottomId")), cm.getCupcakePartById(CupcakePartEnum.TOP, rs.getInt("cupcakeTopId")), rs.getInt("qty")));
+            lineItems.add(new LineItem(cm.getCupcakePartById(rs.getInt("cupcakeBottomId")), cm.getCupcakePartById(rs.getInt("cupcakeTopId")), rs.getInt("qty")));
         }
 
         return lineItems;

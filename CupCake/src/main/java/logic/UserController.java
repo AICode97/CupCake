@@ -1,6 +1,5 @@
 package logic;
 
-import data.DataSourceMySql;
 import logic.model.User;
 import data.mappers.UserMapper;
 import java.security.MessageDigest;
@@ -9,6 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 import javax.xml.bind.DatatypeConverter;
+import logic.model.enums.RoleEnum;
 
 /**
  *
@@ -40,14 +40,14 @@ public class UserController {
         }
     }
 
-    public int addUser(String username, String email, String password) {
+    public int addUser(String username, String email, String password, RoleEnum role) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes());
             byte[] digest = md.digest();
             String passwordHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
 
-            return um.addUser(username, email, passwordHash);
+            return um.addUser(username, email, passwordHash, role);
         } catch (SQLException | NoSuchAlgorithmException ex) {
             ex.printStackTrace();
             return -1;
