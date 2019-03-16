@@ -12,6 +12,7 @@ CREATE TABLE `cupcake`.`users` (
   `balance` INT NOT NULL DEFAULT 0,
   `role` ENUM('ADMIN', 'CUSTOMER') NOT NULL DEFAULT 'CUSTOMER',
   PRIMARY KEY (`username`),
+  UNIQUE INDEX `email_U` (`email` ASC) VISIBLE,
   INDEX `usernameIndex` (`username` ASC) VISIBLE,
   INDEX `emailIndex` (`email` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
