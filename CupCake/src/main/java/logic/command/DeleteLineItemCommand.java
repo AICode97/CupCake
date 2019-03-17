@@ -24,8 +24,8 @@ public class DeleteLineItemCommand extends Command {
         ShoppingCart sc;
         CupcakeController cc = new CupcakeController(new DataSourceMySql().getDataSource());
         
-        CupcakePart bottom = cc.getCupcakePart(CupcakePartEnum.BOTTOM, Integer.parseInt(request.getParameter("bottom")));
-        CupcakePart top = cc.getCupcakePart(CupcakePartEnum.TOP, Integer.parseInt(request.getParameter("top")));
+        CupcakePart bottom = cc.getCupcakePart(Integer.parseInt(request.getParameter("bottom")));
+        CupcakePart top = cc.getCupcakePart(Integer.parseInt(request.getParameter("top")));
         int qty = Integer.parseInt(request.getParameter("qty"));
         
         LineItem li = new LineItem(bottom, top, qty);

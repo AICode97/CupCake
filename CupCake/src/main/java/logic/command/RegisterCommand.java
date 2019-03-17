@@ -5,9 +5,8 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import logic.UserController;
-import logic.model.User;
+import logic.model.enums.RoleEnum;
 
 /**
  *
@@ -28,7 +27,7 @@ public class RegisterCommand extends Command {
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         } else {
             UserController rc = new UserController(new DataSourceMySql().getDataSource());
-            int result = rc.addUser(username, email, password);
+            int result = rc.addUser(username, email, password, RoleEnum.CUSTOMER);
             if (result == -1) {
                 response.addHeader("error", "User with same username or email is already registered");
                 request.setAttribute("errormessage", "User with same username or email is already registered");

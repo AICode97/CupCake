@@ -33,9 +33,9 @@ public class CupcakeController {
         }
     }
 
-    public CupcakePart getCupcakePart(CupcakePartEnum partType, int id) {
+    public CupcakePart getCupcakePart(int id) {
         try {
-            return ccm.getCupcakePartById(partType, id);
+            return ccm.getCupcakePartById(id);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;

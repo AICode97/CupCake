@@ -1,6 +1,5 @@
 package logic;
 
-import data.DataSourceMySql;
 import logic.model.User;
 import data.mappers.UserMapper;
 import java.security.MessageDigest;
@@ -9,10 +8,11 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 import javax.xml.bind.DatatypeConverter;
+import logic.model.enums.RoleEnum;
 
 /**
  *
- * @author William Hussfeldt & Martin Frederiksen
+ * @author William Hussfeldt - Martin Frederiksen
  */
 public class UserController {
 
@@ -40,14 +40,14 @@ public class UserController {
         }
     }
 
-    public int addUser(String username, String email, String password) {
+    public int addUser(String username, String email, String password, RoleEnum role) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes());
             byte[] digest = md.digest();
             String passwordHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
 
-            return um.addUser(username, email, passwordHash);
+            return um.addUser(username, email, passwordHash, role);
         } catch (SQLException | NoSuchAlgorithmException ex) {
             ex.printStackTrace();
             return -1;
@@ -99,18 +99,4 @@ public class UserController {
             return false;
         }
     }
-
-    public static void main(String[] args) {
-        UserController uc = new UserController(new DataSourceMySql().getDataSource());
-        List<User> users = uc.getUsers();
-        for (User u : users) {
-            System.out.println(u.getUsername());
-        }
-        User user = uc.getUser("Asger");
-        System.out.println(user.getBalance());
-        //uc.addUser("William2", "ErDuFærdig?@gmail.com", "1234");
-        System.out.println(uc.getUser("William").getEmail());
-        System.out.println(uc.validateUser("William2", "1234"));
-    }
-
 }

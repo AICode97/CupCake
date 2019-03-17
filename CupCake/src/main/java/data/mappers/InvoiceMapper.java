@@ -1,6 +1,5 @@
 package data.mappers;
 
-import data.DataSourceMySql;
 import data.DatabaseConnector;
 import data.interfaces.IInvoiceMapper;
 import java.sql.PreparedStatement;
@@ -9,11 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
-import logic.CupcakeController;
 import logic.model.Invoice;
-import logic.model.LineItem;
 import logic.model.ShoppingCart;
-import logic.model.enums.CupcakePartEnum;
 
 /**
  *
@@ -25,9 +21,43 @@ public class InvoiceMapper implements IInvoiceMapper{
     public InvoiceMapper(DataSource ds) {
         connector.setDataSource(ds);
     }
-    
+
+    /**
+     * Adds an Invoice to the Database based on a OrderId
+     * @param orderId Specific Id of order
+     * @param sc Sessions ShoppingCart
+     * @throws SQLException SQLException
+     */
     @Override
-    public List<Invoice> getAllInvoices() throws SQLException {
+    public void addInvoice(int orderId, ShoppingCart sc) throws SQLException {
+        connector.open();
+        String query = "INSERT INTO invoices(orderId, price) VALUES(?,?);";
+        PreparedStatement ps = connector.prepareStatement(query);
+        connector.setAutoCommit(false);
+        try {
+            ps.setInt(1, orderId);
+            ps.setInt(2, sc.calculate());
+            ps.execute();
+        connector.commit();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            connector.rollback();
+            if (connector != null) {
+                connector.rollback();
+            }
+        } finally {
+            connector.setAutoCommit(true);
+            connector.close();
+        }
+    }    
+    
+    /**
+     * Returns a list of all Invoices from the Database
+     * @return List of Invoices
+     * @throws SQLException SQLException
+     */
+    @Override
+    public List<Invoice> getInvoices() throws SQLException {
         connector.open();
         List<Invoice> invoices = new ArrayList();
         String quary = "SELECT * FROM invoices;";
@@ -41,6 +71,12 @@ public class InvoiceMapper implements IInvoiceMapper{
         return invoices;
     }
 
+    /**
+     * Returns a specific Invoice from the Database
+     * @param invoiceId Specific Invoice Id
+     * @return Specific Invoice
+     * @throws SQLException SQLException
+     */
     @Override
     public Invoice getInvoiceById(int invoiceId) throws SQLException {
         connector.open();
@@ -58,51 +94,4 @@ public class InvoiceMapper implements IInvoiceMapper{
         connector.close();
         return invoice;
     }
-
-    @Override
-    public void addInvoice(int id, ShoppingCart sc) throws SQLException {
-        connector.open();
-        String query = "INSERT INTO invoices(orderId, price) VALUES(?,?);";
-        PreparedStatement ps = connector.prepareStatement(query);
-        connector.setAutoCommit(false);
-        try {
-            ps.setInt(1, id);
-            ps.setInt(2, sc.calculate());
-            ps.execute();
-        connector.commit();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            connector.rollback();
-            if (connector != null) {
-                connector.rollback();
-            }
-        } finally {
-            connector.setAutoCommit(true);
-            connector.close();
-        }
-    }
-    
-    
-    public static void main(String[] args) {
-        InvoiceMapper im = new InvoiceMapper(new DataSourceMySql().getDataSource());
-        ShoppingCart sc = new ShoppingCart();
-        CupcakeController cc = new CupcakeController(new DataSourceMySql().getDataSource());
-        UserMapper um = new UserMapper(new DataSourceMySql().getDataSource());
-        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 3), 10));
-        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 5), cc.getCupcakePart(CupcakePartEnum.TOP, 5), 8));
-        try{
-            for(Invoice i : im.getAllInvoices()){
-                System.out.println(i.getInvoiceID());
-            }
-            Invoice invoice = im.getInvoiceById(3);
-            System.out.println(invoice.getPrice());
-            im.addInvoice(8, sc);
-            
-            //im.addInvoice(5, sc);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
-    
-    
 }

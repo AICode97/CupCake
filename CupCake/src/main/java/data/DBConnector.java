@@ -8,7 +8,7 @@ import java.util.StringJoiner;
 
 /**
  *
- * @author Martin Frederiksen && Andreas Vikke
+ * @author Martin Frederiksen - Andreas Vikke
  */
 public class DBConnector {
     private static final String DRIVER = "com.mysql.jdbc.Driver";
@@ -27,20 +27,5 @@ public class DBConnector {
             }
         }
         return connection;
-    }
-    
-    public static void main(String[] args) {
-        //Test connection
-        try {
-            String sql = "SELECT * FROM users";
-            ResultSet rs = getConnection().prepareStatement(sql).executeQuery();
-            while (rs.next()) {
-                StringJoiner sj = new StringJoiner(" - ");
-                sj.add(rs.getString("username")).add(rs.getString("email")).add(rs.getString("password")).add(rs.getString("balance"));
-                System.out.println(sj.toString());
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
     }
 }

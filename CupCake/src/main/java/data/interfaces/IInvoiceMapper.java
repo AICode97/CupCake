@@ -15,7 +15,7 @@ import logic.model.ShoppingCart;
  * @author Martin Frederiksen
  */
 public interface IInvoiceMapper {
-    List<Invoice> getAllInvoices() throws SQLException;
-    Invoice getInvoiceById(int invoiceId) throws SQLException;
     void addInvoice(int orderId, ShoppingCart sc) throws SQLException;   
+    List<Invoice> getInvoices() throws SQLException;
+    Invoice getInvoiceById(int invoiceId) throws SQLException;
 }

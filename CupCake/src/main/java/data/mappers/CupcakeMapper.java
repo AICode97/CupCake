@@ -1,6 +1,5 @@
 package data.mappers;
 
-import data.DataSourceMySql;
 import data.DatabaseConnector;
 import data.interfaces.ICupcakeMapper;
 import java.sql.PreparedStatement;
@@ -24,27 +23,22 @@ public class CupcakeMapper implements ICupcakeMapper {
         connector.setDataSource(ds);
     }
     
-    public void setDataSource(DataSource ds){
-        connector.setDataSource(ds);
-    }
-
-
+    /**
+     * Adds a new Cupcake Part to the Database
+     * @param partType Cupcake Part (TOP, BOTTOM)
+     * @param name Name of Cupcake Part
+     * @param price Price of Cupcake Part
+     * @throws SQLException SQLException
+     */
     @Override
     public void addCupcakePart(CupcakePartEnum partType, String name, int price) throws SQLException {
         connector.open();
-        String quary = "";
-        switch(partType) {
-            case TOP:
-                quary = "INSERT INTO cupcakeTops(name, price) VALUES(?,?);";
-                break;
-            case BOTTOM:
-                quary = "INSERT INTO cupcakeBottoms(name, price) VALUES(?,?);";
-                break;
-        }
+        String quary = "INSERT INTO cupcakeBottoms(name, price, partType) VALUES(?,?,?);";
         PreparedStatement ps = connector.prepareStatement(quary);
         try {
             ps.setString(1, name);
             ps.setDouble(2, price);
+            ps.setString(3, partType.toString());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -57,73 +51,46 @@ public class CupcakeMapper implements ICupcakeMapper {
         }
     }
 
+    /**
+     * Returns a list of all CupcakeParts in the Database
+     * @return List of Cupcake Parts
+     * @throws SQLException SQLException
+     */
     @Override
     public List<CupcakePart> getCupcakeParts() throws SQLException {
         connector.open();
         List<CupcakePart> cupcakes = new ArrayList();
-        String topQuary = "SELECT * FROM cupcakeTops;";
-        String bottomQuary = "SELECT * FROM cupcakeBottoms;";
+        String quary = "SELECT * FROM cupcakeParts;";
         Statement stmt = connector.createStatement();
         
-        ResultSet rs = stmt.executeQuery(topQuary);
+        ResultSet rs = stmt.executeQuery(quary);
         while (rs.next()) {
-            cupcakes.add(new CupcakePart(rs.getInt("id"), CupcakePartEnum.TOP, rs.getString("name"), rs.getInt("price")));
+            cupcakes.add(new CupcakePart(rs.getInt("id"), CupcakePartEnum.valueOf(rs.getString("partType")), rs.getString("name"), rs.getInt("price")));
         }
         
-        rs = stmt.executeQuery(bottomQuary);
-        while (rs.next()) {
-            cupcakes.add(new CupcakePart(rs.getInt("id"), CupcakePartEnum.BOTTOM, rs.getString("name"), rs.getInt("price")));
-        }
         connector.close();
         return cupcakes;
     }
 
+    /**
+     * Returns a specific Cupcake Part from the Database
+     * @param id Specific Cupcake Id
+     * @return Specific Cupcake Part
+     * @throws SQLException SQLException
+     */
     @Override
-    public CupcakePart getCupcakePartById(CupcakePartEnum partType, int id) throws SQLException {
+    public CupcakePart getCupcakePartById(int id) throws SQLException {
         connector.open();
-        String quary = "";
-        PreparedStatement ps = null;
-        switch(partType) {
-            case TOP:
-                quary = "SELECT * FROM cupcakeTops WHERE id = ?;";
-                ps = connector.prepareStatement(quary);
-                break;
-            case BOTTOM:
-                quary = "SELECT * FROM cupcakeBottoms WHERE id = ?;";
-                ps = connector.prepareStatement(quary);
-                break;
-        }
+        String quary = "SELECT * FROM cupcakeParts WHERE id = ?;";
+        PreparedStatement ps = connector.prepareStatement(quary);
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         
         CupcakePart cupcake = null;
         while (rs.next()) {
-            cupcake = new CupcakePart(rs.getInt("id"), partType, rs.getString("name"), rs.getInt("price"));
+            cupcake = new CupcakePart(rs.getInt("id"), CupcakePartEnum.valueOf(rs.getString("partType")), rs.getString("name"), rs.getInt("price"));
         }
         connector.close();
         return cupcake;
-    }
-    
-    public static void main(String[] args) {
-        CupcakeMapper ccm = new CupcakeMapper(new DataSourceMySql().getDataSource());
-        ccm.setDataSource(new DataSourceMySql().getDataSource());
-        try {
-            List<CupcakePart> cupcakes = ccm.getCupcakeParts();
-            for (CupcakePart ccp : cupcakes) {
-                System.out.println(ccp);
-            }
-            System.out.println(ccm.getCupcakePartById(CupcakePartEnum.TOP, 5));
-            System.out.println(ccm.getCupcakePartById(CupcakePartEnum.BOTTOM, 5));
-            System.out.println(ccm.getCupcakePartById(CupcakePartEnum.TOP, 1));
-            System.out.println(ccm.getCupcakePartById(CupcakePartEnum.BOTTOM, 1));
-//            CupcakePart cupcake = ccm.getCupcakePartById(CupcakePartEnum.TOP, 7);
-//            CupcakePart cupcake2 = ccm.getCupcakePartById(CupcakePartEnum.BOTTOM, 5);
-//            System.out.println(cupcake);
-//            System.out.println(cupcake2);
-
-            ccm.addCupcakePart(CupcakePartEnum.BOTTOM, "Test", 5);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
     }
 }

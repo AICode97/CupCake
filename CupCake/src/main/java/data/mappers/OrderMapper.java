@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
-import logic.CupcakeController;
 import logic.model.LineItem;
 import logic.model.Order;
 import logic.model.ShoppingCart;
@@ -28,6 +27,12 @@ public class OrderMapper implements IOrderMapper {
         connector.setDataSource(ds);
     }
     
+    /**
+     * Adds a new Order to the Database
+     * @param sc Sessions ShoppingCart
+     * @param user Sessions User
+     * @throws SQLException SQLException
+     */
     @Override
     public void addOrder(ShoppingCart sc, User user) throws SQLException {
         connector.open();
@@ -62,7 +67,7 @@ public class OrderMapper implements IOrderMapper {
             connector.close();
         }
     }
-
+    
     private void addOrderLine(int id, LineItem li) throws SQLException {
         String query = "INSERT INTO orderLines VALUES(?,?,?,?,?);";
         PreparedStatement ps = connector.prepareStatement(query);
@@ -83,8 +88,13 @@ public class OrderMapper implements IOrderMapper {
         }
     }
 
+    /**
+     * Returns all Orders from the Database
+     * @return List of Orders
+     * @throws SQLException SQLException
+     */
     @Override
-    public List<Order> getAllOrders() throws SQLException {
+    public List<Order> getOrders() throws SQLException {
         connector.open();
         List<Order> orders = new ArrayList();
         String quary = "SELECT * FROM orders;";
@@ -99,6 +109,12 @@ public class OrderMapper implements IOrderMapper {
         return orders;
     }
 
+    /**
+     * Returns specific order form the Database
+     * @param id Specific Order Id
+     * @return Specific Order
+     * @throws SQLException SQLException
+     */
     @Override
     public Order getOrderById(int id) throws SQLException {
         connector.open();
@@ -118,8 +134,14 @@ public class OrderMapper implements IOrderMapper {
         return order;
     }
 
+    /**
+     * Returns a List of Users specific Orders from Database
+     * @param username Specific Users Username
+     * @return List of Orders
+     * @throws SQLException SQLException
+     */
     @Override
-    public List<Order> getOrderByUser(String username) throws SQLException {
+    public List<Order> getOrdersByUser(String username) throws SQLException {
         connector.open();
         List<Order> orders = new ArrayList();
         String quary = "SELECT * FROM orders WHERE username = ?;";
@@ -145,48 +167,9 @@ public class OrderMapper implements IOrderMapper {
         CupcakeMapper cm = new CupcakeMapper(new DataSourceMySql().getDataSource());
 
         while (rs.next()) {
-            lineItems.add(new LineItem(cm.getCupcakePartById(CupcakePartEnum.BOTTOM, rs.getInt("cupcakeBottomId")), cm.getCupcakePartById(CupcakePartEnum.TOP, rs.getInt("cupcakeTopId")), rs.getInt("qty")));
+            lineItems.add(new LineItem(cm.getCupcakePartById(rs.getInt("cupcakeBottomId")), cm.getCupcakePartById(rs.getInt("cupcakeTopId")), rs.getInt("qty")));
         }
 
         return lineItems;
     }
-    
-
-    public static void main(String[] args) {
-        OrderMapper om = new OrderMapper(new DataSourceMySql().getDataSource());
-        ShoppingCart sc = new ShoppingCart();
-        CupcakeController cc = new CupcakeController(new DataSourceMySql().getDataSource());
-        cc.setDataSource(new DataSourceMySql().getDataSource());
-        UserMapper um = new UserMapper(new DataSourceMySql().getDataSource());
-        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 1), cc.getCupcakePart(CupcakePartEnum.TOP, 3), 10));
-        sc.addLineItem(new LineItem(cc.getCupcakePart(CupcakePartEnum.BOTTOM, 5), cc.getCupcakePart(CupcakePartEnum.TOP, 5), 8));
-        try {
-            User user = um.getUser("vikke");
-            //om.addOrder(sc, user);
-            //System.out.println("order added");
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        /*try {
-            
-            for(LineItem i : im.getLineItemsById(1)){
-                System.out.println(i.getQuantity());
-            }
-            
-            for (Order o : im.getAllOrders()) {
-                System.out.println(o.getOrderId());
-            }
-            System.out.println(im.getOrderById(1).getUsername());
-            for (Order o : im.getOrderByUser("vikke")) {
-                for(LineItem li : o.getLineItems())
-                    System.out.println(li.getBottom());
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }*/
-    }
-    
 }

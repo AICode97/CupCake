@@ -4,7 +4,7 @@ import logic.model.enums.RoleEnum;
 
 /**
  *
- * @author Martin Frederiksen && Andreas Vikke
+ * @author Martin Frederiksen - Andreas Vikke
  */
 public class User {
     private String username;
