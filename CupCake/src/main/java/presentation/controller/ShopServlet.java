@@ -1,11 +1,14 @@
 package presentation.controller;
 
+import data.exceptions.CupcakeException;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import logic.CupcakeController;
 
 /**
  *
@@ -21,12 +24,18 @@ public class ShopServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("user") == null) {
-            request.getRequestDispatcher("/login").forward(request, response);
-        } else {
-            request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
-        }        
+        try {
+            HttpSession session = request.getSession();
+            if (session.getAttribute("user") == null) {
+                request.getRequestDispatcher("/login").forward(request, response);
+            } else {
+                session.setAttribute("cupcakeParts", CupcakeController.getCupcakeParts());
+                request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
+            }
+        } catch(SQLException | CupcakeException ex) {
+            request.setAttribute("errormessage", ex.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

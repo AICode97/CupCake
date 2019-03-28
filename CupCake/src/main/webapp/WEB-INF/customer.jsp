@@ -4,7 +4,7 @@
     Author     : Andreas Vikke
 --%>
 
-<%@page import="logic.model.User"%>
+<%@page import="data.models.User"%>
 <%@include file = "../header.jsp" %>
 
 <div class="contentBox">

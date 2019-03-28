@@ -10,13 +10,13 @@
 <%@page import="java.util.List" %>
 <%@page import="logic.CupcakeController"%>
 <%@page import="data.mappers.CupcakeMapper"%>
-<%@page import="logic.model.enums.CupcakePartEnum"%>
-<%@page import="logic.model.CupcakePart"%>
+<%@page import="data.models.enums.CupcakePartEnum"%>
+<%@page import="data.models.CupcakePart"%>
 <%@include file = "../header.jsp" %>
 
 
-<%CupcakeController ccc = new CupcakeController(new DataSourceMySql().getDataSource());
-    List<CupcakePart> cupcakeParts = ccc.getCupcakeParts();
+<%
+    List<CupcakePart> cupcakeParts = (List<CupcakePart>)session.getAttribute("cupcakeParts");
     List<CupcakePart> tops = new ArrayList();
     List<CupcakePart> bottoms = new ArrayList();
 

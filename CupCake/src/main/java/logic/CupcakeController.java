@@ -1,52 +1,29 @@
 package logic;
 
 import data.DataSourceMySql;
+import data.exceptions.CupcakeException;
 import data.mappers.CupcakeMapper;
 import java.sql.SQLException;
 import java.util.List;
-import javax.sql.DataSource;
-import logic.model.CupcakePart;
-import logic.model.enums.CupcakePartEnum;
+import data.models.CupcakePart;
+import data.models.enums.CupcakePartEnum;
 
 /**
  *
  * @author Andreas Vikke
  */
 public class CupcakeController {
-    private CupcakeMapper ccm;
+    private static final CupcakeMapper ccm = new CupcakeMapper(new DataSourceMySql().getDataSource());
     
-    public CupcakeController(DataSource ds) {
-        ccm = new CupcakeMapper(new DataSourceMySql().getDataSource());
+    public static List<CupcakePart> getCupcakeParts() throws SQLException, CupcakeException {
+        return ccm.getAll();
     }
 
-    public CupcakeMapper setDataSource(DataSource ds) {
-        ccm = new CupcakeMapper(new DataSourceMySql().getDataSource());
-        return ccm;
+    public static CupcakePart getCupcakePart(int id) throws SQLException, CupcakeException {
+        return ccm.get(id);
     }
 
-    public List<CupcakePart> getCupcakeParts() {
-        try {
-            return ccm.getAll();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    public CupcakePart getCupcakePart(int id) {
-        try {
-            return ccm.get(id);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    public void addCupcakePart(CupcakePartEnum partType, String name, int price) {
-        try {
-            ccm.add(new CupcakePart(0, partType, name, price));
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+    public static void addCupcakePart(CupcakePartEnum partType, String name, int price) throws SQLException, CupcakeException {
+        ccm.add(new CupcakePart(0, partType, name, price));
     }
 }

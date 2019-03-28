@@ -1,15 +1,19 @@
-package logic.command;
+package presentation.command;
 
 import data.DataSourceMySql;
+import data.exceptions.CommandException;
+import data.exceptions.OrderException;
+import data.exceptions.UserException;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.OrderController;
 import logic.UserController;
-import logic.model.ShoppingCart;
-import logic.model.User;
+import data.models.ShoppingCart;
+import data.models.User;
 
 /**
  *
@@ -18,26 +22,27 @@ import logic.model.User;
 public class CheckoutCommand extends Command {
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, CommandException {
+        try {
         HttpSession session = request.getSession();
 
         User user = (User) session.getAttribute("user");
-        UserController uc = new UserController(new DataSourceMySql().getDataSource());
-        OrderController oc = new OrderController(new DataSourceMySql().getDataSource());
 
         ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");
 
         if (user.getBalance() >= sc.calculate()) {
-            uc.changeBalance(user, sc.calculate());
+            UserController.changeBalance(user, sc.calculate());
             String username = user.getUsername();
-            oc.addOrder(sc, user);
+            OrderController.addOrder(sc, user);
             sc = null;
-            session.setAttribute("user", uc.getUser(username));
+            session.setAttribute("user", UserController.getUser(username));
             session.setAttribute("ShoppingCart", sc);
             request.getRequestDispatcher("/cart").forward(request, response);
         } else {
-            request.setAttribute("errormessage", "Balance to low");
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
+            throw new CommandException("Balance to low");
+        }
+        } catch(SQLException | UserException | OrderException ex) {
+            throw new CommandException(ex.getMessage());
         }
     }
 }

@@ -1,6 +1,8 @@
 package logic;
 
-import logic.model.User;
+import data.DataSourceMySql;
+import data.exceptions.UserException;
+import data.models.User;
 import data.mappers.UserMapper;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -8,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 import javax.xml.bind.DatatypeConverter;
-import logic.model.enums.RoleEnum;
+import data.models.enums.RoleEnum;
 
 /**
  *
@@ -16,31 +18,17 @@ import logic.model.enums.RoleEnum;
  */
 public class UserController {
 
-    private UserMapper um;
+    private static final UserMapper um = new UserMapper(new DataSourceMySql().getDataSource());
 
-    public UserController(DataSource ds) {
-        um = new UserMapper(ds);
+    public static List<User> getUsers() throws SQLException, UserException {
+        return um.getAll();
     }
 
-    public List<User> getUsers() {
-        try {
-            return um.getAll();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
+    public static User getUser(String username) throws SQLException, UserException {
+        return um.get(username);
     }
 
-    public User getUser(String username) {
-        try {
-            return um.get(username);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    public  void addUser(String username, String email, String password, RoleEnum role) throws SQLException {
+    public  static void addUser(String username, String email, String password, RoleEnum role) throws SQLException, UserException {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes());
@@ -55,49 +43,38 @@ public class UserController {
         }
     }
 
-    public int changePassword(String username, String newPassword) {
+    public static int changePassword(String username, String newPassword) throws UserException, SQLException {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
 
             md.update(newPassword.getBytes());
             byte[] digest = md.digest();
-            String passwordHash2 = DatatypeConverter.printHexBinary(digest).toUpperCase();
+            String passwordHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
 
-            return um.changePassword(username, passwordHash2);
-        } catch (SQLException | NoSuchAlgorithmException ex) {
+            return um.changePassword(username, passwordHash);
+        } catch (NoSuchAlgorithmException ex) {
             ex.printStackTrace();
             return -1;
         }
     }
 
-    public void addBalance(User user, int balance) {
-        try {
-            um.addBalance(user, balance);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+    public static void addBalance(User user, int balance) throws SQLException, UserException {
+        um.addBalance(user, balance);
     }
 
-    public void changeBalance(User user, int balance) {
-        try {
-            um.checkout(user, balance);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+    public static void changeBalance(User user, int balance) throws SQLException, UserException {
+        um.checkout(user, balance);
     }
     
-    public boolean validateUser(String username, String password) {
-        if(username == null || password == null || username.equals("") || password.equals("")) return false;
-        try {            
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes());
-            byte[] digest = md.digest();
-            String passwordHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
-            
-            return um.validateUser(username, passwordHash);
-        } catch (SQLException | NoSuchAlgorithmException ex) {
-            ex.printStackTrace();
-            return false;
-        }
+    public static boolean validateUser(String username, String password) throws SQLException, UserException, NoSuchAlgorithmException {
+        if(username == null || password == null || username.equals("") || password.equals("")) 
+            return false;   
+        
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
+        byte[] digest = md.digest();
+        String passwordHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
+
+        return um.validateUser(username, passwordHash);
     }
 }

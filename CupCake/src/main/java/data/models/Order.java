@@ -1,4 +1,4 @@
-package logic.model;
+package data.models;
 
 import java.sql.Date;
 import java.util.List;

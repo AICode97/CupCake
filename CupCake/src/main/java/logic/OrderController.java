@@ -1,12 +1,13 @@
 package logic;
 
+import data.DataSourceMySql;
+import data.exceptions.OrderException;
 import data.mappers.OrderMapper;
 import java.sql.SQLException;
 import java.util.List;
-import javax.sql.DataSource;
-import logic.model.Order;
-import logic.model.ShoppingCart;
-import logic.model.User;
+import data.models.Order;
+import data.models.ShoppingCart;
+import data.models.User;
 
 /**
  *
@@ -14,46 +15,23 @@ import logic.model.User;
  */
 public class OrderController {
 
-    private OrderMapper om;
+    private static final OrderMapper om = new OrderMapper(new DataSourceMySql().getDataSource());
 
-    public OrderController(DataSource ds) {
-        om = new OrderMapper(ds);
+    public static List<Order> getAllOrders() throws SQLException, OrderException {
+        return om.getAll();
     }
 
-    public List<Order> getAllOrders() {
-        try {
-            return om.getAll();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
+    public static Order getOrderById(int id) throws SQLException, OrderException {
+        return om.get(id);
     }
 
-    public Order getOrderById(int id) {
-        try {
-            return om.get(id);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
+    public static List<Order> getOrderByUser(String username) throws SQLException, OrderException {
+        return om.getAllByUser(username);
     }
 
-    public List<Order> getOrderByUser(String username) {
-        try {
-            return om.getAllByUser(username);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    public void addOrder(ShoppingCart sc, User user) {
-        try {
-            Order order = new Order(0, user.getUsername(), null, null);
-            order.setShoppingCart(sc);
-            om.add(order);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+    public static void addOrder(ShoppingCart sc, User user) throws SQLException, OrderException {
+        Order order = new Order(0, user.getUsername(), null, null);
+        order.setShoppingCart(sc);
+        om.add(order);
     }
 }

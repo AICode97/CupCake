@@ -1,4 +1,4 @@
-package logic.model.enums;
+package data.models.enums;
 
 /**
  *

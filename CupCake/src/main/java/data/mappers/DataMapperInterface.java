@@ -1,4 +1,4 @@
-package data.interfaces;
+package data.mappers;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package logic.model;
+package data.models;
 
-import logic.model.enums.RoleEnum;
+import data.models.enums.RoleEnum;
 
 /**
  *

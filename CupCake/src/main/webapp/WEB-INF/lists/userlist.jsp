@@ -7,11 +7,10 @@
 <%@page import="data.DataSourceMySql"%>
 <%@page import="java.util.List"%>
 <%@page import="logic.UserController"%>
-<%@page import="logic.model.User"%>
+<%@page import="data.models.User"%>
 
 <%
-    UserController uc = new UserController(new DataSourceMySql().getDataSource());
-    List<User> users = uc.getUsers();
+    List<User> users = (List<User>)session.getAttribute("userList");
     int count = 1;
 %>
 

@@ -5,7 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import logic.command.Command;
+import presentation.command.Command;
 
 /**
  *
@@ -26,13 +26,10 @@ public class CommandServlet extends HttpServlet {
         try {
             Command c = Command.from(request, response);
             c.execute(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            String error = "Unkown Command<br/><br/>";
-            for(StackTraceElement st : e.getStackTrace()) {
-                error += st.toString() + "<br/>";
-            }
-            request.setAttribute("errormessage", error);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            response.addHeader("error", ex.getMessage());
+            request.setAttribute("errormessage", ex.getMessage());
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }

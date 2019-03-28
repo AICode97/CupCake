@@ -1,7 +1,7 @@
 package data.mappers;
 
 import data.DatabaseConnector;
-import data.interfaces.DataMapperInterface;
+import data.exceptions.CupcakeException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,8 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
-import logic.model.CupcakePart;
-import logic.model.enums.CupcakePartEnum;
+import data.models.CupcakePart;
+import data.models.enums.CupcakePartEnum;
 
 /**
  *
@@ -29,15 +29,17 @@ public class CupcakeMapper implements DataMapperInterface<CupcakePart, Integer> 
      * @throws SQLException SQLException
      */
     @Override
-    public void add(CupcakePart cupcake) throws SQLException {
-        connector.open();
-        String quary = "INSERT INTO cupcakeBottoms(name, price, partType) VALUES(?,?,?);";
-        PreparedStatement ps = connector.prepareStatement(quary);
+    public void add(CupcakePart cupcake) throws SQLException, CupcakeException {
         try {
+            connector.open();
+            String quary = "INSERT INTO cupcakeBottoms(name, price, partType) VALUES(?,?,?);";
+            PreparedStatement ps = connector.prepareStatement(quary);
+            
             ps.setString(1, cupcake.getName());
             ps.setDouble(2, cupcake.getPrice());
             ps.setString(3, cupcake.getPart().toString());
             connector.setAutoCommit(false);
+            
             ps.executeUpdate();
             connector.commit();
         } catch (SQLException ex) {
@@ -46,6 +48,7 @@ public class CupcakeMapper implements DataMapperInterface<CupcakePart, Integer> 
             if (connector != null) {
                 connector.rollback();
             }
+            throw new CupcakeException(ex.getMessage());
         } finally {
             connector.close();
         }
@@ -57,19 +60,25 @@ public class CupcakeMapper implements DataMapperInterface<CupcakePart, Integer> 
      * @throws SQLException SQLException
      */
     @Override
-    public List<CupcakePart> getAll() throws SQLException {
-        connector.open();
-        List<CupcakePart> cupcakes = new ArrayList();
-        String quary = "SELECT * FROM cupcakeParts;";
-        Statement stmt = connector.createStatement();
-        
-        ResultSet rs = stmt.executeQuery(quary);
-        while (rs.next()) {
-            cupcakes.add(new CupcakePart(rs.getInt("id"), CupcakePartEnum.valueOf(rs.getString("partType")), rs.getString("name"), rs.getInt("price")));
+    public List<CupcakePart> getAll() throws SQLException, CupcakeException {
+        try {
+            connector.open();
+            List<CupcakePart> cupcakes = new ArrayList();
+            String quary = "SELECT * FROM cupcakeParts;";
+            Statement stmt = connector.createStatement();
+
+            ResultSet rs = stmt.executeQuery(quary);
+            while (rs.next()) {
+                cupcakes.add(new CupcakePart(rs.getInt("id"), CupcakePartEnum.valueOf(rs.getString("partType")), rs.getString("name"), rs.getInt("price")));
+            }
+
+            return cupcakes;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new CupcakeException(ex.getMessage());
+        } finally {
+            connector.close();
         }
-        
-        connector.close();
-        return cupcakes;
     }
 
     /**
@@ -79,18 +88,24 @@ public class CupcakeMapper implements DataMapperInterface<CupcakePart, Integer> 
      * @throws SQLException SQLException
      */
     @Override
-    public CupcakePart get(Integer id) throws SQLException {
-        connector.open();
-        String quary = "SELECT * FROM cupcakeParts WHERE id = ?;";
-        PreparedStatement ps = connector.prepareStatement(quary);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        
-        CupcakePart cupcake = null;
-        while (rs.next()) {
-            cupcake = new CupcakePart(rs.getInt("id"), CupcakePartEnum.valueOf(rs.getString("partType")), rs.getString("name"), rs.getInt("price"));
+    public CupcakePart get(Integer id) throws SQLException, CupcakeException {
+        try {
+            connector.open();
+            String quary = "SELECT * FROM cupcakeParts WHERE id = ?;";
+            PreparedStatement ps = connector.prepareStatement(quary);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            CupcakePart cupcake = null;
+            while (rs.next()) {
+                cupcake = new CupcakePart(rs.getInt("id"), CupcakePartEnum.valueOf(rs.getString("partType")), rs.getString("name"), rs.getInt("price"));
+            }
+            return cupcake;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new CupcakeException(ex.getMessage());
+        } finally {
+            connector.close();
         }
-        connector.close();
-        return cupcake;
     }
 }

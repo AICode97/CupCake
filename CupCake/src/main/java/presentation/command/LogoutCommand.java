@@ -1,4 +1,4 @@
-package logic.command;
+package presentation.command;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

@@ -1,4 +1,4 @@
-package logic.command;
+package presentation.command;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class Command {
 
-    public abstract void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+    public abstract void execute(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
     public static Command from(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command c;

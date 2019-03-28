@@ -1,16 +1,18 @@
 package presentation.controller;
 
 import data.DataSourceMySql;
+import data.exceptions.OrderException;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.OrderController;
-import logic.model.Order;
-import logic.model.User;
-import logic.model.enums.RoleEnum;
+import data.models.Order;
+import data.models.User;
+import data.models.enums.RoleEnum;
 
 /**
  *
@@ -26,12 +28,12 @@ public class OrderServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        OrderController oc = new OrderController(new DataSourceMySql().getDataSource());
+        try {
         HttpSession session = request.getSession();
         
         String orderId = request.getParameter("orderId");
         if(orderId != null) {
-            Order order = oc.getOrderById(Integer.parseInt(orderId));
+            Order order = OrderController.getOrderById(Integer.parseInt(orderId));
             session.setAttribute("order", order);
             
             if(order == null) {
@@ -51,6 +53,10 @@ public class OrderServlet extends HttpServlet {
             }
         } else {
             request.setAttribute("errormessage", "No Order Id supplied.");
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
+        }
+        } catch(SQLException | OrderException ex) {
+            request.setAttribute("errormessage", ex.getMessage());
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     } 

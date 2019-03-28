@@ -4,12 +4,12 @@
     Author     : Martin Frederiksen
 --%>
 
-<%@page import="logic.model.CupcakePart"%>
+<%@page import="data.models.CupcakePart"%>
 <%@page import="logic.CupcakeController"%>
-<%@page import="logic.model.ShoppingCart"%>
-<%@page import="logic.model.Order"%>
-<%@page import="logic.model.LineItem"%>
-<%@page import="logic.model.LineItem"%>
+<%@page import="data.models.ShoppingCart"%>
+<%@page import="data.models.Order"%>
+<%@page import="data.models.LineItem"%>
+<%@page import="data.models.LineItem"%>
 <%@include file = "../header.jsp" %>
 
 <%

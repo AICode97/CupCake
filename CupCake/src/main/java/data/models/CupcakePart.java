@@ -1,6 +1,6 @@
-package logic.model;
+package data.models;
 
-import logic.model.enums.CupcakePartEnum;
+import data.models.enums.CupcakePartEnum;
 
 /**
  *

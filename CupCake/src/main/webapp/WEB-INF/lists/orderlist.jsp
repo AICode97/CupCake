@@ -5,18 +5,12 @@
 --%>
 
 <%@page import="data.DataSourceMySql"%>
-<%@page import="logic.model.Order"%>
+<%@page import="data.models.Order"%>
 <%@page import="logic.OrderController"%>
 <%@page import="java.util.List"%>
 
 <%
-    OrderController oc = new OrderController(new DataSourceMySql().getDataSource());
-    String username = request.getParameter("username");
-    List<Order> orders;
-    if(username == null)
-        orders = oc.getAllOrders();
-    else
-        orders = oc.getOrderByUser(username);
+    List<Order> orders = (List<Order>) session.getAttribute("orderList");
 %>
 
 <button class="btn btn-info" onclick="orderById();">Order by Id</button>

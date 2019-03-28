@@ -1,14 +1,14 @@
 package data.mappers;
 
 import data.DatabaseConnector;
-import data.interfaces.DataMapperInterface;
+import data.exceptions.InvoiceException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
-import logic.model.Invoice;
+import data.models.Invoice;
 
 /**
  *
@@ -27,11 +27,11 @@ public class InvoiceMapper implements DataMapperInterface<Invoice, Integer> {
      * @throws SQLException SQLException
      */
     @Override
-    public void add(Invoice invoice) throws SQLException {
-        connector.open();
-        String query = "INSERT INTO invoices(orderId, price) VALUES(?,?);";
-        PreparedStatement ps = connector.prepareStatement(query);
+    public void add(Invoice invoice) throws SQLException, InvoiceException {
         try {
+            connector.open();
+            String query = "INSERT INTO invoices(orderId, price) VALUES(?,?);";
+            PreparedStatement ps = connector.prepareStatement(query);
             ps.setInt(1, invoice.getOrderId());
             ps.setInt(2, invoice.getShoppingCart().calculate());
             connector.setAutoCommit(false);
@@ -43,6 +43,7 @@ public class InvoiceMapper implements DataMapperInterface<Invoice, Integer> {
             if (connector != null) {
                 connector.rollback();
             }
+            throw new InvoiceException(ex.getMessage());
         } finally {
             connector.close();
         }
@@ -54,18 +55,24 @@ public class InvoiceMapper implements DataMapperInterface<Invoice, Integer> {
      * @throws SQLException SQLException
      */
     @Override
-    public List<Invoice> getAll() throws SQLException {
-        connector.open();
-        List<Invoice> invoices = new ArrayList();
-        String quary = "SELECT * FROM invoices;";
-        PreparedStatement ps = connector.prepareStatement(quary);
-        ResultSet rs = ps.executeQuery();
-        
-        while(rs.next()){
-            invoices.add(new Invoice(rs.getInt("invoiceId"), rs.getInt("orderId"), rs.getInt("price"), rs.getDate("date")));
+    public List<Invoice> getAll() throws SQLException, InvoiceException {
+        try {    
+            connector.open();
+            List<Invoice> invoices = new ArrayList();
+            String quary = "SELECT * FROM invoices;";
+            PreparedStatement ps = connector.prepareStatement(quary);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                invoices.add(new Invoice(rs.getInt("invoiceId"), rs.getInt("orderId"), rs.getInt("price"), rs.getDate("date")));
+            }
+            return invoices;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new InvoiceException(ex.getMessage());
+        } finally {
+            connector.close();
         }
-        connector.close();
-        return invoices;
     }
 
     /**
@@ -75,20 +82,26 @@ public class InvoiceMapper implements DataMapperInterface<Invoice, Integer> {
      * @throws SQLException SQLException
      */
     @Override
-    public Invoice get(Integer invoiceId) throws SQLException {
-        connector.open();
-        Invoice invoice = null;
-        String quary = "SELECT * FROM invoices WHERE invoiceId = ?;";
-        PreparedStatement ps = connector.prepareStatement(quary);
-        ps.setInt(1, invoiceId);
-        ResultSet rs = ps.executeQuery();
-        
-        while(rs.next()){
-            if(invoiceId == rs.getInt("invoiceId")){
-                invoice = new Invoice(invoiceId, rs.getInt("orderId"), rs.getInt("price"), rs.getDate("date"));
+    public Invoice get(Integer invoiceId) throws SQLException, InvoiceException {
+        try {
+            connector.open();
+            Invoice invoice = null;
+            String quary = "SELECT * FROM invoices WHERE invoiceId = ?;";
+            PreparedStatement ps = connector.prepareStatement(quary);
+            ps.setInt(1, invoiceId);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                if(invoiceId == rs.getInt("invoiceId")){
+                    invoice = new Invoice(invoiceId, rs.getInt("orderId"), rs.getInt("price"), rs.getDate("date"));
+                }
             }
+            return invoice;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new InvoiceException(ex.getMessage());
+        } finally {
+            connector.close();
         }
-        connector.close();
-        return invoice;
     }
 }
