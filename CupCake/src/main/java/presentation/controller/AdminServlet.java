@@ -35,7 +35,11 @@ public class AdminServlet extends HttpServlet {
             if (session.getAttribute("user") == null) {
                 request.getRequestDispatcher("/login").forward(request, response);
             } else if (((User) session.getAttribute("user")).getRole() == RoleEnum.ADMIN) {
-                session.setAttribute("orderList", OrderController.getAllOrders());
+                String username = request.getParameter("username");
+                if(username == null)
+                    session.setAttribute("orderList", OrderController.getAllOrders());
+                else
+                    session.setAttribute("orderList", OrderController.getOrderByUser(username));
                 session.setAttribute("userList", UserController.getUsers());
                 request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
             } else {
