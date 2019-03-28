@@ -33,7 +33,7 @@ public class ShopServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
             }
         } catch(SQLException | CupcakeException ex) {
-            request.setAttribute("errormessage", ex.getMessage());
+            response.addHeader("error", ex.getMessage());
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     } 

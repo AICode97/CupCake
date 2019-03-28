@@ -37,7 +37,7 @@ public class OrderServlet extends HttpServlet {
             session.setAttribute("order", order);
             
             if(order == null) {
-                request.setAttribute("errormessage", "Order not found.");
+                response.addHeader("error", "Order not found.");
                 request.getRequestDispatcher("/error.jsp").forward(request, response);
             } else {
                 if (session.getAttribute("user") == null) {
@@ -47,16 +47,16 @@ public class OrderServlet extends HttpServlet {
                     request.setAttribute("orderId", orderId);
                     request.getRequestDispatcher("/WEB-INF/order.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("errormessage", "Insufficient permisson to access order.");
+                    response.addHeader("error", "Insufficient permisson to access order.");
                     request.getRequestDispatcher("/error.jsp").forward(request, response);
                 }
             }
         } else {
-            request.setAttribute("errormessage", "No Order Id supplied.");
+            response.addHeader("error", "No Order Id supplied.");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
         } catch(SQLException | OrderException ex) {
-            request.setAttribute("errormessage", ex.getMessage());
+            response.addHeader("error", ex.getMessage());
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     } 

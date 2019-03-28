@@ -42,7 +42,7 @@ public class AdminServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/customer").forward(request, response);
             }
         } catch(SQLException | OrderException | UserException ex) {
-            request.setAttribute("errormessage", ex.getMessage());
+            response.addHeader("error", ex.getMessage());
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }

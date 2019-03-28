@@ -29,7 +29,6 @@ public class CommandServlet extends HttpServlet {
         } catch (Exception ex) {
             ex.printStackTrace();
             response.addHeader("error", ex.getMessage());
-            request.setAttribute("errormessage", ex.getMessage());
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }

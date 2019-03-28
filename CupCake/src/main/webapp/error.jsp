@@ -8,9 +8,9 @@
 
 <%
     String errormessage = "Error occurred...";
-    if(request.getAttribute("errormessage") != null)
+    if(response.getHeader("error") != null)
     {
-        errormessage = (String) request.getAttribute("errormessage");
+        errormessage = (String) response.getHeader("error");
     }
 %>
 
