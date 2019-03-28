@@ -1,7 +1,7 @@
 package data.mappers;
 
 import data.DatabaseConnector;
-import data.interfaces.IUserMapper;
+import data.interfaces.DataMapperInterface;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +15,7 @@ import logic.model.User;
  *
  * @author Martin Frederiksen
  */
-public class UserMapper implements IUserMapper {
+public class UserMapper implements DataMapperInterface<User, String> {
 
     private DatabaseConnector connector = new DatabaseConnector();
 
@@ -25,35 +25,30 @@ public class UserMapper implements IUserMapper {
 
     /**
      * Adds a new User to the Database
-     * @param username Username of new User
-     * @param email Email of new User
-     * @param password Password of new User
-     * @return Id of the new User
+     * @param user User
      * @throws SQLException SQLException
      */
     @Override
-    public int addUser(String username, String email, String password, RoleEnum role) throws SQLException {
+    public void add(User user) throws SQLException {
         connector.open();
         String quary = "INSERT INTO users(username, email, password, role) VALUES(?,?,?,?);";
         PreparedStatement ps = connector.prepareStatement(quary);
         try {
-            ps.setString(1, username);
-            ps.setString(2, email);
-            ps.setString(3, password);
-            ps.setString(4, role.toString());
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getRole().toString());
             connector.setAutoCommit(false);
-            int result = ps.executeUpdate();
-            return result;
+            ps.executeUpdate();
+            connector.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
             if (connector != null) {
                 connector.rollback();
             }
         } finally {
-            connector.setAutoCommit(true);
             connector.close();
         }
-        return -1;
     }
 
     /**
@@ -62,7 +57,7 @@ public class UserMapper implements IUserMapper {
      * @throws SQLException SQLException
      */
     @Override
-    public List<User> getUsers() throws SQLException {
+    public List<User> getAll() throws SQLException {
         connector.open();
         List<User> users = new ArrayList();
         String quary = "SELECT username, email, balance, role FROM users;";
@@ -70,7 +65,7 @@ public class UserMapper implements IUserMapper {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-            users.add(new User(rs.getString("username"), rs.getString("email"), rs.getInt("balance"), RoleEnum.valueOf(rs.getString("role"))));
+            users.add(new User(rs.getString("username"), null, rs.getString("email"), rs.getInt("balance"), RoleEnum.valueOf(rs.getString("role"))));
         }
         connector.close();
         return users;
@@ -83,7 +78,7 @@ public class UserMapper implements IUserMapper {
      * @throws SQLException SQLException
      */
     @Override
-    public User getUser(String username) throws SQLException {
+    public User get(String username) throws SQLException {
         connector.open();
         String quary = "SELECT username, email, balance, role FROM users WHERE username = ?;";
         PreparedStatement ps = connector.prepareStatement(quary);
@@ -92,7 +87,7 @@ public class UserMapper implements IUserMapper {
         User user = null;
         while (rs.next()) {
             if (username.equalsIgnoreCase(rs.getString("username"))) {
-                user = new User(username, rs.getString("email"), rs.getInt("balance"), RoleEnum.valueOf(rs.getString("role")));
+                user = new User(username, rs.getString("email"), null, rs.getInt("balance"), RoleEnum.valueOf(rs.getString("role")));
             }
         }
         connector.close();
@@ -106,7 +101,6 @@ public class UserMapper implements IUserMapper {
      * @return Boolean (True = Valid)
      * @throws SQLException SQLException
      */
-    @Override
     public boolean validateUser(String username, String password) throws SQLException {
         connector.open();
         String quary = "SELECT username, email FROM users WHERE (username = ? OR email = ?)AND password = ?;";
@@ -130,9 +124,8 @@ public class UserMapper implements IUserMapper {
      * @param username Username of specific User
      * @param password New Password of specific User
      * @return Error integer
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
-    @Override
     public int changePassword(String username, String password) throws SQLException {
         connector.open();
         String quary = "UPDATE users SET password = ? WHERE username = ?;";
@@ -150,7 +143,6 @@ public class UserMapper implements IUserMapper {
                 connector.rollback();
             }
         } finally {
-            connector.setAutoCommit(true);
             connector.close();
         }
         return -1;
@@ -160,9 +152,8 @@ public class UserMapper implements IUserMapper {
      * Adds a balance to a specific User
      * @param user Specific User
      * @param balance Balance to add
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
-    @Override
     public void addBalance(User user, int balance) throws SQLException {
         connector.open();
         String quary = "UPDATE users SET balance = ? WHERE username = ?;";
@@ -170,23 +161,25 @@ public class UserMapper implements IUserMapper {
         try {
             ps.setInt(1, user.getBalance() + balance);
             ps.setString(2, user.getUsername());
+            connector.setAutoCommit(false);
             ps.execute();
+            connector.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
             if (connector != null) {
                 connector.rollback();
             }
-        }
+        } finally {
         connector.close();
+        }
     }
 
     /**
      * Removes Balance from specific User after Checkout
      * @param user Specific User
      * @param balance Balance to remove
-     * @throws SQLException 
+     * @throws SQLException SQLException
      */
-    @Override
     public void checkout(User user, int balance) throws SQLException {
         connector.open();
         String quary = "UPDATE users SET balance = ? WHERE username = ?;";
@@ -194,13 +187,16 @@ public class UserMapper implements IUserMapper {
         try {
             ps.setInt(1, user.getBalance() - balance);
             ps.setString(2, user.getUsername());
+            connector.setAutoCommit(false);
             ps.execute();
+            connector.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
             if (connector != null) {
                 connector.rollback();
             }
+        } finally {
+            connector.close();
         }
-        connector.close();
     }
 }

@@ -2,6 +2,9 @@ package logic.command;
 
 import data.DataSourceMySql;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,14 +30,15 @@ public class RegisterCommand extends Command {
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         } else {
             UserController rc = new UserController(new DataSourceMySql().getDataSource());
-            int result = rc.addUser(username, email, password, RoleEnum.CUSTOMER);
-            if (result == -1) {
+            try {
+                rc.addUser(username, email, password, RoleEnum.CUSTOMER);
+                response.addHeader("redirect", request.getContextPath() + "/login");
+                request.getRequestDispatcher("/login").forward(request, response);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
                 response.addHeader("error", "User with same username or email is already registered");
                 request.setAttribute("errormessage", "User with same username or email is already registered");
                 request.getRequestDispatcher("/error.jsp").forward(request, response);
-            } else {
-                response.addHeader("redirect", request.getContextPath() + "/login");
-                request.getRequestDispatcher("/login").forward(request, response);
             }
         }
     }

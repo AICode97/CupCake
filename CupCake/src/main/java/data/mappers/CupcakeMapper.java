@@ -1,7 +1,7 @@
 package data.mappers;
 
 import data.DatabaseConnector;
-import data.interfaces.ICupcakeMapper;
+import data.interfaces.DataMapperInterface;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ import logic.model.enums.CupcakePartEnum;
  *
  * @author Andreas Vikke
  */
-public class CupcakeMapper implements ICupcakeMapper {
+public class CupcakeMapper implements DataMapperInterface<CupcakePart, Integer> {
     private DatabaseConnector connector = new DatabaseConnector();
 
     public CupcakeMapper(DataSource ds) {
@@ -25,21 +25,21 @@ public class CupcakeMapper implements ICupcakeMapper {
     
     /**
      * Adds a new Cupcake Part to the Database
-     * @param partType Cupcake Part (TOP, BOTTOM)
-     * @param name Name of Cupcake Part
-     * @param price Price of Cupcake Part
+     * @param cupcake Cupcake Part
      * @throws SQLException SQLException
      */
     @Override
-    public void addCupcakePart(CupcakePartEnum partType, String name, int price) throws SQLException {
+    public void add(CupcakePart cupcake) throws SQLException {
         connector.open();
         String quary = "INSERT INTO cupcakeBottoms(name, price, partType) VALUES(?,?,?);";
         PreparedStatement ps = connector.prepareStatement(quary);
         try {
-            ps.setString(1, name);
-            ps.setDouble(2, price);
-            ps.setString(3, partType.toString());
+            ps.setString(1, cupcake.getName());
+            ps.setDouble(2, cupcake.getPrice());
+            ps.setString(3, cupcake.getPart().toString());
+            connector.setAutoCommit(false);
             ps.executeUpdate();
+            connector.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
             connector.rollback();
@@ -57,7 +57,7 @@ public class CupcakeMapper implements ICupcakeMapper {
      * @throws SQLException SQLException
      */
     @Override
-    public List<CupcakePart> getCupcakeParts() throws SQLException {
+    public List<CupcakePart> getAll() throws SQLException {
         connector.open();
         List<CupcakePart> cupcakes = new ArrayList();
         String quary = "SELECT * FROM cupcakeParts;";
@@ -79,7 +79,7 @@ public class CupcakeMapper implements ICupcakeMapper {
      * @throws SQLException SQLException
      */
     @Override
-    public CupcakePart getCupcakePartById(int id) throws SQLException {
+    public CupcakePart get(Integer id) throws SQLException {
         connector.open();
         String quary = "SELECT * FROM cupcakeParts WHERE id = ?;";
         PreparedStatement ps = connector.prepareStatement(quary);

@@ -2,7 +2,7 @@ package data.mappers;
 
 import data.DataSourceMySql;
 import data.DatabaseConnector;
-import data.interfaces.IOrderMapper;
+import data.interfaces.DataMapperInterface;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,18 +10,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
+import logic.model.Invoice;
 import logic.model.LineItem;
 import logic.model.Order;
-import logic.model.ShoppingCart;
-import logic.model.User;
-import logic.model.enums.CupcakePartEnum;
 
 /**
  *
  * @author Martin Frederiksen
  */
-public class OrderMapper implements IOrderMapper {
-    private DatabaseConnector connector = new DatabaseConnector();;
+public class OrderMapper implements DataMapperInterface<Order, Integer> {
+    private DatabaseConnector connector = new DatabaseConnector();
 
     public OrderMapper(DataSource ds) {
         connector.setDataSource(ds);
@@ -29,36 +27,36 @@ public class OrderMapper implements IOrderMapper {
     
     /**
      * Adds a new Order to the Database
-     * @param sc Sessions ShoppingCart
-     * @param user Sessions User
+     * @param order Order
      * @throws SQLException SQLException
      */
     @Override
-    public void addOrder(ShoppingCart sc, User user) throws SQLException {
+    public void add(Order order) throws SQLException {
         connector.open();
         String query = "INSERT INTO orders(username) VALUES(?);";
         PreparedStatement ps = connector.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         int result = 0;
         ResultSet rs = null;
-
         
         try {
-            ps.setString(1, user.getUsername());
+            ps.setString(1, order.getUsername());
             connector.setAutoCommit(false);
             result = ps.executeUpdate();
             rs = ps.getGeneratedKeys();
             rs.next();
             result = rs.getInt(1);
-            for (LineItem li : sc.getLineItems()) {
+            connector.commit();
+            
+            for (LineItem li : order.getShoppingCart().getLineItems()) {
                 addOrderLine(result, li);
             }
-            InvoiceMapper im = new InvoiceMapper(new DataSourceMySql().getDataSource());
-            im.addInvoice(result, sc);
             
-            connector.commit();
+            InvoiceMapper im = new InvoiceMapper(new DataSourceMySql().getDataSource());
+            Invoice invoice = new Invoice(-1, result, 0, null);
+            invoice.setShoppingCart(order.getShoppingCart());
+            im.add(invoice);
         } catch (SQLException ex) {
             ex.printStackTrace();
-            connector.rollback();
             if (connector != null) {
                 connector.rollback();
             }
@@ -82,7 +80,9 @@ public class OrderMapper implements IOrderMapper {
             connector.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            connector.rollback();
+            if (connector != null) {
+                connector.rollback();
+            }
         } finally {
             connector.setAutoCommit(true);
         }
@@ -94,7 +94,7 @@ public class OrderMapper implements IOrderMapper {
      * @throws SQLException SQLException
      */
     @Override
-    public List<Order> getOrders() throws SQLException {
+    public List<Order> getAll() throws SQLException {
         connector.open();
         List<Order> orders = new ArrayList();
         String quary = "SELECT * FROM orders;";
@@ -116,7 +116,7 @@ public class OrderMapper implements IOrderMapper {
      * @throws SQLException SQLException
      */
     @Override
-    public Order getOrderById(int id) throws SQLException {
+    public Order get(Integer id) throws SQLException {
         connector.open();
         Order order = null;
         String quary = "SELECT * FROM orders WHERE orderId = ?;";
@@ -140,8 +140,7 @@ public class OrderMapper implements IOrderMapper {
      * @return List of Orders
      * @throws SQLException SQLException
      */
-    @Override
-    public List<Order> getOrdersByUser(String username) throws SQLException {
+    public List<Order> getAllByUser(String username) throws SQLException {
         connector.open();
         List<Order> orders = new ArrayList();
         String quary = "SELECT * FROM orders WHERE username = ?;";
@@ -167,7 +166,7 @@ public class OrderMapper implements IOrderMapper {
         CupcakeMapper cm = new CupcakeMapper(new DataSourceMySql().getDataSource());
 
         while (rs.next()) {
-            lineItems.add(new LineItem(cm.getCupcakePartById(rs.getInt("cupcakeBottomId")), cm.getCupcakePartById(rs.getInt("cupcakeTopId")), rs.getInt("qty")));
+            lineItems.add(new LineItem(cm.get(rs.getInt("cupcakeBottomId")), cm.get(rs.getInt("cupcakeTopId")), rs.getInt("qty")));
         }
 
         return lineItems;

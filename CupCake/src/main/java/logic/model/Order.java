@@ -12,6 +12,7 @@ public class Order {
     private String username;
     private Date orderDate;
     private List<LineItem> lineItems;
+    private ShoppingCart shoppingCart;
 
     public Order(int orderId, String username, Date orderDate, List<LineItem> lineItems) {
         this.orderId = orderId;
@@ -41,5 +42,13 @@ public class Order {
         for(LineItem li : lineItems)
             total += li.getPrice();
         return total;
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 }

@@ -1,7 +1,7 @@
 package data.mappers;
 
 import data.DatabaseConnector;
-import data.interfaces.IInvoiceMapper;
+import data.interfaces.DataMapperInterface;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,13 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import logic.model.Invoice;
-import logic.model.ShoppingCart;
 
 /**
  *
  * @author Martin Frederiksen
  */
-public class InvoiceMapper implements IInvoiceMapper{
+public class InvoiceMapper implements DataMapperInterface<Invoice, Integer> {
     DatabaseConnector connector = new DatabaseConnector();
     
     public InvoiceMapper(DataSource ds) {
@@ -24,21 +23,20 @@ public class InvoiceMapper implements IInvoiceMapper{
 
     /**
      * Adds an Invoice to the Database based on a OrderId
-     * @param orderId Specific Id of order
-     * @param sc Sessions ShoppingCart
+     * @param invoice Invoice
      * @throws SQLException SQLException
      */
     @Override
-    public void addInvoice(int orderId, ShoppingCart sc) throws SQLException {
+    public void add(Invoice invoice) throws SQLException {
         connector.open();
         String query = "INSERT INTO invoices(orderId, price) VALUES(?,?);";
         PreparedStatement ps = connector.prepareStatement(query);
-        connector.setAutoCommit(false);
         try {
-            ps.setInt(1, orderId);
-            ps.setInt(2, sc.calculate());
+            ps.setInt(1, invoice.getOrderId());
+            ps.setInt(2, invoice.getShoppingCart().calculate());
+            connector.setAutoCommit(false);
             ps.execute();
-        connector.commit();
+            connector.commit();
         } catch (SQLException ex) {
             ex.printStackTrace();
             connector.rollback();
@@ -46,7 +44,6 @@ public class InvoiceMapper implements IInvoiceMapper{
                 connector.rollback();
             }
         } finally {
-            connector.setAutoCommit(true);
             connector.close();
         }
     }    
@@ -57,7 +54,7 @@ public class InvoiceMapper implements IInvoiceMapper{
      * @throws SQLException SQLException
      */
     @Override
-    public List<Invoice> getInvoices() throws SQLException {
+    public List<Invoice> getAll() throws SQLException {
         connector.open();
         List<Invoice> invoices = new ArrayList();
         String quary = "SELECT * FROM invoices;";
@@ -78,7 +75,7 @@ public class InvoiceMapper implements IInvoiceMapper{
      * @throws SQLException SQLException
      */
     @Override
-    public Invoice getInvoiceById(int invoiceId) throws SQLException {
+    public Invoice get(Integer invoiceId) throws SQLException {
         connector.open();
         Invoice invoice = null;
         String quary = "SELECT * FROM invoices WHERE invoiceId = ?;";

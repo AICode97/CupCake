@@ -22,7 +22,7 @@ public class OrderController {
 
     public List<Order> getAllOrders() {
         try {
-            return om.getOrders();
+            return om.getAll();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -31,7 +31,7 @@ public class OrderController {
 
     public Order getOrderById(int id) {
         try {
-            return om.getOrderById(id);
+            return om.get(id);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -40,7 +40,7 @@ public class OrderController {
 
     public List<Order> getOrderByUser(String username) {
         try {
-            return om.getOrdersByUser(username);
+            return om.getAllByUser(username);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -49,7 +49,9 @@ public class OrderController {
 
     public void addOrder(ShoppingCart sc, User user) {
         try {
-            om.addOrder(sc, user);
+            Order order = new Order(0, user.getUsername(), null, null);
+            order.setShoppingCart(sc);
+            om.add(order);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

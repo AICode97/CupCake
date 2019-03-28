@@ -26,7 +26,7 @@ public class CupcakeController {
 
     public List<CupcakePart> getCupcakeParts() {
         try {
-            return ccm.getCupcakeParts();
+            return ccm.getAll();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -35,7 +35,7 @@ public class CupcakeController {
 
     public CupcakePart getCupcakePart(int id) {
         try {
-            return ccm.getCupcakePartById(id);
+            return ccm.get(id);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -44,7 +44,7 @@ public class CupcakeController {
 
     public void addCupcakePart(CupcakePartEnum partType, String name, int price) {
         try {
-            ccm.addCupcakePart(partType, name, price);
+            ccm.add(new CupcakePart(0, partType, name, price));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

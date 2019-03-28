@@ -24,7 +24,7 @@ public class UserController {
 
     public List<User> getUsers() {
         try {
-            return um.getUsers();
+            return um.getAll();
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
@@ -33,24 +33,25 @@ public class UserController {
 
     public User getUser(String username) {
         try {
-            return um.getUser(username);
+            return um.get(username);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public int addUser(String username, String email, String password, RoleEnum role) {
+    public  void addUser(String username, String email, String password, RoleEnum role) throws SQLException {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(password.getBytes());
             byte[] digest = md.digest();
             String passwordHash = DatatypeConverter.printHexBinary(digest).toUpperCase();
-
-            return um.addUser(username, email, passwordHash, role);
-        } catch (SQLException | NoSuchAlgorithmException ex) {
+            
+            User user = new User(username, passwordHash, email, 0, role);
+            
+            um.add(user);
+        } catch (NoSuchAlgorithmException ex) {
             ex.printStackTrace();
-            return -1;
         }
     }
 
