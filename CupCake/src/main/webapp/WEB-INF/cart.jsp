@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="data.models.CupcakePart"%>
-<%@page import="logic.CupcakeController"%>
 <%@page import="data.models.ShoppingCart"%>
 <%@page import="data.models.Order"%>
 <%@page import="data.models.LineItem"%>

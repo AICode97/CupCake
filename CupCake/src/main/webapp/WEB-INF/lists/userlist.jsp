@@ -6,7 +6,6 @@
 
 <%@page import="data.DataSourceMySql"%>
 <%@page import="java.util.List"%>
-<%@page import="logic.UserController"%>
 <%@page import="data.models.User"%>
 
 <%

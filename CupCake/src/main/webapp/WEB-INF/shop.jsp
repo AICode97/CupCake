@@ -8,7 +8,6 @@
 <%@page import="data.DataSourceMySql"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List" %>
-<%@page import="logic.CupcakeController"%>
 <%@page import="data.mappers.CupcakeMapper"%>
 <%@page import="data.models.enums.CupcakePartEnum"%>
 <%@page import="data.models.CupcakePart"%>

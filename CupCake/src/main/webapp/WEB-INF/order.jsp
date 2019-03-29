@@ -6,7 +6,6 @@
 
 <%@page import="data.models.LineItem"%>
 <%@page import="data.models.Order"%>
-<%@page import="logic.OrderController"%>
 <%@include file = "../header.jsp" %>
 
 <%
