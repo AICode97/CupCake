@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import logic.UserController;
+import logic.UserFacade;
 import data.models.enums.RoleEnum;
 
 /**
@@ -29,7 +29,7 @@ public class RegisterCommand extends Command {
                 throw new CommandException("All fields needs to be filled.");
             } else {
                 try {
-                    UserController.addUser(username, email, password, RoleEnum.CUSTOMER);
+                    UserFacade.addUser(username, email, password, RoleEnum.CUSTOMER);
                     response.addHeader("redirect", request.getContextPath() + "/login");
                     request.getRequestDispatcher("/login").forward(request, response);
                 } catch (SQLException ex) {

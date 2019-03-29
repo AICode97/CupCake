@@ -106,8 +106,8 @@ public class OrderMapper implements DataMapperInterface<Order, Integer> {
             connector.open();
             List<Order> orders = new ArrayList();
             String quary = "SELECT * FROM orders;";
-            PreparedStatement ps = connector.prepareStatement(quary);
-            ResultSet rs = ps.executeQuery();
+            Statement stmt = connector.createStatement();
+            ResultSet rs = stmt.executeQuery(quary);
 
             while (rs.next()) {
                 orders.add(new Order(rs.getInt("orderId"), rs.getString("username"), rs.getDate("date"), getLineItemsById(rs.getInt("orderId"))));

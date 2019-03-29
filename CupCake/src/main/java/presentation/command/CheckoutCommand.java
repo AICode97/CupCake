@@ -10,8 +10,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import logic.OrderController;
-import logic.UserController;
+import logic.OrderFacade;
+import logic.UserFacade;
 import data.models.ShoppingCart;
 import data.models.User;
 
@@ -31,11 +31,11 @@ public class CheckoutCommand extends Command {
         ShoppingCart sc = (ShoppingCart) session.getAttribute("ShoppingCart");
 
         if (user.getBalance() >= sc.calculate()) {
-            UserController.changeBalance(user, sc.calculate());
+            UserFacade.changeBalance(user, sc.calculate());
             String username = user.getUsername();
-            OrderController.addOrder(sc, user);
+            OrderFacade.addOrder(sc, user);
             sc = null;
-            session.setAttribute("user", UserController.getUser(username));
+            session.setAttribute("user", UserFacade.getUser(username));
             session.setAttribute("ShoppingCart", sc);
             request.getRequestDispatcher("/cart").forward(request, response);
         } else {

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 import data.models.Invoice;
+import java.sql.Statement;
 
 /**
  *
@@ -60,8 +61,8 @@ public class InvoiceMapper implements DataMapperInterface<Invoice, Integer> {
             connector.open();
             List<Invoice> invoices = new ArrayList();
             String quary = "SELECT * FROM invoices;";
-            PreparedStatement ps = connector.prepareStatement(quary);
-            ResultSet rs = ps.executeQuery();
+            Statement stmt = connector.createStatement();
+            ResultSet rs = stmt.executeQuery(quary);
 
             while(rs.next()){
                 invoices.add(new Invoice(rs.getInt("invoiceId"), rs.getInt("orderId"), rs.getInt("price"), rs.getDate("date")));

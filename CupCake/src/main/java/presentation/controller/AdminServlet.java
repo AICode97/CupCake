@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 import data.models.enums.RoleEnum;
 import data.models.User;
 import java.sql.SQLException;
-import logic.OrderController;
-import logic.UserController;
+import logic.OrderFacade;
+import logic.UserFacade;
 
 /**
  *
@@ -37,10 +37,10 @@ public class AdminServlet extends HttpServlet {
             } else if (((User) session.getAttribute("user")).getRole() == RoleEnum.ADMIN) {
                 String username = request.getParameter("username");
                 if(username == null)
-                    session.setAttribute("orderList", OrderController.getAllOrders());
+                    session.setAttribute("orderList", OrderFacade.getAllOrders());
                 else
-                    session.setAttribute("orderList", OrderController.getOrderByUser(username));
-                session.setAttribute("userList", UserController.getUsers());
+                    session.setAttribute("orderList", OrderFacade.getOrderByUser(username));
+                session.setAttribute("userList", UserFacade.getUsers());
                 request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
             } else {
                 request.getRequestDispatcher("/WEB-INF/customer").forward(request, response);

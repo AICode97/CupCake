@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import logic.OrderController;
+import logic.OrderFacade;
 import data.models.Order;
 import data.models.User;
 import data.models.enums.RoleEnum;
@@ -33,7 +33,7 @@ public class OrderServlet extends HttpServlet {
         
         String orderId = request.getParameter("orderId");
         if(orderId != null) {
-            Order order = OrderController.getOrderById(Integer.parseInt(orderId));
+            Order order = OrderFacade.getOrderById(Integer.parseInt(orderId));
             session.setAttribute("order", order);
             
             if(order == null) {

@@ -15,7 +15,7 @@ import data.models.enums.RoleEnum;
  *
  * @author William Hussfeldt - Martin Frederiksen
  */
-public class UserController {
+public class UserFacade {
 
     private static final UserMapper um = new UserMapper(new DataSourceMySql().getDataSource());
 

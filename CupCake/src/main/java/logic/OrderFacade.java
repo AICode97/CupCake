@@ -13,7 +13,7 @@ import data.models.User;
  *
  * @author Martin Frederiksen
  */
-public class OrderController {
+public class OrderFacade {
 
     private static final OrderMapper om = new OrderMapper(new DataSourceMySql().getDataSource());
 

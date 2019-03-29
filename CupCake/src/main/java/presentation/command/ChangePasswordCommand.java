@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import logic.UserController;
+import logic.UserFacade;
 import data.models.User;
 
 /**
@@ -31,7 +31,7 @@ public class ChangePasswordCommand extends Command {
             HttpSession session = request.getSession();
             User u = (User) session.getAttribute("user");
 
-            boolean valid = UserController.validateUser(u.getUsername(), currentPassword);
+            boolean valid = UserFacade.validateUser(u.getUsername(), currentPassword);
 
             if (newPassword2.isEmpty() || newPassword2 == null || currentPassword.isEmpty() || currentPassword == null
                     || newPassword.isEmpty() || newPassword == null) {
@@ -39,7 +39,7 @@ public class ChangePasswordCommand extends Command {
             } else if (!newPassword.equals(newPassword2)) {
                 throw new CommandException("New passwords doesn't match.");
             } else if (valid) {
-                int result = UserController.changePassword(u.getUsername(), newPassword);
+                int result = UserFacade.changePassword(u.getUsername(), newPassword);
                 if (result == -1) {
                     throw new CommandException("Something went wrong. Please try again.");
                 } else {

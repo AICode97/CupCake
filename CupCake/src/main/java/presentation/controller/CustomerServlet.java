@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import data.models.User;
 import java.sql.SQLException;
-import logic.OrderController;
+import logic.OrderFacade;
 
 /**
  *
@@ -32,7 +32,7 @@ public class CustomerServlet extends HttpServlet {
             if (session.getAttribute("user") == null) {
                 request.getRequestDispatcher("/login").forward(request, response);
             } else {
-                session.setAttribute("orderList", OrderController.getOrderByUser(((User) session.getAttribute("user")).getUsername()));
+                session.setAttribute("orderList", OrderFacade.getOrderByUser(((User) session.getAttribute("user")).getUsername()));
                 request.getRequestDispatcher("/WEB-INF/customer.jsp").forward(request, response);
             }
         } catch(SQLException | OrderException ex) {

@@ -9,7 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import logic.UserController;
+import logic.UserFacade;
 import data.models.User;
 
 /**
@@ -27,8 +27,8 @@ public class AddBalanceCommand extends Command {
             
             int balance;
             balance = (request.getParameter("balance").isEmpty()) ? 0 : Integer.parseInt(request.getParameter("balance"));
-            UserController.addBalance(user, balance);
-            user = UserController.getUser(username);
+            UserFacade.addBalance(user, balance);
+            user = UserFacade.getUser(username);
             session.setAttribute("user", user);
 
             response.sendRedirect(request.getContextPath() + "/cart");

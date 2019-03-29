@@ -10,6 +10,7 @@ import java.util.List;
 import javax.sql.DataSource;
 import data.models.enums.RoleEnum;
 import data.models.User;
+import java.sql.Statement;
 
 /**
  *
@@ -63,8 +64,8 @@ public class UserMapper implements DataMapperInterface<User, String> {
             connector.open();
             List<User> users = new ArrayList();
             String quary = "SELECT username, email, balance, role FROM users;";
-            PreparedStatement ps = connector.prepareStatement(quary);
-            ResultSet rs = ps.executeQuery();
+            Statement stmt = connector.createStatement();
+            ResultSet rs = stmt.executeQuery(quary);
 
             while (rs.next()) {
                 users.add(new User(rs.getString("username"), null, rs.getString("email"), rs.getInt("balance"), RoleEnum.valueOf(rs.getString("role"))));

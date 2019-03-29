@@ -12,7 +12,7 @@ import data.models.enums.CupcakePartEnum;
  *
  * @author Andreas Vikke
  */
-public class CupcakeController {
+public class CupcakeFacade {
     private static final CupcakeMapper ccm = new CupcakeMapper(new DataSourceMySql().getDataSource());
     
     public static List<CupcakePart> getCupcakeParts() throws SQLException, CupcakeException {

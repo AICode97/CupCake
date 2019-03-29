@@ -2,9 +2,7 @@ package data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.StringJoiner;
 
 /**
  *
@@ -17,7 +15,7 @@ public class DBConnector {
     private static final String PASSWORD = "f7qGtArm";
     private static Connection connection = null;
 
-    public static Connection getConnection() {
+    public static synchronized Connection getConnection() {
         if (connection == null) {
             try {
                 Class.forName(DRIVER);

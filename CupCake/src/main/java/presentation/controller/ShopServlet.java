@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import logic.CupcakeController;
+import logic.CupcakeFacade;
 
 /**
  *
@@ -29,7 +29,7 @@ public class ShopServlet extends HttpServlet {
             if (session.getAttribute("user") == null) {
                 request.getRequestDispatcher("/login").forward(request, response);
             } else {
-                session.setAttribute("cupcakeParts", CupcakeController.getCupcakeParts());
+                session.setAttribute("cupcakeParts", CupcakeFacade.getCupcakeParts());
                 request.getRequestDispatcher("/WEB-INF/shop.jsp").forward(request, response);
             }
         } catch(SQLException | CupcakeException ex) {
