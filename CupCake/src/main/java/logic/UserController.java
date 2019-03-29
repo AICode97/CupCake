@@ -8,7 +8,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
-import javax.sql.DataSource;
 import javax.xml.bind.DatatypeConverter;
 import data.models.enums.RoleEnum;
 
