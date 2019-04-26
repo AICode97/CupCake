@@ -34,8 +34,8 @@
 
             <a class="navbar-brand" href=""></a>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="shop"><i class="fas fa-shopping-cart"></i> Shop</a>
                     </li>

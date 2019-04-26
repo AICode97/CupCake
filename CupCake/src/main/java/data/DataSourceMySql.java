@@ -14,19 +14,25 @@ public class DataSourceMySql {
     public DataSourceMySql() {
         {
             try {
-                dataSource.setServerName("andreasvikke.dk");
+                dataSource.setServerName("157.230.110.164");
+                //dataSource.setServerName("andreasvikke.dk");
                 dataSource.setPort(3306);
                 dataSource.setDatabaseName("cupcake");
-                dataSource.setUser("transformer");
-                dataSource.setPassword("f7qGtArm");
+                dataSource.setUser("transform");
+                dataSource.setPassword("transform");
+                //dataSource.setUser("transformer");
+                //dataSource.setPassword("f7qGtArm");
                 dataSource.setUseSSL(false);
                 
                 localDataSource.setServerName("localhost");
                 localDataSource.setPort(3306);
                 localDataSource.setDatabaseName("cupcake");
-                localDataSource.setUser("transformer");
-                localDataSource.setPassword("f7qGtArm");
+                localDataSource.setUser("transform");
+                //localDataSource.setUser("transformer");
+                localDataSource.setPassword("transform");
+                //localDataSource.setPassword("f7qGtArm");
                 localDataSource.setUseSSL(false);
+                
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
